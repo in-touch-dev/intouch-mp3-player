@@ -1,16 +1,18 @@
 import React from "react";
-
-// import { forwards } from './images/forward.svg';
-import playButton from './images/play-button.svg';
-// import backwards from './images/backward.svg'
+import Icon from './icons/PlayerIcons'
 
 class Player extends React.Component {
   render() {
-      console.log(playButton)
     return (
       <div className="container">
         <div className="backwards">
-            <svg src={playButton} alt='play-pause-icon'/>
+            <Icon iconName='play' fill={'red'} width={'100px'}/>
+            <Icon iconName='pause' fill={'black'} width={'100px'}/>
+            <Icon iconName='forward' fill={'yellow'} width={'100px'}/>
+            <Icon iconName='backward' fill={'purple'} width={'100px'}/>
+            <Icon iconName='playlist' fill={'green'} width={'100px'}/>
+            <Icon iconName='mute' fill={'blue'} width={'100px'}/>
+            <p>hello</p>
         </div>
         <div className="play-pause"></div>
         <div className="forward"></div>

@@ -1,7 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 
-const Forward = props => {
+const Playlist = props => {
   const style = {
     width: `${props.width}`
   };
@@ -11,19 +11,19 @@ const Forward = props => {
       className={`icon-itn message-icon ${props.svgClass}`}
       style={style}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="-27 0 320 320"
+      viewBox="0 0 60.123 60.123"
       aria-hidden={props.ariaHidden}
       focusable={props.focusable}
+      fill={props.fill}
     >
       <path
-        d="M255.2 0a10.03 10.03 0 0 0-10 10v148.8c-.375-3.102-2.19-5.844-4.898-7.402L15 21.3a9.93 9.93 0 0 0-10 0A10.03 10.03 0 0 0 0 30v260.2a10.03 10.03 0 0 0 5 8.699 10.26 10.26 0 0 0 10 0L240.3 168.8a10.08 10.08 0 0 0 4.898-7.402V310a10 10 0 1 0 20 0V10a10.03 10.03 0 0 0-10-10zm0 0"
-        fill={props.fill}
+        d="M57.124 51.893H16.92a3 3 0 1 1 0-6h40.203a3 3 0 0 1 .001 6zm0-18.83H16.92a3 3 0 0 1 0-6h40.203a3 3 0 0 1 .001 6zm0-18.832H16.92a3 3 0 1 1 0-6h40.203a3 3 0 0 1 .001 6z"/><circle cx="4.029" cy="11.463" r="4.029"/><circle cx="4.029" cy="30.062" r="4.029"/><circle cx="4.029" cy="48.661" r="4.029"
       />
     </svg>
   );
 };
 
-Forward.propTypes = {
+Playlist.propTypes = {
   width: propTypes.string,
   ariaHidden: propTypes.string,
   focusable: propTypes.string,
@@ -31,11 +31,11 @@ Forward.propTypes = {
   svgClass: propTypes.string
 };
 
-Forward.defaultProps = {
+Playlist.defaultProps = {
   ariaHidden: "true",
   svgClass: "",
   focusable: "false",
   fill: "#30353a"
 };
 
-export default Forward;
+export default Playlist;

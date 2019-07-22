@@ -1,25 +1,25 @@
+import React from 'react';
+import PlayButton from './PlayButton';
+import PauseButton from './PauseButton';
+import Forward from './Forward';
+import Backward from './Backward';
+import Playlist from './Playlist';
+import Mute from './Mute';
+
 const Icon = props => {
 	switch (props.iconName) {
-		case 'account':
-			return <Account {...props} />;
-		case 'message':
-			return <Message {...props} />;
-		case 'network':
-			return <Network {...props} />;
-		case 'profile':
-			return <Profile {...props} />;
-		case 'resources':
-			return <Resources {...props} />;
-		case 'work':
-			return <Work {...props} />;
-		case 'settings':
-			return <Settings {...props} />;
-		case 'close':
-			return <Close {...props} />;
-		case 'play':
-			return <Play {...props} />;
-		case 'basket':
-			return <Basket {...props} />;
+        case 'play':
+        return <PlayButton {...props} />
+        case 'pause':
+        return <PauseButton {...props} />
+        case 'forward':
+        return <Forward {...props} />
+        case 'backward':
+        return <Backward {...props} />
+        case 'playlist':
+        return <Playlist {...props} />
+        case 'mute':
+        return <Mute {...props} />
 		default:
 			return <div>Check the iconName prop is correct</div>;
 	}
