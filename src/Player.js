@@ -104,12 +104,12 @@ class Player extends React.Component {
               min="0"
               max="20"
             />
-            <p> 03:00</p>
+            { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
+          : <span>0.00</span> }
           </div>
-          { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
-          : 0.00 }
-          
-          <Icon iconName="playlist" fill={"green"} width={"50px"} />
+          </div>
+          <div className='volume-container'>
+          <div className="volume-slider">
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
           <Icon iconName="mute" />
@@ -134,6 +134,7 @@ class Player extends React.Component {
           <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
           </button>
           </div>
+      </div>
     );
   }
 }
