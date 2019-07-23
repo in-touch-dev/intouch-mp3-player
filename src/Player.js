@@ -78,6 +78,8 @@ class Player extends React.Component {
 	// const positionControl = document.querySelector('[data-action="position"]');
 	const audioElement = document.querySelector(".audio-file");
 	console.log(audioElement.fastSeek(20))
+  }
+  
   render() {
 
     return (
@@ -87,19 +89,19 @@ class Player extends React.Component {
         <div className="track-container">
           <div className="control-buttons">
           <button className="tape-controls-backward">
-          <Icon iconName="backward" fill={"#4D4D4D"} />
+          <Icon iconName="backward" />
           </button>
             <button className="tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <Icon iconName="play" fill={"#4D4D4D"} />
+                <Icon iconName="play" />
               ) : (
-                <Icon iconName="pause" fill={"#4D4D4D"} />
+                <Icon iconName="pause" />
               )}
             </button>
             <button className="tape-controls-forward">
-          <Icon iconName="forward" fill={"#4D4D4D"} />
+          <Icon iconName="forward" />
           </button>
           </div>
 
@@ -117,7 +119,15 @@ class Player extends React.Component {
           : <span>0:00</span> }
           </div>
           </div>
-          <div className="volume-container">
+          <div className='volume-container'>
+          <div className='menu-buttons'>
+          <button className="playlist-control">
+          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          </button>
+          <button className="playlist-control">
+          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          </button>
+          </div>
           <div className="volume-slider">
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
@@ -135,9 +145,6 @@ class Player extends React.Component {
               onInput={evt => this.changeVolume(evt)}
             />
           </div>
-          <button className="playlist-control">
-          <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
-          </button>
           </div>
       </div>
     );
