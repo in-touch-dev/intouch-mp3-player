@@ -71,8 +71,12 @@ class Player extends React.Component {
     return (
       <div className="container">
         <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
+        <div className='current-track'/>
+        <div className="track-container">
           <div className="control-buttons">
+          <button className="tape-controls-backward">
           <Icon iconName="backward" fill={"#4D4D4D"} width={"30px"} />
+          </button>
             <button className="tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
@@ -82,19 +86,24 @@ class Player extends React.Component {
                 <Icon iconName="pause" fill={"#4D4D4D"} width={"50px"} />
               )}
             </button>
+            <button className="tape-controls-forward">
           <Icon iconName="forward" fill={"#4D4D4D"} width={"30px"} />
+          </button>
           </div>
+
           <div className="track-slider">
             <input
               type="range"
               className="control-track"
             />
           </div>
-          
-          <Icon iconName="playlist" fill={"green"} width={"50px"} />
+          </div>
+
+
+          <div className='volume-container'>
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
-          <Icon iconName="mute" fill={"blue"} width={"50px"} onClick={evt => this.muteSound(evt)}/>
+          <Icon iconName="mute" fill={"#4D4D4D"} width={"20px"} onClick={evt => this.muteSound(evt)}/>
 		    </button>
           <div className="volume-slider">
             <input
@@ -112,11 +121,11 @@ class Player extends React.Component {
               <option value="0" label="min" />
               <option value="2" label="max" />
             </datalist>
-            <label htmlFor="volume">VOL</label>
           </div>
-          <p>hello</p>
-        <div className="play-pause" />
-        <div className="forward" />
+          <button className="playlist-control">
+          <Icon iconName="playlist" fill={"#4D4D4D"} width={"25px"} />
+          </button>
+          </div>
       </div>
     );
   }

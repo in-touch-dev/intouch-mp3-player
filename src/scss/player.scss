@@ -1,29 +1,72 @@
 .container {
-    width: 100%;
+    width: 98%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    padding: 1rem;
 
-    .control-buttons {
+    .current-track {
+        height: 100px;
+        width: 25%;
+        color: aqua;
+        background-color: aqua;
+    }
+
+    .track-container {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        padding: 1rem 5rem;
+
+        .control-buttons {
         display: flex;
         flex-direction: row;
-        height: 50px;
-        margin: 0 0 0 1em;
+        justify-content: center;
+        align-items: center;
 
-        .tape-controls-play {
+            button {
             border: none;
+            padding:  0.5rem;
+
+            &:focus {
+                outline: none;
+            }
+            }
+        }
+
+        .track-slider {
+            display: flex;
+            align-items: center;
+
+            .control-track {
+            width: 100%
+            }
         }
     }
 
-    .track-slider {
-        width: 80%;
+    .volume-container {
         display: flex;
-        align-items: center;
-        margin: 0 1em 0 1em;
+        flex-direction: row;
+        width: 25%;
 
-        .control-track {
-            width: 100%
+        .tape-controls-mute,
+        .playlist-control {
+            border: none;
+            &:focus {
+                outline: none;
+            }
+        }
+        
+        .volume-slider {
+            display: flex;
+            align-items: center;
+            margin: 0 2em 0 0;
+            width: 40%;
+
+    
+            .control-volume {
+                width: 100%
+            }
         }
     }
 }
