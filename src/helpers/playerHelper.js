@@ -1,15 +1,14 @@
-const audioCtx = new AudioContext();
+export function getDuration(time){
 
-function playPause(){
+    const minutes = Math.floor(time / 60)
+    const seconds = time - minutes * 60;
+    const hours = Math.floor(time / 3600);
 
-    audioCtx.play();
+    const wholeSeconds = seconds.toFixed(0)
 
-}
-
-
-export function AudioControls() {
-
-    playPause();
+    if(hours !== 0)
+    return hours +  '.'  +  minutes + '.' + wholeSeconds
     
-   
+    else
+    return minutes + '.' + wholeSeconds;
 }
