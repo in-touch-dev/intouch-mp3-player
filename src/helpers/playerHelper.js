@@ -7,8 +7,9 @@ export function getDuration(time){
     const wholeSeconds = seconds.toFixed(0)
 
     if(hours !== 0)
-    return hours +  '.'  +  minutes + '.' + wholeSeconds
-    
-    else
-    return minutes + '.' + wholeSeconds;
+    return hours +  ':'  +  minutes + ':' + wholeSeconds
+    if(seconds < 9.5)
+    return minutes + ':0' + wholeSeconds;
+    else 
+    return minutes + ':' + wholeSeconds;
 }

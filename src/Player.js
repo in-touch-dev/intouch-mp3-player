@@ -2,15 +2,15 @@ import React from "react";
 import Icon from "./icons/PlayerIcons";
 import audioMp3 from "./audio/belle.mp3";
 import { getDuration } from "./helpers/playerHelper";
-
 class Player extends React.Component {
   constructor() {
     super();
     this.state = {
       isPlaying: false,
-	    track: false,
+	  track: false,
       volumeLevel: '',
-      trackDuration: ''
+	  trackDuration: '',
+	  currentTime: '' 
     };
     const audioCtx = window.AudioContext || window.webkitAudioContext;
     if (audioCtx) {
@@ -45,10 +45,6 @@ class Player extends React.Component {
       audioElement.pause();
       this.setState({ isPlaying: false });
     }
-
-    // this.setState({
-    //   isPlaying: true
-    // })
   };
 
   changeVolume = evt => {
@@ -59,7 +55,7 @@ class Player extends React.Component {
   };
 
   muteSound = evt => {
-  evt.preventDefault();
+  	evt.preventDefault();
 
 	this.setState({volumeLevel : this.gainNode.gain.value}) 
 	this.gainNode.gain.value = 0;
@@ -68,16 +64,26 @@ class Player extends React.Component {
 	{
 		this.gainNode.gain.value = this.state.volumeLevel;
 	}	
-  
+  };
 
-  }
+  getElapsedTime() {
+	const audioElement = document.querySelector(".audio-file");
+	const formatTime = getDuration(audioElement.currentTime);
+	this.setState({currentTime: formatTime});
+	document.getElementById('time-elapsed').innerHTML = formatTime;
+	};
 
+  changeTimePosition = evt => {
+	evt.preventDefault();
+	// const positionControl = document.querySelector('[data-action="position"]');
+	const audioElement = document.querySelector(".audio-file");
+	console.log(audioElement.fastSeek(20))
   render() {
 
     return (
       <div className="container">
-        <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
-        <div className='current-track'/>
+        <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" onTimeUpdate={() => this.getElapsedTime()}/>
+        <div className="current-track"/>
         <div className="track-container">
           <div className="control-buttons">
           <button className="tape-controls-backward">
@@ -98,17 +104,20 @@ class Player extends React.Component {
           </div>
 
           <div className="control-track">
-            <p>00:00 </p>
+		  <span id='time-elapsed' className="track-elapsed"/>
             <input
               type="range"
-              min="0"
-              max="20"
+              min={this.state.currentTime}
+			  max={this.state.trackDuration}
+			  onInput={evt => this.changeTimePosition(evt)}
+			  data-action="position"
+			  step="0.01"
             />
             { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
-          : <span>0.00</span> }
+          : <span>0:00</span> }
           </div>
           </div>
-          <div className='volume-container'>
+          <div className="volume-container">
           <div className="volume-slider">
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
@@ -125,10 +134,6 @@ class Player extends React.Component {
               data-action="volume"
               onInput={evt => this.changeVolume(evt)}
             />
-            <datalist id="gain-vals">
-              <option value="0" label="min" />
-              <option value="2" label="max" />
-            </datalist>
           </div>
           <button className="playlist-control">
           <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
