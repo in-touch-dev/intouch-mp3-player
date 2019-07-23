@@ -1,14 +1,16 @@
 import React from "react";
 import Icon from "./icons/PlayerIcons";
 import audioMp3 from "./audio/belle.mp3";
+import { getDuration } from "./helpers/playerHelper";
 
 class Player extends React.Component {
   constructor() {
     super();
     this.state = {
       isPlaying: false,
-	  track: false,
-	  volumeLevel: ''
+	    track: false,
+      volumeLevel: '',
+      trackDuration: ''
     };
     const audioCtx = window.AudioContext || window.webkitAudioContext;
     if (audioCtx) {
@@ -16,13 +18,17 @@ class Player extends React.Component {
 	  this.gainNode = this.audioCtx.createGain();
     } else {
       throw new Error("This environment does not support the web audio API.");
-	}
-
+  }
   }
   playPauseAudio = evt => {
     evt.preventDefault();
 
     const audioElement = document.querySelector(".audio-file");
+    const time = getDuration(audioElement.duration);
+    console.log(time)
+
+
+    this.setState({ trackDuration : time })
 
     if (!this.state.track) {
       this.track = this.audioCtx.createMediaElementSource(audioElement);
@@ -49,7 +55,6 @@ class Player extends React.Component {
     evt.preventDefault();
 
 	const volumeControl = document.querySelector('[data-action="volume"]');
-	console.log(volumeControl.value);
 	this.gainNode.gain.value = volumeControl.value;
   };
 
@@ -63,11 +68,12 @@ class Player extends React.Component {
 	{
 		this.gainNode.gain.value = this.state.volumeLevel;
 	}	
-	
+  
 
   }
 
   render() {
+
     return (
       <div className="container">
         <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
@@ -100,11 +106,10 @@ class Player extends React.Component {
             />
             <p> 03:00</p>
           </div>
-          </div>
-
-
-          <div className='volume-container'>
-          <div className="volume-slider">
+          { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
+          : 0.00 }
+          
+          <Icon iconName="playlist" fill={"green"} width={"50px"} />
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
           <Icon iconName="mute" />
@@ -129,7 +134,6 @@ class Player extends React.Component {
           <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
           </button>
           </div>
-      </div>
     );
   }
 }
