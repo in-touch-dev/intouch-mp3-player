@@ -54,7 +54,7 @@ class Player extends React.Component {
   };
 
   muteSound = evt => {
-	evt.preventDefault();
+  evt.preventDefault();
 
 	this.setState({volumeLevel : this.gainNode.gain.value}) 
 	this.gainNode.gain.value = 0;
@@ -75,37 +75,40 @@ class Player extends React.Component {
         <div className="track-container">
           <div className="control-buttons">
           <button className="tape-controls-backward">
-          <Icon iconName="backward" fill={"#4D4D4D"} width={"30px"} />
+          <Icon iconName="backward" fill={"#4D4D4D"} />
           </button>
             <button className="tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <Icon iconName="play" fill={"#4D4D4D"} width={"50px"} />
+                <Icon iconName="play" fill={"#4D4D4D"} />
               ) : (
-                <Icon iconName="pause" fill={"#4D4D4D"} width={"50px"} />
+                <Icon iconName="pause" fill={"#4D4D4D"} />
               )}
             </button>
             <button className="tape-controls-forward">
-          <Icon iconName="forward" fill={"#4D4D4D"} width={"30px"} />
+          <Icon iconName="forward" fill={"#4D4D4D"} />
           </button>
           </div>
 
-          <div className="track-slider">
+          <div className="control-track">
+            <p>00:00 </p>
             <input
               type="range"
-              className="control-track"
+              min="0"
+              max="20"
             />
+            <p> 03:00</p>
           </div>
           </div>
 
 
           <div className='volume-container'>
+          <div className="volume-slider">
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
-          <Icon iconName="mute" fill={"#4D4D4D"} width={"20px"} onClick={evt => this.muteSound(evt)}/>
+          <Icon iconName="mute" />
 		    </button>
-          <div className="volume-slider">
             <input
               type="range"
               id="volume"
@@ -123,7 +126,7 @@ class Player extends React.Component {
             </datalist>
           </div>
           <button className="playlist-control">
-          <Icon iconName="playlist" fill={"#4D4D4D"} width={"25px"} />
+          <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
           </button>
           </div>
       </div>
