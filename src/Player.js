@@ -81,24 +81,24 @@ class Player extends React.Component {
         <div className="track-container">
           <div className="control-buttons">
           <button className="tape-controls-backward">
-          <Icon iconName="backward" fill={"#4D4D4D"} />
+          <Icon iconName="backward" />
           </button>
             <button className="tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <Icon iconName="play" fill={"#4D4D4D"} />
+                <Icon iconName="play" />
               ) : (
-                <Icon iconName="pause" fill={"#4D4D4D"} />
+                <Icon iconName="pause" />
               )}
             </button>
             <button className="tape-controls-forward">
-          <Icon iconName="forward" fill={"#4D4D4D"} />
+          <Icon iconName="forward" />
           </button>
           </div>
 
           <div className="control-track">
-            <p>00:00 </p>
+            <span>0:00 </span>
             <input
               type="range"
               min="0"
@@ -109,6 +109,14 @@ class Player extends React.Component {
           </div>
           </div>
           <div className='volume-container'>
+          <div className='menu-buttons'>
+          <button className="playlist-control">
+          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          </button>
+          <button className="playlist-control">
+          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          </button>
+          </div>
           <div className="volume-slider">
           <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
@@ -130,9 +138,6 @@ class Player extends React.Component {
               <option value="2" label="max" />
             </datalist>
           </div>
-          <button className="playlist-control">
-          <Icon iconName="playlist" fill={"#4D4D4D"} width={"24px"} />
-          </button>
           </div>
       </div>
     );
