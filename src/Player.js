@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "./icons/PlayerIcons";
-
 import audioMp3 from "./audio/belle.mp3";
 
 class Player extends React.Component {
@@ -72,27 +71,31 @@ class Player extends React.Component {
     return (
       <div className="container">
         <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
-        <div className="backwards">
-          <div className="play-pause">
+          <div className="control-buttons">
+          <Icon iconName="backward" fill={"#4D4D4D"} width={"30px"} />
             <button className="tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <Icon iconName="play" fill={"red"} width={"50px"} />
+                <Icon iconName="play" fill={"#4D4D4D"} width={"50px"} />
               ) : (
-                <Icon iconName="pause" fill={"black"} width={"50px"} />
+                <Icon iconName="pause" fill={"#4D4D4D"} width={"50px"} />
               )}
             </button>
+          <Icon iconName="forward" fill={"#4D4D4D"} width={"30px"} />
           </div>
-          <Icon iconName="forward" fill={"yellow"} width={"50px"} />
-          <Icon iconName="backward" fill={"purple"} width={"50px"} />
+          <div className="track-slider">
+            <input
+              type="range"
+              className="control-track"
+            />
+          </div>
+          
           <Icon iconName="playlist" fill={"green"} width={"50px"} />
-
-		  <button className="tape-controls-mute"
+          <button className="tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
           <Icon iconName="mute" fill={"blue"} width={"50px"} onClick={evt => this.muteSound(evt)}/>
-		  </button>
-
+		    </button>
           <div className="volume-slider">
             <input
               type="range"
@@ -111,9 +114,7 @@ class Player extends React.Component {
             </datalist>
             <label htmlFor="volume">VOL</label>
           </div>
-
           <p>hello</p>
-        </div>
         <div className="play-pause" />
         <div className="forward" />
       </div>
