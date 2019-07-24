@@ -1,0 +1,344 @@
+.container {
+    width: 99%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #03163D;
+    border: 2px #03163D solid;
+
+    .current-track {
+        height: 80px;
+        width: 20%;
+        background-color: #c5bfbf;
+        display: flex;
+        flex-direction: row;
+
+        .current-img {
+            border-radius: 40px;
+        }
+    }
+
+    .track-container {
+        display: flex;
+        flex-direction: column;
+        width: 65%;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+
+        .control-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        button {
+                border: none;
+                padding:  0.5rem;
+                background: transparent;
+                cursor: pointer;
+                &:focus {
+                    outline: none;
+                }
+        }
+            .tape-controls-play {
+                border: 1px white solid;
+                border-radius: 40px;
+                position: relative;
+                padding: 12px;
+                .play-button {
+                svg {
+                    position: relative;
+                    width: 35px;
+                    transition: 0.5s;
+                    left: 3px;
+                    path {
+                        fill: #FFFFFF;;
+                        transition: 0.5s;
+                    }
+                    &:hover {
+                        transform: scale(1.05);
+                        path {
+                            fill: #FFFFFF;
+                        }
+                    }
+                }
+            }
+            svg {
+                position: relative;
+                width: 35px;
+                transition: 0.5s;
+                path {
+                    fill: #FFFFFF;;
+                    transition: 0.5s;
+                }
+                &:hover {
+                    transform: scale(1.05);
+                    path {
+                        fill: #FFFFFF;
+                    }
+                }
+            }
+            }
+            .tape-controls-forward {
+                svg {
+                    width: 20px;
+                    transition: 0.5s;
+                    path {
+                        fill: #FFFFFF;;
+                        transition: 0.5s;
+                    }
+                    &:hover {
+                        path {
+                            fill: #FFFFFF;
+                        }                    }
+                }
+            }
+            .tape-controls-backward {
+                svg {
+                    width: 20px;
+                    transition: 0.5s;
+                    path {
+                        fill: #FFFFFF;;
+                        transition: 0.5s;
+                    }
+                    &:hover {
+                        path {
+                            fill: #FFFFFF;
+                        }
+                    }
+                }
+            }
+        }
+
+        .control-track {
+            span {
+                padding: 1rem;
+            }
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 75%;
+            height: 100%;
+            background: transparent;
+        
+            &:focus {
+                outline: none;
+            }
+        
+            //WEBKIT
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+                
+            }
+        
+            &::-webkit-slider-runnable-track {
+                width: 60%;
+                height: 9px;
+                background: #E84E0F;
+                border-radius: 3rem;
+        
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+        
+            // IE
+        
+            &::-ms-track {
+                width: 60%;
+                cursor: pointer;
+                height: 9px;
+        
+                transition: all 0.5s;
+                /* Hides the slider so custom styles can be added */
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+        
+            &::-ms-thumb {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+            }
+    
+        
+            //FIREFOX
+            &::-moz-range-thumb {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+            }
+        
+            &::-moz-range-track {
+                width: 60%;
+                height: 9px;
+                background: #E84E0F;
+                border-radius: 3rem;
+        
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+        }
+        
+    }
+
+    .volume-container {
+        display: flex;
+        flex-direction: column;
+        width: 15%;
+        height: 80px;
+        justify-content: space-between;
+
+        .tape-controls-mute,
+        .playlist-control {
+            border: none;
+            background: transparent;
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .menu-buttons {
+           text-align: right
+        }
+
+        .volume-slider {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+
+            .tape-controls-mute {
+                padding: 0.2rem 0.2rem 0 0.6rem;
+                align-items: center;
+                cursor: pointer;
+                svg {
+                    width: 15px;
+                    transition: 0.5s;
+                    path {
+                        fill: white;
+                    }
+                    &:hover {
+                        transform: translateX(2px)
+                    }
+                }
+            }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        
+            &:focus {
+                outline: none;
+            }
+        
+            //WEBKIT
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 14px;
+                width: 14px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+                
+            }
+        
+            &::-webkit-slider-runnable-track {
+                width: 60%;
+                height: 5px;
+                background: #E84E0F;
+                border-radius: 3rem;
+        
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+    
+        
+            // IE
+        
+            &::-ms-track {
+                width: 60%;
+                cursor: pointer;
+                height: 5px;
+        
+                transition: all 0.5s;
+                /* Hides the slider so custom styles can be added */
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+        
+            &::-ms-thumb {
+                height: 18px;
+                width: 18px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+            }
+        
+            &::-ms-fill-lower {
+                background: #bdbdbd;
+                border-radius: 3rem;
+            }
+            &:focus::-ms-fill-lower {
+                background: #E84E0F;
+            }
+            &::-ms-fill-upper {
+                background: #bdbdbd;
+                border-radius: 3rem;
+            }
+            &:focus::-ms-fill-upper {
+                background: #E84E0F;
+            }
+        
+            //FIREFOX
+            &::-moz-range-thumb {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+                background: #ffffff;
+                margin-top: -5px;
+                box-shadow: 1px 1px 2px rgba(#000, 0.5);
+        
+                cursor: pointer;
+            }
+        
+            &::-moz-range-track {
+                width: 60%;
+                height: 9px;
+                background: #E84E0F;
+                border-radius: 3rem;
+        
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+        }
+    }
+    }
+}
