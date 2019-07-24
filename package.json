@@ -1,16 +1,29 @@
 {
-  "name": "intouch-mp3",
+  "name": "react-mp3-player",
+  "description": "An Mp3 player to play any audio file using ReactJS",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
+  "private": false,
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/in-touch-dev/intouch-mp3-player"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,serviceWorker.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -28,5 +41,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "keywords": [
+    "mp3",
+    "react",
+    "player",
+    "mp3 player",
+    "react mp3",
+    "audio",
+    "music"
+  ],
+  "author": "Liam Riley",
+  "license": "(MIT OR Apache-2.0)"
 }
