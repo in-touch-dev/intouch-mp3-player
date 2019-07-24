@@ -11,8 +11,13 @@
     .current-track {
         height: 80px;
         width: 20%;
-        color: #03163D;
         background-color: #c5bfbf;
+        display: flex;
+        flex-direction: row;
+
+        .current-img {
+            border-radius: 40px;
+        }
     }
 
     .track-container {
@@ -37,9 +42,16 @@
                 }
         }
             .tape-controls-play {
+                border: 1px white solid;
+                border-radius: 40px;
+                position: relative;
+                padding: 12px;
+                .play-button {
                 svg {
-                    width: 50px;
+                    position: relative;
+                    width: 35px;
                     transition: 0.5s;
+                    left: 3px;
                     path {
                         fill: #FFFFFF;;
                         transition: 0.5s;
@@ -51,6 +63,22 @@
                         }
                     }
                 }
+            }
+            svg {
+                position: relative;
+                width: 35px;
+                transition: 0.5s;
+                path {
+                    fill: #FFFFFF;;
+                    transition: 0.5s;
+                }
+                &:hover {
+                    transform: scale(1.05);
+                    path {
+                        fill: #FFFFFF;
+                    }
+                }
+            }
             }
             .tape-controls-forward {
                 svg {

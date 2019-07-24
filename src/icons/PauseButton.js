@@ -11,14 +11,22 @@ const PauseButton = props => {
       className={`icon-itn message-icon ${props.svgClass}`}
       style={style}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
+      viewBox="-45 0 327 327"
       aria-hidden={props.ariaHidden}
       focusable={props.focusable}
     >
-      <path
-        d="M255 0C114.75 0 0 114.75 0 255s114.75 255 255 255 255-114.75 255-255S395.25 0 255 0zm-25.5 357h-51V153h51v204zm102 0h-51V153h51v204z"
-        fill={props.fill}
-      />
+      <g>
+    <path
+      d="m158 0h71c4.417969 0 8 3.582031 8 8v311c0 4.417969-3.582031 8-8 8h-71c-4.417969 0-8-3.582031-8-8v-311c0-4.417969 3.582031-8 8-8zm0 0"
+      
+      fill={props.fill}
+    />
+    <path
+      d="m8 0h71c4.417969 0 8 3.582031 8 8v311c0 4.417969-3.582031 8-8 8h-71c-4.417969 0-8-3.582031-8-8v-311c0-4.417969 3.582031-8 8-8zm0 0"
+      
+      fill={props.fill}
+    />
+  </g>
     </svg>
   );
 };
@@ -39,3 +47,4 @@ PauseButton.defaultProps = {
 };
 
 export default PauseButton;
+

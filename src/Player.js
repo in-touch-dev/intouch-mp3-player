@@ -87,7 +87,7 @@ class Player extends React.Component {
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <Icon iconName="play" />
+                <span className='play-button'><Icon iconName="play" /></span>
               ) : (
                 <Icon iconName="pause" />
               )}
@@ -114,7 +114,7 @@ class Player extends React.Component {
           <Icon iconName="playlist" fill={"white"} width={"28px"} />
           </button>
           <button className="playlist-control">
-          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          <Icon iconName="hide" fill={"white"} width={"28px"} />
           </button>
           </div>
           <div className="volume-slider">
