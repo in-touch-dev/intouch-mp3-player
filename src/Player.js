@@ -77,7 +77,7 @@ class Player extends React.Component {
 	evt.preventDefault();
 	// const positionControl = document.querySelector('[data-action="position"]');
 	const audioElement = document.querySelector(".audio-file");
-	console.log(audioElement.fastSeek(20))
+	// console.log(audioElement.fastSeek(20))
   }
   
   render() {
