@@ -77,7 +77,12 @@ class Player extends React.Component {
     return (
       <div className="container">
         <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
-        <div className='current-track'/>
+        <div className='current-track'>
+        <div className='current-img'>
+        <img src='/favicon.ico' alt='podcast'/>
+        </div>
+        <div className='current-title'></div>
+        </div>
         <div className="track-container">
           <div className="control-buttons">
           <button className="tape-controls-backward">

@@ -1,6 +1,5 @@
-# In Touch React Icon Library
-A library of icons for InTouch apps based on ReactJS
-
+# React mp3 Player
+An Mp3 player to play any audio file based on ReactJS
 ## Table of Contents
 
 - [Installation](#installation)
@@ -11,11 +10,11 @@ A library of icons for InTouch apps based on ReactJS
 ## Installation
 Install via NPM 
 ```shell
-npm install in-touch-icons
+npm install react-mp3-player
 ```
 or use yarn
 ```shell
-yarn add in-touch-icons
+yarn add react-mp3-player
 ```
 
 ## Usage
@@ -23,35 +22,16 @@ yarn add in-touch-icons
 Import the Icon component
 
 ```Javascript
-import {Icon} from 'in-touch-icons';
+import {Player} from 'react-mp3-player';
 ```
-Add the Icon component and pass it the relevant icon name
+Add the Player component and pass it the relative mp3 playlist as well as a primary and secondary color
 
 ```Javascript
-<Icon iconName={'message'} />
+<Player playlist={['audio.mp3', 'audio2.mp3']} primaryColor='#FFFFFF' secondaryColor='#FEFEFE'/>
 ```
 
-### Icons Available
-
-Currenlty the list of icons includes
-- account
-- message
-- network
-- profile
-- resources
-- settings
-- work
-- close
-- play
-- basket
-
-
-## Adding new icons to the library
-Firstly create a new component to hold the svg code by copying one of the current components. Before adding the new svg code, make sure to compress and minify with an appropriate online tool (eg. https://vecta.io/nano) then remove all references to clip-path within the SVG.
-
-After the component containing the SVG is prepared, import it to the index.js and then also import into the IconObj.js component and add it to the object. Your icon has now been added to the library, make sure to add it to the list of icons in the readme (above).
-
-Update the version (in the package.json) by 0.0.1 and then push all your changes to the repo.
+## Adding new features to the mp3
+Make any changes or additional features in the Player.js component and update the version (in the package.json) by 0.0.1 and then push all your changes to the repo.
 
 ### Publish to NPM 
 
@@ -74,7 +54,7 @@ yarn upgrade in-touch-icons
 
 Download the repo to your machine
 ```shell
-git clone https://github.com/in-touch-dev/icon-library.git
+git clone https://github.com/in-touch-dev/intouch-mp3-player
 ```
 
 Then to get up and running with a dev environment
