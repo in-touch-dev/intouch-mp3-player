@@ -1,6 +1,6 @@
 {
   "name": "react-mp3-player",
-  "description": "An Icon library for use with all In Touch apps based on ReactJS",
+  "description": "An Mp3 player to play any audio file using ReactJS",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -18,12 +18,12 @@
     "react-scripts": "3.0.1"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/in-touch-dev/intouch-mp3-player"
+    "type": "git",
+    "url": "https://github.com/in-touch-dev/intouch-mp3-player"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,serviceWorker.js",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,serviceWorker.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

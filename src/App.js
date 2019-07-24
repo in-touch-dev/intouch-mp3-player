@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.scss';
-import Player from './Player';
+import './lib/scss/App.scss';
+import Player from './lib/components/Player';
 
 const App = () => {
   return (

@@ -1,8 +1,0 @@
-*,
-*::before,
-*::after {
- box-sizing: border-box; // 1
-}
-
- @import './scss/player.scss';
- @import './scss/playlist.scss';
