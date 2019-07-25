@@ -10,8 +10,8 @@ class Player extends React.Component {
       isPlaying: false,
 	    track: false,
       volumeLevel: '',
-	    trackDuration: '',
-      currentTime: '',
+	    trackDuration: 1,
+      currentTime: 0,
       viewPlaylist: false,
       activeTrack: ''
     };
@@ -31,21 +31,34 @@ class Player extends React.Component {
   }
 
   play(audioBuffer){
+    if( this.state.currentTime === this.state.trackDuration ){ return; };
   
     const source = this.audioCtx.createBufferSource();
     source.buffer = audioBuffer;
+
     source.connect(this.gainNode).connect(this.audioCtx.destination);
-    if (!this.state.isPlaying){
-        this.setState({ isPlaying: true });
-        source.start(0);
-    }
-    if (this.audioCtx.state === 'suspended'){
+    this.setState({ trackDuration : source.buffer.duration });
+
+    if (!this.state.isPlaying) {
+      this.setState({ isPlaying: true });
+      source.start(0);
+      this.playLoop();
+    };
+
+    if (this.audioCtx.state === "suspended") {
       this.audioCtx.resume();
-      console.log('issuspended ', this.audioCtx.state);
-  }
-  console.log(source);
-  const time = getDuration(source.buffer.duration)
-    this.setState({trackDuration: time})
+      console.log("issuspended ", this.audioCtx.state);
+    };
+
+    console.log(source);
+
+    source.onended = evt => {
+      this.pause();
+      this.stopPlayLoop();
+      this.setState({ currentTime : source.buffer.duration });
+      console.log('source.stop() source.onended : ', arguments)
+    };
+
   }
 
   pause(){
@@ -64,34 +77,48 @@ class Player extends React.Component {
         .then(arrayBuffer => this.audioCtx.decodeAudioData(arrayBuffer))
         .then(audioBuffer => {
           trackBuffer = audioBuffer;
-          // setInterval(() => console.log(this.audioCtx.currentTime), 500);
-          this.play(trackBuffer)
+          this.play(trackBuffer);
         });
         
-    setInterval(() => this.setState({currentTime: getDuration(this.audioCtx.currentTime)}), 500)
   }
-  pauseAudioBuffer() {
-          this.pause(this.trackBuffer)
+
+
+
+  playLoop(){
+    this.loop = setInterval(() => {
+
+      let currentTime = this.audioCtx.currentTime > this.state.trackDuration ? this.state.trackDuration : this.audioCtx.currentTime ;
+      this.setState({ currentTime });
+
+    }, 500);
   }
+
+  stopPlayLoop(){
+    clearInterval( this.loop );
+    this.loop = 0;
+  }
+
+
+
+
+
+  pauseAudioBuffer = () => this.pause(this.trackBuffer)
 
   changeVolume = evt => {
     evt.preventDefault();
-
-	const volumeControl = document.querySelector('[data-action="volume"]');
-  this.gainNode.gain.value = volumeControl.value;
-  
+    const volumeControl = document.querySelector('[data-action="volume"]');
+    if( volumeControl ){ this.gainNode.gain.value = volumeControl.value };
   };
 
   muteSound = evt => {
   	evt.preventDefault();
 
-	this.setState({volumeLevel : this.gainNode.gain.value}) 
-	this.gainNode.gain.value = 0;
+    this.setState({ volumeLevel: this.gainNode.gain.value });
+    this.gainNode.gain.value = 0;
 
-	if(this.state.volumeLevel)
-	{
-		this.gainNode.gain.value = this.state.volumeLevel;
-	}	
+    if (this.state.volumeLevel) {
+      this.gainNode.gain.value = this.state.volumeLevel;
+    }	
   };
 
   // changeTimePosition() {
@@ -124,6 +151,9 @@ class Player extends React.Component {
     const activeSrc = this.state.activeTrack;
     console.log(activeSrc);
 
+    const trackDuration = getDuration( this.state.trackDuration );
+    const currentTime = getDuration( this.state.currentTime );
+
     return (
       <div className="container">
         <div className="current-track"/>
@@ -153,16 +183,16 @@ class Player extends React.Component {
 
           <div className="control-track">
 		      <span id='time-elapsed' className="track-elapsed"/>
-          <span>{this.state.currentTime}</span>
+          <span>{ currentTime }</span>
             <input
               type="range"
-              min={this.state.currentTime}
-			  max={this.state.trackDuration}
+              min={ 0 }
+			  max={ trackDuration }
         onInput={() => this.changeTimePosition()}
 			  data-action="position"
 			  step="0.01"
             />
-            { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
+            { trackDuration ? <span>{ trackDuration }</span>
           : <span>0:00</span> }
           </div>
           </div>
