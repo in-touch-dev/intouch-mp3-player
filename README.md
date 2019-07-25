@@ -47,7 +47,7 @@ npm publish
 ```
 Your update should now be live on NPM. Make sure to update the package in your project by running
 ```shell
-yarn upgrade in-touch-icons
+yarn upgrade react-mp3-player
 ```
 
 ## Contributing
