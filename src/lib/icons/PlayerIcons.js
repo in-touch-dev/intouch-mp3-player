@@ -6,6 +6,7 @@ import Backward from './Backward';
 import Playlist from './Playlist';
 import Mute from './Mute';
 import Hide from './Hide';
+import Volume from './Volume';
 
 const Icon = props => {
 	switch (props.iconName) {
@@ -23,6 +24,8 @@ const Icon = props => {
         return <Mute {...props} />
         case 'hide':
         return <Hide {...props} />
+        case 'volume':
+        return <Volume {...props} />
 		default:
 			return <div>Check the iconName prop is correct</div>;
 	}
