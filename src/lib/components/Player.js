@@ -9,7 +9,8 @@ class Player extends React.Component {
     this.state = {
       isPlaying: false,
 	    track: false,
-      volumeLevel: '',
+      volumeLevel: null,
+      mute: false,
       trackDuration: ''
     };
     const audioCtx = window.AudioContext || window.webkitAudioContext;
@@ -25,7 +26,6 @@ class Player extends React.Component {
 
     const audioElement = document.querySelector(".audio-file");
     const time = getDuration(audioElement.duration);
-    console.log(time)
 
 
     this.setState({ trackDuration : time })
@@ -55,18 +55,21 @@ class Player extends React.Component {
     evt.preventDefault();
 
 	const volumeControl = document.querySelector('[data-action="volume"]');
-	this.gainNode.gain.value = volumeControl.value;
+  this.gainNode.gain.value = volumeControl.value;
+  this.setState({volumeLevel: this.gainNode.gain.value})
   };
 
   muteSound = evt => {
   evt.preventDefault();
+  // this.setState({mute: true})
+  console.log(this.gainNode.gain.value)
 
-	this.setState({volumeLevel : this.gainNode.gain.value}) 
+  this.setState({volumeLevel : this.gainNode.gain.value}) 
 	this.gainNode.gain.value = 0;
 
 	if(this.state.volumeLevel)
 	{
-		this.gainNode.gain.value = this.state.volumeLevel;
+    this.gainNode.gain.value = this.state.volumeLevel;
 	}	
   
 
@@ -75,65 +78,66 @@ class Player extends React.Component {
   render() {
 
     return (
-      <div className="container">
-        <audio className="audio-file" src={audioMp3} crossOrigin="anonymous" />
-        <div className='current-track'>
-        <div className='current-img'>
+      <div className='mp3-player-container'>
+        <audio className="mp3-player-audio-file" src={audioMp3} crossOrigin="anonymous" />
+        <div className='mp3-player-current-track'>
+        <div className='mp3-player-current-img'>
         <img src='/favicon.ico' alt='podcast'/>
         </div>
-        <div className='current-title'>
+        <div className='mp3-player-current-title'>
         <h3>This is the title</h3>
         <h4>This is the copy for the podcast were we have info</h4>
         </div>
         </div>
-        <div className="track-container">
-          <div className="control-buttons">
-          <button className="tape-controls-backward">
+        <div className="mp3-player-track-container">
+          <div className="mp3-player-control-buttons">
+          <button className="mp3-player-tape-controls-backward">
           <Icon iconName="backward" />
           </button>
-            <button className="tape-controls-play"
+            <button className="mp3-player-tape-controls-play"
               onClick={evt => this.playPauseAudio(evt)}>
 
               {!this.state.isPlaying ? (
-                <span className='play-button'><Icon iconName="play" /></span>
+                <span className='mp3-player-play-button'><Icon iconName="play" /></span>
               ) : (
                 <Icon iconName="pause" />
               )}
             </button>
-            <button className="tape-controls-forward">
+            <button className="mp3-player-tape-controls-forward">
           <Icon iconName="forward" />
           </button>
           </div>
 
-          <div className="control-track">
+          <div className="mp3-player-control-track">
             <span>0:00 </span>
             <input
               type="range"
               min="0"
               max="20"
+              className="mp3-player-control-track"
             />
             { this.state.trackDuration ? <span>{this.state.trackDuration}</span>
           : <span>0.00</span> }
           </div>
           </div>
-          <div className='volume-container'>
-          <div className='menu-buttons'>
-          <button className="playlist-control">
-          <Icon iconName="playlist" fill={"white"} width={"28px"} />
+          <div className='mp3-player-volume-container'>
+          <div className='mp3-player-menu-buttons'>
+          <button className="mp3-player-playlist-control">
+          <Icon iconName="playlist" fill={"white"} />
           </button>
-          <button className="playlist-control">
-          <Icon iconName="hide" fill={"white"} width={"28px"} />
+          <button className="mp3-player-hide-control">
+          <Icon iconName="hide" fill={"white"} />
           </button>
           </div>
-          <div className="volume-slider">
-          <button className="tape-controls-mute"
+          <div className="mp3-player-volume-slider">
+          <button className="mp3-player-tape-controls-mute"
               onClick={evt => this.muteSound(evt)}>
-          <Icon iconName="mute" />
+          {this.state.volumeLevel === 0 || this.state.mute === true ? <Icon iconName="mute" /> : <Icon iconName="volume" />}
 		    </button>
             <input
               type="range"
               id="volume"
-              className="control-volume"
+              className="mp3-player-control-volume"
               min="0"
               max="2"
               list="gain-vals"
