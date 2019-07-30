@@ -172,8 +172,9 @@ class Player extends React.Component {
 	playlistContent(){
 	  const playlist = this.props.tracks.map((track, key) => {
 	    return (
-	      <button className='playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
-	      <p>{track.name}</p>
+	      <button className='mp3-player-playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
+	      <h3 className='mp3-player-playlist-track-name'>{track.name}</h3>
+	      <h3 className='mp3-player-playlist-track-time'>0:00</h3>
 	      </button>
 	    )
 	  })
@@ -187,9 +188,10 @@ class Player extends React.Component {
     const currentTime = getDuration(this.state.currentTime);
 
     const hideMp3 = this.state.isHidden ? 'hidden' : ''
+    const showPlaylist = this.state.viewPlaylist ? 'playlist' : ''
     
     return (
-      <div className={`mp3-player-container ${hideMp3}`}>
+      <div className={`mp3-player-container ${hideMp3} ${showPlaylist}`}>
         <div className='mp3-player-current-track'>
         <div className='mp3-player-current-img'>
         <img src='/favicon.ico' alt='podcast'/>
@@ -268,11 +270,20 @@ class Player extends React.Component {
           </div>
           </div>
           { this.state.viewPlaylist ? 
-          this.playlistContent()
+          <div className='mp3-player-playlist-container'>
+          <div className='mp3-player-playlist-header'>
+          <button className="mp3-player-playlist-close" onClick={(evt) => this.viewPlaylistBox(evt)}>
+          <Icon iconName="close" fill={"white"} />
+          </button>
+          </div>
+          <div className='mp3-player-playlist-content'>
+          {this.playlistContent()}
+          </div>
+          </div>
           :
           null
-          }
-      </div>
+        }
+        </div>
     );
   }
 }
