@@ -1,3 +1,11 @@
+body {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 .container {
     width: 99%;
     height: 100px;
@@ -115,6 +123,22 @@
             span {
                 padding: 1rem;
                 color: white;
+            }
+
+            .progress-bar-wrap {
+                display: inline-block;
+                width: 200px;
+                background-color: #cdcdcd;
+                height: 30px;
+
+                .progress{
+                    display: block;
+                    width: 0;
+                    height: 30px;
+                    background-color: lightcoral;
+                    text-align: right;
+                    position: relative;
+                }
             }
         }
         
