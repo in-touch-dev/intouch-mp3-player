@@ -34,51 +34,62 @@ class Player extends React.Component {
 		// this.playAudioBuffer(URL);
 	}
 
-	play(audioBuffer) {
+
+
+
+
+	play( startingAt ){
+		// console.log( "1.) play() >> startingAt : ", startingAt );
 		if (this.state.currentTime === this.state.trackDuration) { return; };
+		// console.log( "2.) play() >> startingAt : ", startingAt );
 
-		const source = this.audioCtx.createBufferSource();
-		source.buffer = audioBuffer;
+		this.source = this.audioCtx.createBufferSource();
+		this.source.buffer = this.audioBuffer;
 
-		source.connect(this.gainNode).connect(this.audioCtx.destination);
-		this.setState({ trackDuration: source.buffer.duration });
+		this.source.connect(this.gainNode).connect(this.audioCtx.destination);
+		this.setState({ trackDuration: this.source.buffer.duration });
 
 		if (!this.state.isPlaying) {
 			this.setState({ isPlaying: true });
-			source.start(0);
+			this.source.start( 0, startingAt || 0 );
 			this.playLoop();
 		};
 
 		if (this.audioCtx.state === "suspended") {
 			this.audioCtx.resume();
-			console.log("issuspended ", this.audioCtx.state);
+			// console.log("issuspended ", this.audioCtx.state);
 		};
 
-		console.log(source);
-
-		source.onended = evt => {
+		this.source.onended = evt => {
 			this.pause();
 			this.stopPlayLoop();
-			this.setState({ currentTime: source.buffer.duration });
-			console.log('source.stop() source.onended : ', arguments)
+			// console.log('onended()')
 		};
 
 	}
+
+
+
+
+
 
 	pause() {
 		if (this.audioCtx.state === 'running') {
 			this.setState({ isPlaying: false });
 			this.audioCtx.suspend();
 			this.stopPlayLoop();
-			console.log('running', this.audioCtx.state);
+			// console.log('running', this.audioCtx.state);
 		}
 	}
 
-	playAudioBuffer( url ){
+	playAudioBuffer( url, startingAt ){
 		fetch( url )
 			.then( response => response.arrayBuffer() )
 			.then( arrayBuffer => this.audioCtx.decodeAudioData( arrayBuffer ) )
-			.then( audioBuffer => this.play( audioBuffer ) )
+			.then( audioBuffer => {
+				this.audioBuffer = audioBuffer;
+				this.play( startingAt );
+			})
 			.catch( console.error );
 	}
 
@@ -118,21 +129,28 @@ class Player extends React.Component {
 		);
 	}
 
-
-
 	playLoop() {
 		this.loop = setInterval(() => {
 
-			// let currentTime = this.audioCtx.currentTime > this.state.trackDuration ? this.state.trackDuration : this.audioCtx.currentTime;
-
-			this.progressRef.current.querySelector( '.progress' ).width = `${ this.state.currentTime / this.state.trackDuration * this.progressRef.current.clientWidth }px`;
-			// this.setState({ currentTime });
+			let currentTime = this.audioCtx.currentTime;// > this.state.trackDuration ? this.state.trackDuration : this.audioCtx.currentTime;
+			let progressIndicator = this.audioCtx.currentTime / this.state.trackDuration * this.progressRef.current.clientWidth;
+			this.progressRef.current.querySelector( '.progress' ).style.width = `${ progressIndicator }px`;
+			this.setState({ currentTime, progressIndicator });
 
 		}, 500);
 	}
 
 
 	progressClicked( evt ){
+
+		this.pause();
+		this.stopPlayLoop();
+		this.source.stop(0);
+		this.source.disconnect();
+		this.gainNode.disconnect();
+		this.audioCtx.destination.disconnect();
+		console.log(this.audioCtx);
+
 		this.movementX = (evt.pageX || evt.clientX) - evt.currentTarget.getBoundingClientRect().left;
 
 		this.setState({
@@ -141,10 +159,7 @@ class Player extends React.Component {
 		}, () => {
 
 			this.progressRef.current.querySelector( '.progress' ).style.width = `${ this.state.progressIndicator }px`;
-
-			// console.log( '>>>> this.movementX : ', this.movementX );
-			// console.log('this.state.currentTime : ', this.state.currentTime);
-			// console.log('this.state.progressIndicator : ', this.state.progressIndicator);
+			this.play( this.state.currentTime );
 
 		});
 	}
