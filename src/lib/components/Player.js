@@ -2,6 +2,7 @@ import React from "react";
 import Icon from "../icons/PlayerIcons";
 import audioMp3 from "../audio/1-10.mp3";
 import { getDuration } from "../helpers/playerHelper";
+import { Howl } from 'howler';
 
 class Player extends React.Component {
 	constructor() {
@@ -28,140 +29,102 @@ class Player extends React.Component {
 
 	}
 
-	componentWillMount() {
-		this.setState({ activeTrack: audioMp3 })
-		// let URL = this.props.tracks[0].src;
-		// this.playAudioBuffer(URL);
-	}
+	componentWillMount = () => this.setState({ activeTrack : audioMp3 })
 
+	setProgressIndicator = val => this.progressRef.current.querySelector( '.progress' ).style.width = `${ val }px`
 
+	play( src ){
+		if( this.state.currentTime === this.state.trackDuration ){ return };
 
-
-
-	play( startingAt ){
-		// console.log( "1.) play() >> startingAt : ", startingAt );
-		if (this.state.currentTime === this.state.trackDuration) { return; };
-		// console.log( "2.) play() >> startingAt : ", startingAt );
-
-		this.source = this.audioCtx.createBufferSource();
-		this.source.buffer = this.audioBuffer;
-
-		this.source.connect(this.gainNode).connect(this.audioCtx.destination);
-		this.setState({ trackDuration: this.source.buffer.duration });
-
-		if (!this.state.isPlaying) {
-			this.setState({ isPlaying: true });
-			this.source.start( 0, startingAt || 0 );
-			this.playLoop();
+		if( this.sound && this.state.isPaused ){
+			this.sound.play();
+			this.setState({ isPaused : true });
+			return;
 		};
 
-		if (this.audioCtx.state === "suspended") {
-			this.audioCtx.resume();
-			// console.log("issuspended ", this.audioCtx.state);
-		};
+		this.sound = new Howl({ src : [ src ] });
+		this.sound.once( 'load', () => { 
 
-		this.source.onended = evt => {
-			this.pause();
-			this.stopPlayLoop();
-			// console.log('onended()')
-		};
+			this.sound.on( 'end', evt => {
+				this.stopPlayLoop();
+				this.setProgressIndicator( this.progressRef.current.clientWidth );
+				this.setState({ currentTime : this.state.trackDuration });
+			});
 
+			this.sound.on( 'play', evt => {
+				this.setState({
+					trackDuration : this.sound._duration,
+					isPlaying : true,
+					isPaused : false
+				}, () => this.playLoop());
+			});
+
+			this.sound.play();
+
+		});
 	}
 
-
-
-
-
-
-	pause() {
-		if (this.audioCtx.state === 'running') {
-			this.setState({ isPlaying: false });
-			this.audioCtx.suspend();
-			this.stopPlayLoop();
-			// console.log('running', this.audioCtx.state);
-		}
-	}
-
-	playAudioBuffer( url, startingAt ){
-		fetch( url )
-			.then( response => response.arrayBuffer() )
-			.then( arrayBuffer => this.audioCtx.decodeAudioData( arrayBuffer ) )
-			.then( audioBuffer => {
-				this.audioBuffer = audioBuffer;
-				this.play( startingAt );
-			})
-			.catch( console.error );
+	pause(){
+		this.sound.pause();
+		this.stopPlayLoop();
+		this.setState({ isPlaying : false, isPaused : true });
 	}
 
 	stopPlayLoop() {
-		clearInterval(this.loop);
+		clearInterval( this.loop );
 		this.loop = 0;
 	}
-
-	pauseAudioBuffer = () => this.pause( this.trackBuffer )
 
 	changeVolume = evt => {
 		evt.preventDefault();
 		const volumeControl = document.querySelector('[data-action="volume"]');
-		if( volumeControl ){ this.gainNode.gain.value = volumeControl.value };
+		if( volumeControl ){ this.sound.volume( volumeControl.value ) };
 	};
 
 	muteSound = evt => {
 		evt.preventDefault();
-
-		this.setState({ volumeLevel: this.gainNode.gain.value });
-		this.gainNode.gain.value = 0;
-		if( this.state.volumeLevel ){ this.gainNode.gain.value = this.state.volumeLevel };
+		this.isMuted = !this.isMuted;
+		this.sound.mute( this.isMuted );
 	};
 
 	playPause(){
 		if( !this.state.isPlaying ){
 			return (
-				<button className="tape-controls-play" onClick={() => this.playAudioBuffer( this.state.activeTrack )}>
+				<button className="tape-controls-play" onClick={ () => this.play( this.state.activeTrack ) }>
 					<span className='play-button'><Icon iconName="play" /></span>
 				</button>
 			);
 		};
 		return (
-			<button className="tape-controls-play" onClick={() => this.pauseAudioBuffer( this.state.activeTrack )}>
+			<button className="tape-controls-play" onClick={ () => this.pause() }>
 				<span className='pause-button'><Icon iconName="pause" /></span>
 			</button>
 		);
 	}
 
+
 	playLoop() {
 		this.loop = setInterval(() => {
-
-			let currentTime = this.audioCtx.currentTime;// > this.state.trackDuration ? this.state.trackDuration : this.audioCtx.currentTime;
-			let progressIndicator = this.audioCtx.currentTime / this.state.trackDuration * this.progressRef.current.clientWidth;
-			this.progressRef.current.querySelector( '.progress' ).style.width = `${ progressIndicator }px`;
-			this.setState({ currentTime, progressIndicator });
-
+			let progressIndicator = this.sound.seek() / this.state.trackDuration * this.progressRef.current.clientWidth;
+			this.setState({ currentTime : this.sound.seek(), progressIndicator }, () => this.setProgressIndicator( progressIndicator ));
 		}, 500);
 	}
 
-
 	progressClicked( evt ){
+		if( !this.sound ){ return };
 
 		this.pause();
-		this.stopPlayLoop();
-		this.source.stop(0);
-		this.source.disconnect();
-		this.gainNode.disconnect();
-		this.audioCtx.destination.disconnect();
-		console.log(this.audioCtx);
-
 		this.movementX = (evt.pageX || evt.clientX) - evt.currentTarget.getBoundingClientRect().left;
 
 		this.setState({
 			currentTime : this.movementX / this.progressRef.current.clientWidth * this.state.trackDuration,
 			progressIndicator : this.movementX
 		}, () => {
-
-			this.progressRef.current.querySelector( '.progress' ).style.width = `${ this.state.progressIndicator }px`;
-			this.play( this.state.currentTime );
-
+			this.setProgressIndicator( this.state.progressIndicator );
+			this.sound.seek( this.state.currentTime );
+			this.play();
 		});
+
 	}
 
 	render() {
@@ -206,7 +169,7 @@ class Player extends React.Component {
 							id="volume"
 							className="control-volume"
 							min="0"
-							max="2"
+							max="1"
 							list="gain-vals"
 							step="0.01"
 							data-action="volume"
