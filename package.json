@@ -52,5 +52,8 @@
     "music"
   ],
   "author": "Liam Riley",
-  "license": "(MIT OR Apache-2.0)"
+  "license": "(MIT OR Apache-2.0)",
+  "dependencies": {
+    "howler": "^2.1.2"
+  }
 }

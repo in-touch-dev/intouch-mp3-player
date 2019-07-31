@@ -1,263 +1,239 @@
 import React from "react";
 import Icon from "../icons/PlayerIcons";
-import audioMp3 from "../audio/recording.mp3";
-import { getDuration } from "../helpers/playerHelper";
+import audioMp3 from "../audio/1-10.mp3";
+import { formatTime } from "../helpers/playerHelper";
+import { Howl } from 'howler';
 
 class Player extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			isPlaying: false,
-			track: false,
-			volumeLevel: "",
-			trackDuration: 1,
-			currentTime: 0,
-			viewPlaylist: false,
-      		activeTrack: "",
-      		isHidden: false
-		};
-		this.timerRef = React.createRef();this.timerRef = React.createRef();
-		this.createAudioCtx();
+  constructor() {
+    super();
+
+    this.state = {
+      isPlaying: false,
+      track: false,
+      trackDuration: 60,
+      currentTime: 0,
+      activeTrack: audioMp3,
+      isHidden: false,
+	  viewPlaylist: false,
+	  volumeLevel : 1
+    };
+
+    this.progressRef = React.createRef();
+  }
+
+  setProgressIndicator = val =>
+    (this.progressRef.current.querySelector(
+      ".progress"
+    ).style.width = `${val}px`);
+
+  play(src) {
+    if (this.state.currentTime === this.state.trackDuration) {
+      return;
+    }
+
+    if (this.sound && this.state.isPaused) {
+      this.sound.play();
+      this.setState({ isPaused: false, isPlaying: true });
+      return;
+    }
+
+    this.sound = new Howl({ src: [src] });
+    this.sound.once("load", () => {
+      this.sound.on("end", evt => {
+        this.stopPlayLoop();
+        this.setProgressIndicator(this.progressRef.current.clientWidth);
+        this.setState({ currentTime: this.state.trackDuration });
+      });
+
+      this.sound.on("play", evt => {
+        this.setState(
+          {
+            trackDuration: this.sound._duration,
+            isPlaying: true,
+            isPaused: false
+          },
+          () => this.playLoop()
+        );
+      });
+
+      this.sound.play();
+    });
+  }
+
+  pause() {
+    this.sound.pause();
+    this.stopPlayLoop();
+    this.setState({ isPlaying: false, isPaused: true });
+  }
+
+  stopPlayLoop() {
+    clearInterval(this.loop);
+    this.loop = 0;
+  }
+
+  changeVolume = evt => {
+	if( !this.sound ){ return };
+    evt.preventDefault();
+    const volumeControl = document.querySelector('[data-action="volume"]');
+    if (volumeControl) {
+	  this.sound.volume(volumeControl.value);
+	  this.setState({ volumeLevel : volumeControl.value });
+    }
+  };
+
+  muteSound = evt => {
+	  if( !this.sound ){ return };
+    evt.preventDefault();
+    this.isMuted = !this.isMuted;
+    this.sound.mute(this.isMuted);
+	const volumeControl = document.querySelector('[data-action="volume"]');
+	if (volumeControl) {
+		this.setState({ volumeLevel : this.isMuted ? 0 : volumeControl.value });
 	}
+  };
 
-	createAudioCtx(){
-		const audioCtx = window.AudioContext || window.webkitAudioContext;
-		
-		if (audioCtx) {
-			this.audioCtx = new audioCtx();
-			this.gainNode = this.audioCtx.createGain();
-		} else {
-			throw new Error("This environment does not support the web audio API.");
-		}
-	}
+  playPause() {
+    if (!this.state.isPlaying) {
+      return (
+        <button
+          className="mp3-player-tape-controls-play"
+          onClick={() => this.play(this.state.activeTrack)}>
+          <span className="mp3-player-play-button">
+            <Icon iconName="play" />
+          </span>
+        </button>
+      );
+    }
+    return (
+      <button
+        className="mp3-player-tape-controls-play"
+        onClick={() => this.pause()} >
+        <Icon iconName="pause" />
+      </button>
+    );
+  }
 
-	componentWillMount() {
-		this.setState({ activeTrack: audioMp3 });
-	}
+  playLoop() {
+    this.loop = setInterval(() => {
+      let progressIndicator =
+        (this.sound.seek() / this.state.trackDuration) *
+        this.progressRef.current.clientWidth;
+      this.setState({ currentTime: this.sound.seek(), progressIndicator }, () =>
+        this.setProgressIndicator(progressIndicator)
+      );
+    }, 500);
+  }
 
-	//creates new buffer
-	//connects up to audio context
-	//gets total duration of track
-	//if it isnt previously playing then will begin track
-	//otherwise if is playing then resume
-	play(audioBuffer, startAt) {
-		if (this.state.currentTime === this.state.trackDuration) {
-			return;
-		}
+  progressClicked(evt) {
+    if (!this.sound) {
+      return;
+    }
 
-		this.source = this.audioCtx.createBufferSource();
-		this.source.buffer = audioBuffer;
+    this.pause();
+    this.movementX =
+      (evt.pageX || evt.clientX) -
+      evt.currentTarget.getBoundingClientRect().left;
 
-		this.source.connect(this.gainNode).connect(this.audioCtx.destination);
-		this.setState({ trackDuration: this.source.buffer.duration });
+    this.setState(
+      {
+        currentTime:
+          (this.movementX / this.progressRef.current.clientWidth) *
+          this.state.trackDuration,
+        progressIndicator: this.movementX
+      },
+      () => {
+        this.setProgressIndicator(this.state.progressIndicator);
+        this.sound.seek(this.state.currentTime);
+        this.play();
+      }
+    );
+  }
 
-		if (!this.state.isPlaying) {
-			this.setState({ isPlaying: true });
-			this.source.start(0, startAt || 0);
-			// this.setState({ currentTime : startAt || 0 })
-			this.playLoop();
-		}
+  viewPlaylistBox = evt => {
+    evt.preventDefault();
+    if (!this.state.viewPlaylist) this.setState({ viewPlaylist: true });
+    else this.setState({ viewPlaylist: false });
+  };
 
-		if (this.audioCtx.state === "suspended") {
-			this.audioCtx.resume();
-		}
+  playlistContent(){
+	const playlist = this.props.tracks.map((track, key) => {
+	  return (
+		<button className='mp3-player-playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
+		<h3 className='mp3-player-playlist-track-name'>{track.name}</h3>
+		<h3 className='mp3-player-playlist-track-time'>0:00</h3>
+		</button>
+	  )
+	})
+	return playlist;
+  }
 
-		
-		this.source.onended = evt => {
-			this.pause();
-			this.stopPlayLoop();
-		};
-	}
-
-
-	//pauses the audiobuffer
-	pause() {
-		if (this.audioCtx.state === "running") {
-			this.setState({ isPlaying: false });
-			this.audioCtx.suspend();
-		}
-	}
-
-	playAudioBuffer(url) {
-		const URL = url;
-		window
-			.fetch(URL)
-			.then(response => response.arrayBuffer())
-			.then(arrayBuffer => this.audioCtx.decodeAudioData(arrayBuffer))
-			.then(audioBuffer => {
-				this.trackBuffer = audioBuffer;
-				this.play(this.trackBuffer);
-			});
-	}
-
-
-	pauseAudioBuffer = () => this.pause(this.trackBuffer);
-
-	//regularly updates current time elapsed, ensure value doesnt exceed total track duration
-	playLoop() {
-		this.loop = setInterval(() => {
-			let currentTime = this.audioCtx.currentTime > this.state.trackDuration ? this.state.trackDuration : Math.abs(this.audioCtx.currentTime - this.offset) ;
-			//this.audioCtx.currentTime > this.state.currentTime ? this.audioCtx.currentTime + (+this.timerRef.current.value) :
-			console.log('-> playLoop() currentTime : ', this.offset, this.audioCtx.currentTime, currentTime);
-			this.setState({ currentTime });
-		}, 500);
-	}
-
-	//when track ends stop the interval updating this.state.currentTime
-	stopPlayLoop() {
-		clearInterval(this.loop);
-		this.loop = 0;
-	}
-
-	//adjust gainnode value to change the volume levels
-	changeVolume = evt => {
-		evt.preventDefault();
-		const volumeControl = document.querySelector('[data-action="volume"]');
-		if (volumeControl) {
-			this.gainNode.gain.value = volumeControl.value;
-		}
-	};
-
-
-	//mute track
-	muteSound = evt => {
-		evt.preventDefault();
-
-		this.setState({ volumeLevel: this.gainNode.gain.value });
-		this.gainNode.gain.value = 0;
-
-		if (this.state.volumeLevel) {
-			this.gainNode.gain.value = this.state.volumeLevel;
-		}
-	};
-
-	//When the timer value changes through the input slider we stop the audio source and recreate with the passed in 
-	//parameter of currenttime to begin playback at that moment
-	changeFired = false;
-	offset = 0;
-	changeTimePosition( evt ) {
-		this.offset = this.audioCtx.currentTime;
-		this.setState( { currentTime: this.timerRef.current.value })
-		switch( evt.type ){
-			case "mouseup":
-				this.changeFired = false;
-				this.play( this.trackBuffer, this.timerRef.current.value )
-			break;
-			case "change":
-				if( this.changeFired ){ return };
-				this.changeFired = true;
-				this.source.stop(0);
-				this.stopPlayLoop();
-      		break;
-      default:
-		}
-	}
-
-	setActiveTrack = (track) => {
-		this.source.stop(0);
-		this.setState({ activeTrack : track.src})
-		console.log('what is active', this.state.activeTrack)
-
-	}
-
-	viewPlaylistBox = evt =>{
-	  evt.preventDefault();
-	  if(!this.state.viewPlaylist)
-	    this.setState({ viewPlaylist: true})
-	  else
-	  this.setState({ viewPlaylist: false})
-	}
-	playlistContent(){
-	  const playlist = this.props.tracks.map((track, key) => {
-	    return (
-	      <button className='mp3-player-playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
-	      <h3 className='mp3-player-playlist-track-name'>{track.name}</h3>
-	      <h3 className='mp3-player-playlist-track-time'>0:00</h3>
-	      </button>
-	    )
-	  })
-	  return playlist;
-	}
-
-	render() {
-		const activeSrc = this.state.activeTrack;
-
-		const trackDuration = getDuration(this.state.trackDuration);
-    const currentTime = getDuration(this.state.currentTime);
-
-    const hideMp3 = this.state.isHidden ? 'hidden' : ''
+  render() {
+    const trackDuration = formatTime(this.state.trackDuration);
+	const currentTime = formatTime(this.state.currentTime);
+	const hideMp3 = this.state.isHidden ? 'hidden' : ''
     const showPlaylist = this.state.viewPlaylist ? 'playlist' : ''
-    
+
     return (
       <div className={`mp3-player-container ${hideMp3} ${showPlaylist}`}>
-        <div className='mp3-player-current-track'>
-        <div className='mp3-player-current-img'>
-        <img src='/favicon.ico' alt='podcast'/>
-        </div>
-        <div className='mp3-player-current-title'>
-        <h3 className='mp3-player-current-name'>This is the title</h3>
-        <h4 className='mp3-player-current-copy'>This is the copy for the podcast were we have info</h4>
-        </div>
+        <div className="mp3-player-current-track">
+          <div className="mp3-player-current-img">
+            <img src="/favicon.ico" alt="podcast" />
+          </div>
+          <div className="mp3-player-current-title">
+            <h3 className="mp3-player-current-name">This is the title</h3>
+            <h4 className="mp3-player-current-copy">
+              This is the copy for the podcast were we have info
+            </h4>
+          </div>
         </div>
         <div className="mp3-player-track-container">
           <div className="mp3-player-control-buttons">
-          <button className="mp3-player-tape-controls-backward">
-          <Icon iconName="backward" />
-          </button>
-              {!this.state.isPlaying ? (
-
-            <button className="mp3-player-tape-controls-play"
-            onClick={() => this.playAudioBuffer(activeSrc)}>
-                <span className='mp3-player-play-button'><Icon iconName="play" /></span>
-                </button>
-              ) : (
-                <button className="mp3-player-tape-controls-play"
-                 onClick={() => this.pauseAudioBuffer(activeSrc)}>
-                 <Icon iconName="pause"/>
-                </button>
-                
-              )}
+            <button className="mp3-player-tape-controls-backward">
+              <Icon iconName="backward" />
+            </button>
+            {this.playPause()}
             <button className="mp3-player-tape-controls-forward">
-          <Icon iconName="forward" />
-          </button>
+              <Icon iconName="forward" />
+            </button>
           </div>
-
           <div className="mp3-player-control-track">
-            <span className='mp3-player-track-elapsed'>{currentTime}</span>
-            <input
-                            ref={ this.timerRef }
-                            className='mp3-player-track-input'
-                            type="range"
-                            min="0"
-                            value={ this.state.currentTime }
-                            max={this.state.trackDuration}
-                            onChange={ evt => this.changeTimePosition( evt ) }
-                            onMouseUp={ evt => this.changeTimePosition( evt ) }
-                            data-action="position"
-                            step="0.01"
-                        />
-            { trackDuration ? <span className='mp3-player-track-remaining'>{ trackDuration }</span>
-          : <span className='mp3-player-track-remaining'>0:00</span> }
+            <span className="mp3-player-track-elapsed">{currentTime}</span>
+            <a
+              href="#"
+              ref={this.progressRef}
+              className="progress-bar-wrap"
+              onClick={evt => this.progressClicked(evt)} >
+              <div className="progress" />
+            </a>
+            <span className="mp3-player-track-remaining">
+                {trackDuration}
+			</span>
           </div>
-          </div>
-          <div className='mp3-player-volume-container'>
-          <div className='mp3-player-menu-buttons'>
-          <button className="mp3-player-playlist-control" onClick={(evt) => this.viewPlaylistBox(evt)}>
-          <Icon iconName="playlist" fill={"white"} />
-          </button>
-          <button className="mp3-player-hide-control" onClick={this.state.isHidden ? () => this.setState({isHidden: false}) : () => this.setState({isHidden: true})}>
-          <Icon iconName="hide" fill={"white"} />
-          </button>
+        </div>
+        <div className="mp3-player-volume-container">
+          <div className="mp3-player-menu-buttons">
+            <button
+              className="mp3-player-playlist-control"
+              onClick={evt => this.viewPlaylistBox(evt)} >
+              <Icon iconName="playlist" fill={"white"} />
+            </button>
+            <button
+              className="mp3-player-hide-control"
+              onClick={ () => this.setState({ isHidden: this.state.isHidden ? false : true }) } >
+              <Icon iconName="hide" fill={"white"} />
+            </button>
           </div>
           <div className="mp3-player-volume-slider">
-          <button className="mp3-player-tape-controls-mute"
-              onClick={evt => this.muteSound(evt)}>
-          {this.state.volumeLevel === 0 ? <Icon iconName="mute" /> : <Icon iconName="volume" />}
-		    </button>
+            <button
+              className="mp3-player-tape-controls-mute"
+              onClick={evt => this.muteSound(evt)} >
+              { <Icon iconName={ !this.state.volumeLevel ? "mute" : "volume" } /> }
+            </button>
             <input
               type="range"
               id="volume"
-              className='mp3-player-volume-input'
+              className="mp3-player-volume-input"
               min="0"
               max="2"
               list="gain-vals"
@@ -266,23 +242,24 @@ class Player extends React.Component {
               onInput={evt => this.changeVolume(evt)}
             />
           </div>
-          </div>
-          { this.state.viewPlaylist ? 
-          <div className='mp3-player-playlist-container'>
-          <div className='mp3-player-playlist-header'>
-          <button className="mp3-player-playlist-close" onClick={(evt) => this.viewPlaylistBox(evt)}>
-          <Icon iconName="close" fill={"white"} />
-          </button>
-          </div>
-          <div className='mp3-player-playlist-content'>
-          {this.playlistContent()}
-          </div>
-          </div>
-          :
-          null
-        }
         </div>
+        {this.state.viewPlaylist ? (
+          <div className="mp3-player-playlist-container">
+            <div className="mp3-player-playlist-header">
+              <button
+                className="mp3-player-playlist-close"
+                onClick={evt => this.viewPlaylistBox(evt)} >
+                <Icon iconName="close" fill={"white"} />
+              </button>
+            </div>
+            <div className="mp3-player-playlist-content">
+              {this.playlistContent()}
+            </div>
+          </div>
+        ) : null}
+      </div>
     );
   }
-}
+};
+
 export default Player;
