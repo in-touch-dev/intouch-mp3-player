@@ -113,7 +113,14 @@ function (_React$Component) {
         crossOrigin: "anonymous"
       }), React.createElement("div", {
         className: "current-track"
-      }), React.createElement("div", {
+      }, React.createElement("div", {
+        className: "current-img"
+      }, React.createElement("img", {
+        src: "/favicon.ico",
+        alt: "podcast"
+      })), React.createElement("div", {
+        className: "current-title"
+      }, React.createElement("h3", null, "This is the title"), React.createElement("h4", null, "This is the copy for the podcast were we have info"))), React.createElement("div", {
         className: "track-container"
       }, React.createElement("div", {
         className: "control-buttons"

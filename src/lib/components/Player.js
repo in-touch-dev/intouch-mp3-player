@@ -13,7 +13,8 @@ class Player extends React.Component {
 			trackDuration: 1,
 			currentTime: 0,
 			viewPlaylist: false,
-			activeTrack: "",
+      		activeTrack: "",
+      		isHidden: false
 		};
 		this.timerRef = React.createRef();this.timerRef = React.createRef();
 		this.createAudioCtx();
@@ -32,8 +33,6 @@ class Player extends React.Component {
 
 	componentWillMount() {
 		this.setState({ activeTrack: audioMp3 });
-		// let URL = this.props.tracks[0].src;
-		// this.playAudioBuffer(URL);
 	}
 
 	//creates new buffer
@@ -149,13 +148,14 @@ class Player extends React.Component {
 				this.changeFired = true;
 				this.source.stop(0);
 				this.stopPlayLoop();
-			break;
+      		break;
+      default:
 		}
 	}
 
 	setActiveTrack = (track) => {
+		this.source.stop(0);
 		this.setState({ activeTrack : track.src})
-		this.source.stop();
 		console.log('what is active', this.state.activeTrack)
 
 	}
@@ -170,8 +170,9 @@ class Player extends React.Component {
 	playlistContent(){
 	  const playlist = this.props.tracks.map((track, key) => {
 	    return (
-	      <button className='playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
-	      <p>{track.name}</p>
+	      <button className='mp3-player-playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
+	      <h3 className='mp3-player-playlist-track-name'>{track.name}</h3>
+	      <h3 className='mp3-player-playlist-track-time'>0:00</h3>
 	      </button>
 	    )
 	  })
@@ -182,95 +183,106 @@ class Player extends React.Component {
 		const activeSrc = this.state.activeTrack;
 
 		const trackDuration = getDuration(this.state.trackDuration);
-		const currentTime = getDuration(this.state.currentTime);
+    const currentTime = getDuration(this.state.currentTime);
 
-		return (
-			<div className="container">
-				<div className="current-track" />
-				<div className="track-container">
-					<div className="control-buttons">
-						<button className="tape-controls-backward">
-							<Icon iconName="backward" />
-						</button>
+    const hideMp3 = this.state.isHidden ? 'hidden' : ''
+    const showPlaylist = this.state.viewPlaylist ? 'playlist' : ''
+    
+    return (
+      <div className={`mp3-player-container ${hideMp3} ${showPlaylist}`}>
+        <div className='mp3-player-current-track'>
+        <div className='mp3-player-current-img'>
+        <img src='/favicon.ico' alt='podcast'/>
+        </div>
+        <div className='mp3-player-current-title'>
+        <h3 className='mp3-player-current-name'>This is the title</h3>
+        <h4 className='mp3-player-current-copy'>This is the copy for the podcast were we have info</h4>
+        </div>
+        </div>
+        <div className="mp3-player-track-container">
+          <div className="mp3-player-control-buttons">
+          <button className="mp3-player-tape-controls-backward">
+          <Icon iconName="backward" />
+          </button>
+              {!this.state.isPlaying ? (
 
-						{!this.state.isPlaying ? (
-							<button
-								className="tape-controls-play"
-								onClick={() => this.playAudioBuffer(activeSrc)}
-							>
-								<span className="play-button">
-									<Icon iconName="play" />
-								</span>
-							</button>
-						) : (
-								<button
-									className="tape-controls-play"
-									onClick={() => this.pauseAudioBuffer(activeSrc)}
-								>
-									<span className="pause-button">
-										<Icon iconName="pause" />
-									</span>
-								</button>
-							)}
+            <button className="mp3-player-tape-controls-play"
+            onClick={() => this.playAudioBuffer(activeSrc)}>
+                <span className='mp3-player-play-button'><Icon iconName="play" /></span>
+                </button>
+              ) : (
+                <button className="mp3-player-tape-controls-play"
+                 onClick={() => this.pauseAudioBuffer(activeSrc)}>
+                 <Icon iconName="pause"/>
+                </button>
+                
+              )}
+            <button className="mp3-player-tape-controls-forward">
+          <Icon iconName="forward" />
+          </button>
+          </div>
 
-						<button className="tape-controls-forward">
-							<Icon iconName="forward" />
-						</button>
-					</div>
-
-					<div className="control-track">
-						<span id="time-elapsed" className="track-elapsed" />
-						<span>{currentTime}</span>
-						<input
-							ref={ this.timerRef }
-							type="range"
-							min="0"
-							value={ this.state.currentTime }
-							max={this.state.trackDuration}
-							onChange={ evt => this.changeTimePosition( evt ) }
-							onMouseUp={ evt => this.changeTimePosition( evt ) }
-							data-action="position"
-							step="0.01"
-						/>
-						{trackDuration ? <span>{trackDuration}</span> : <span>0:00</span>}
-					</div>
-				</div>
-				<div className="volume-container">
-					<div className="menu-buttons">
-						<button className="playlist-control" onClick={evt => this.viewPlaylistBox(evt)}>
-						<Icon iconName="playlist" fill={"white"} width={"28px"} />
-						</button>
-						<button className="playlist-control">
-							<Icon iconName="hide" fill={"white"} width={"28px"} />
-						</button>
-					</div>
-					<div className="volume-slider">
-						<button
-							className="tape-controls-mute"
-							onClick={evt => this.muteSound(evt)}
-						>
-							<Icon iconName="mute" />
-						</button>
-						<input
-							type="range"
-							id="volume"
-							className="control-volume"
-							min="0"
-							max="2"
-							list="gain-vals"
-							step="0.01"
-							data-action="volume"
-							onInput={evt => this.changeVolume(evt)}
-						/>
-					</div>
-				</div>
-				{ this.state.viewPlaylist ? 
-          this.playlistContent()
+          <div className="mp3-player-control-track">
+            <span className='mp3-player-track-elapsed'>{currentTime}</span>
+            <input
+                            ref={ this.timerRef }
+                            className='mp3-player-track-input'
+                            type="range"
+                            min="0"
+                            value={ this.state.currentTime }
+                            max={this.state.trackDuration}
+                            onChange={ evt => this.changeTimePosition( evt ) }
+                            onMouseUp={ evt => this.changeTimePosition( evt ) }
+                            data-action="position"
+                            step="0.01"
+                        />
+            { trackDuration ? <span className='mp3-player-track-remaining'>{ trackDuration }</span>
+          : <span className='mp3-player-track-remaining'>0:00</span> }
+          </div>
+          </div>
+          <div className='mp3-player-volume-container'>
+          <div className='mp3-player-menu-buttons'>
+          <button className="mp3-player-playlist-control" onClick={(evt) => this.viewPlaylistBox(evt)}>
+          <Icon iconName="playlist" fill={"white"} />
+          </button>
+          <button className="mp3-player-hide-control" onClick={this.state.isHidden ? () => this.setState({isHidden: false}) : () => this.setState({isHidden: true})}>
+          <Icon iconName="hide" fill={"white"} />
+          </button>
+          </div>
+          <div className="mp3-player-volume-slider">
+          <button className="mp3-player-tape-controls-mute"
+              onClick={evt => this.muteSound(evt)}>
+          {this.state.volumeLevel === 0 ? <Icon iconName="mute" /> : <Icon iconName="volume" />}
+		    </button>
+            <input
+              type="range"
+              id="volume"
+              className='mp3-player-volume-input'
+              min="0"
+              max="2"
+              list="gain-vals"
+              step="0.01"
+              data-action="volume"
+              onInput={evt => this.changeVolume(evt)}
+            />
+          </div>
+          </div>
+          { this.state.viewPlaylist ? 
+          <div className='mp3-player-playlist-container'>
+          <div className='mp3-player-playlist-header'>
+          <button className="mp3-player-playlist-close" onClick={(evt) => this.viewPlaylistBox(evt)}>
+          <Icon iconName="close" fill={"white"} />
+          </button>
+          </div>
+          <div className='mp3-player-playlist-content'>
+          {this.playlistContent()}
+          </div>
+          </div>
           :
           null
-				}
-      </div>
-		);
-	}
+        }
+        </div>
+    );
+  }
 }
 export default Player;
