@@ -29,7 +29,7 @@ class Player extends React.Component {
 
 		if( this.sound && this.state.isPaused ){
 			this.sound.play();
-			this.setState({ isPaused : true });
+			this.setState({ isPaused : false, isPlaying : true });
 			return;
 		};
 
