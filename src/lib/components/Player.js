@@ -15,21 +15,12 @@ class Player extends React.Component {
 			trackDuration: 60,
 			currentTime: 0,
 			viewPlaylist: false,
-			activeTrack: ''
+			activeTrack: '',
+			activeTrack : audioMp3
 		};
 
-		const audioCtx = window.AudioContext || window.webkitAudioContext;
-		
-		if( audioCtx ){
-			this.audioCtx = new audioCtx();
-			this.gainNode = this.audioCtx.createGain();
-		}else{ throw new Error("This environment does not support the web audio API.") };
-
 		this.progressRef = React.createRef();
-
 	}
-
-	componentWillMount = () => this.setState({ activeTrack : audioMp3 })
 
 	setProgressIndicator = val => this.progressRef.current.querySelector( '.progress' ).style.width = `${ val }px`
 
