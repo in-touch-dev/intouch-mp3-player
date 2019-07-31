@@ -24,7 +24,7 @@ class Player extends React.Component {
   setProgressIndicator = val =>
     (this.progressRef.current.querySelector(
       ".progress"
-    ).style.width = `${val}px`);
+    ).style.marginLeft = `${val}px`);
 
   play() {
     if (this.state.currentTime === this.state.trackDuration) {
