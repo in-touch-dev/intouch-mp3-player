@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "../icons/PlayerIcons";
 import audioMp3 from "../audio/1-10.mp3";
 import { formatTime } from "../helpers/playerHelper";
-import { Howl } from 'howler';
+import { Howl } from "howler";
 
 class Player extends React.Component {
   constructor() {
@@ -15,8 +15,8 @@ class Player extends React.Component {
       currentTime: 0,
       activeTrack: audioMp3,
       isHidden: false,
-	  viewPlaylist: false,
-	  volumeLevel : 1
+      viewPlaylist: false,
+      volumeLevel: 1
     };
 
     this.progressRef = React.createRef();
@@ -25,7 +25,7 @@ class Player extends React.Component {
   setProgressIndicator = val =>
     (this.progressRef.current.querySelector(
       ".progress"
-    ).style.width = `${val}px`);
+    ).style.marginLeft = `${val}px`);
 
   play(src) {
     if (this.state.currentTime === this.state.trackDuration) {
@@ -73,24 +73,28 @@ class Player extends React.Component {
   }
 
   changeVolume = evt => {
-	if( !this.sound ){ return };
+    if (!this.sound) {
+      return;
+    }
     evt.preventDefault();
     const volumeControl = document.querySelector('[data-action="volume"]');
     if (volumeControl) {
-	  this.sound.volume(volumeControl.value);
-	  this.setState({ volumeLevel : volumeControl.value });
+      this.sound.volume(volumeControl.value);
+      this.setState({ volumeLevel: volumeControl.value });
     }
   };
 
   muteSound = evt => {
-	  if( !this.sound ){ return };
+    if (!this.sound) {
+      return;
+    }
     evt.preventDefault();
     this.isMuted = !this.isMuted;
     this.sound.mute(this.isMuted);
-	const volumeControl = document.querySelector('[data-action="volume"]');
-	if (volumeControl) {
-		this.setState({ volumeLevel : this.isMuted ? 0 : volumeControl.value });
-	}
+    const volumeControl = document.querySelector('[data-action="volume"]');
+    if (volumeControl) {
+      this.setState({ volumeLevel: this.isMuted ? 0 : volumeControl.value });
+    }
   };
 
   playPause() {
@@ -98,7 +102,8 @@ class Player extends React.Component {
       return (
         <button
           className="mp3-player-tape-controls-play"
-          onClick={() => this.play(this.state.activeTrack)}>
+          onClick={() => this.play(this.state.activeTrack)}
+        >
           <span className="mp3-player-play-button">
             <Icon iconName="play" />
           </span>
@@ -108,7 +113,8 @@ class Player extends React.Component {
     return (
       <button
         className="mp3-player-tape-controls-play"
-        onClick={() => this.pause()} >
+        onClick={() => this.pause()}
+      >
         <Icon iconName="pause" />
       </button>
     );
@@ -156,23 +162,27 @@ class Player extends React.Component {
     else this.setState({ viewPlaylist: false });
   };
 
-  playlistContent(){
-	const playlist = this.props.tracks.map((track, key) => {
-	  return (
-		<button className='mp3-player-playlist-track-button' key={key} onClick={() => this.setActiveTrack(track)} >
-		<h3 className='mp3-player-playlist-track-name'>{track.name}</h3>
-		<h3 className='mp3-player-playlist-track-time'>0:00</h3>
-		</button>
-	  )
-	})
-	return playlist;
+  playlistContent() {
+    const playlist = this.props.tracks.map((track, key) => {
+      return (
+        <button
+          className="mp3-player-playlist-track-button"
+          key={key}
+          onClick={() => this.setActiveTrack(track)}
+        >
+          <h3 className="mp3-player-playlist-track-name">{track.name}</h3>
+          <h3 className="mp3-player-playlist-track-time">0:00</h3>
+        </button>
+      );
+    });
+    return playlist;
   }
 
   render() {
     const trackDuration = formatTime(this.state.trackDuration);
-	const currentTime = formatTime(this.state.currentTime);
-	const hideMp3 = this.state.isHidden ? 'hidden' : ''
-    const showPlaylist = this.state.viewPlaylist ? 'playlist' : ''
+    const currentTime = formatTime(this.state.currentTime);
+    const hideMp3 = this.state.isHidden ? "hidden" : "";
+    const showPlaylist = this.state.viewPlaylist ? "playlist" : "";
 
     return (
       <div className={`mp3-player-container ${hideMp3} ${showPlaylist}`}>
@@ -203,32 +213,36 @@ class Player extends React.Component {
               href="#"
               ref={this.progressRef}
               className="progress-bar-wrap"
-              onClick={evt => this.progressClicked(evt)} >
+              onClick={evt => this.progressClicked(evt)}
+            >
               <div className="progress" />
             </a>
-            <span className="mp3-player-track-remaining">
-                {trackDuration}
-			</span>
+            <span className="mp3-player-track-remaining">{trackDuration}</span>
           </div>
         </div>
         <div className="mp3-player-volume-container">
           <div className="mp3-player-menu-buttons">
             <button
               className="mp3-player-playlist-control"
-              onClick={evt => this.viewPlaylistBox(evt)} >
+              onClick={evt => this.viewPlaylistBox(evt)}
+            >
               <Icon iconName="playlist" fill={"white"} />
             </button>
             <button
               className="mp3-player-hide-control"
-              onClick={ () => this.setState({ isHidden: this.state.isHidden ? false : true }) } >
+              onClick={() =>
+                this.setState({ isHidden: this.state.isHidden ? false : true })
+              }
+            >
               <Icon iconName="hide" fill={"white"} />
             </button>
           </div>
           <div className="mp3-player-volume-slider">
             <button
               className="mp3-player-tape-controls-mute"
-              onClick={evt => this.muteSound(evt)} >
-              { <Icon iconName={ !this.state.volumeLevel ? "mute" : "volume" } /> }
+              onClick={evt => this.muteSound(evt)}
+            >
+              {<Icon iconName={!this.state.volumeLevel ? "mute" : "volume"} />}
             </button>
             <input
               type="range"
@@ -248,7 +262,8 @@ class Player extends React.Component {
             <div className="mp3-player-playlist-header">
               <button
                 className="mp3-player-playlist-close"
-                onClick={evt => this.viewPlaylistBox(evt)} >
+                onClick={evt => this.viewPlaylistBox(evt)}
+              >
                 <Icon iconName="close" fill={"white"} />
               </button>
             </div>
@@ -260,6 +275,6 @@ class Player extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Player;
