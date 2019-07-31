@@ -60,17 +60,16 @@ $mobile: 768px;
       }
 
       span {
-        width: 50px;
+        width: 63px;
         text-align: center;
         color: #fff;
       }
 
       .progress-bar-wrap {
         display: block;
-        width: 85%;
         background-color: #e84e0f;
         height: 5px;
-        width: 100%;
+        width: calc(100% - 126px);
         transform: translateY(5px);
         margin-left: 5px;
         margin-right: 5px;
