@@ -333,4 +333,4 @@ function (_React$Component) {
   return Player;
 }(React.Component);
 
-export default Player;
+module.exports = Player;
