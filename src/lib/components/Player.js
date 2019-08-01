@@ -20,7 +20,7 @@ class Player extends React.Component {
 			JSON.stringify({
 				isPlaying: false,
 				track: false,
-				trackDuration: 60,
+				trackDuration: 0,
 				currentTime: 0,
 				isHidden: false,
 				volumeLevel: 1,
@@ -31,13 +31,14 @@ class Player extends React.Component {
 
 	reset() {
 		this.stopPlayLoop();
+		this.sound.pause();
 		this.sound = null;
 		window.audio.active = null;
 		this.setProgressIndicator(0);
 		this.setState( this.defaultState() );
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps) {
 		this.props.activeTrack.src !== nextProps.activeTrack.src && this.reset();
 		return true;
 	}
@@ -48,10 +49,6 @@ class Player extends React.Component {
 		).style.marginLeft = `${val}px`);
 
 	play() {
-		if (this.state.currentTime === this.state.trackDuration) {
-			return;
-		}
-
 		if (this.sound && this.state.isPaused) {
 			this.sound.play();
 			this.setState({ isPaused: false, isPlaying: true });
@@ -64,7 +61,11 @@ class Player extends React.Component {
 			this.sound.on("end", evt => {
 				this.stopPlayLoop();
 				this.setProgressIndicator(this.progressRef.current.clientWidth);
-				this.setState({ currentTime: this.state.trackDuration });
+				this.setState({
+					currentTime: this.state.trackDuration,
+					isPlaying: false,
+					isPaused: true
+				});
 			});
 
 			this.sound.on("play", evt => {
@@ -202,13 +203,13 @@ class Player extends React.Component {
 				</div>
 				<div className="mp3-player-track-container">
 					<div className="mp3-player-control-buttons">
-						<button className="mp3-player-tape-controls-backward">
+						{ this.props.hasPlaylist && <button className="mp3-player-tape-controls-backward" onClick={ evt => this.props.skipHandler( evt, 'prev' ) }>
 							<Icon iconName="backward" />
-						</button>
+						</button> }
 						{this.playPause()}
-						<button className="mp3-player-tape-controls-forward">
+						{ this.props.hasPlaylist && <button className="mp3-player-tape-controls-forward" onClick={ evt => this.props.skipHandler( evt, 'next' ) }>
 							<Icon iconName="forward" />
-						</button>
+						</button> }
 					</div>
 					<div className="mp3-player-control-track">
 						<span className="mp3-player-track-elapsed">{currentTime}</span>

@@ -11,7 +11,7 @@ const App = () => {
   
   return (
       <header className="App-header">
-        <Playlist tracks={ tracks } />
+        <Playlist tracks={ tracks } currentIndex={ 0 } />
       </header>
   );
 }

@@ -7,7 +7,8 @@ class Playlist extends React.Component {
       super(props);
 
       this.state = {
-          activeTrack: this.props.tracks[0]
+		  currentIndex : this.props.currentIndex || 0,
+          activeTrack: this.props.tracks[ (this.props.currentIndex || 0) ]
       }
     }
 
@@ -19,8 +20,6 @@ class Playlist extends React.Component {
     
       playlistContent() {
         const playlist = this.props.tracks.map((track, key) => {
-
-          console.log(track);
           return (
             <button
               className="mp3-player-playlist-track-button"
@@ -35,7 +34,6 @@ class Playlist extends React.Component {
       }
 
       setActiveTrack = track => {
-        console.log(track, this.state);
         if (track.src === this.state.activeTrack) {
           return;
         }
@@ -43,11 +41,9 @@ class Playlist extends React.Component {
 			window.audio.active.pause();
         }
         this.setState({ activeTrack: track });
-        console.log("what is active", this.state.activeTrack);
       };
 
       playlistClickHandler( evt ){
-        console.log('playlistClickHandler()', evt, this);
         this.setState({
           showPlaylistBody : !this.state.showPlaylistBody
         })
@@ -57,24 +53,45 @@ class Playlist extends React.Component {
         if( !this.state.showPlaylistBody ){ return };
         return (
           <div className="mp3-player-playlist-container">
-                    <div className="mp3-player-playlist-header">
-                    <button
-                        className="mp3-player-playlist-close"
-                        onClick={evt => this.playlistClickHandler(evt)} >
-                        <Icon iconName="close" fill={"white"} />
-                    </button>
-                    </div>
-                    <div className="mp3-player-playlist-content">
-                    { this.playlistContent() }
-                    </div>
-                </div>
+            <div className="mp3-player-playlist-header">
+              <button
+                className="mp3-player-playlist-close"
+                onClick={evt => this.playlistClickHandler(evt)}
+              >
+                <Icon iconName="close" fill={"white"} />
+              </button>
+            </div>
+            <div className="mp3-player-playlist-content">
+              {this.playlistContent()}
+            </div>
+          </div>
         );
-      }
+	  }
+	  
+	  skipHandler( evt, type ){
+
+		const newIndex = type === 'next' ? this.state.currentIndex + 1 : this.state.currentIndex - 1;
+
+		if( typeof this.props.tracks[ newIndex ] !== "undefined" ){
+			this.setState({
+				currentIndex : newIndex,
+				activeTrack : this.props.tracks[ newIndex ]
+			});
+			return;
+		};
+
+		console.error("no song to play!");
+
+	  }
 
     render(){
         return (
             <div className="playlist-wrap">
-                <Player activeTrack={ this.state.activeTrack } hasPlaylist={ true } playlistClickHandler={ evt => this.playlistClickHandler( evt ) } />
+                <Player
+					activeTrack={ this.state.activeTrack }
+					hasPlaylist={ true }
+					playlistClickHandler={ evt => this.playlistClickHandler( evt ) }
+					skipHandler={ (evt, type) => this.skipHandler( evt, type ) } />
                 { this.playlistBody() }
             </div>
         );
