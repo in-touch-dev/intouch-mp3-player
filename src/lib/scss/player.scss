@@ -108,10 +108,12 @@ $mobile: 768px;
     .mp3-player-current-img {
       padding: 0.5rem 0.5rem 0 0;
       height: 75px;
+    
 
       img {
         border-radius: 40px;
         border: 2px white solid;
+        width: 75px;
       }
 
       @media (max-width: $mobile) {

@@ -5,239 +5,266 @@ import { formatTime } from "../helpers/playerHelper";
 import { Howl } from "howler";
 
 class Player extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      isPlaying: false,
-      track: false,
-      trackDuration: 60,
-      currentTime: 0,
-      isHidden: false,
-      volumeLevel: 1,
-      currentIndex: 1
-    };
+		console.log("player  activeTrack : ", this.props.activeTrack.src);
 
-    this.progressRef = React.createRef();
-  }
+		this.state = this.defaultState();
 
-  setProgressIndicator = val =>
-    (this.progressRef.current.querySelector(
-      ".progress"
-    ).style.marginLeft = `${val}px`);
+		this.progressRef = React.createRef();
+	}
 
-  play() {
-    if (this.state.currentTime === this.state.trackDuration) {
-      return;
-    }
+	defaultState() {
+		return JSON.parse(
+			JSON.stringify({
+				isPlaying: false,
+				track: false,
+				trackDuration: 60,
+				currentTime: 0,
+				isHidden: false,
+				volumeLevel: 1,
+				currentIndex: 1
+			})
+		);
+	}
 
-    if (this.sound && this.state.isPaused) {
-      this.sound.play();
-      this.setState({ isPaused: false, isPlaying: true });
-      return;
-    }
+	reset() {
+		this.stopPlayLoop();
+		this.sound = null;
+		window.audio.active = null;
+		this.setProgressIndicator(0);
+		this.setState( this.defaultState() );
+	}
 
-    this.sound = new Howl({ src: [this.props.activeTrack] });
-    this.sound.once("load", () => {
-      this.sound.on("end", evt => {
-        this.stopPlayLoop();
-        this.setProgressIndicator(this.progressRef.current.clientWidth);
-        this.setState({ currentTime: this.state.trackDuration });
-      });
+	shouldComponentUpdate(nextProps, nextState) {
+		this.props.activeTrack.src !== nextProps.activeTrack.src && this.reset();
+		return true;
+	}
 
-      this.sound.on("play", evt => {
-        this.setState(
-          {
-            trackDuration: this.sound._duration,
-            isPlaying: true,
-            isPaused: false
-          },
-          () => this.playLoop()
-        );
-      });
+	setProgressIndicator = val =>
+		(this.progressRef.current.querySelector(
+			".progress"
+		).style.marginLeft = `${val}px`);
 
-      this.sound.play();
-    });
-  }
+	play() {
+		if (this.state.currentTime === this.state.trackDuration) {
+			return;
+		}
 
-  pause() {
-    this.sound.pause();
-    this.stopPlayLoop();
-    this.setState({ isPlaying: false, isPaused: true });
-  }
+		if (this.sound && this.state.isPaused) {
+			this.sound.play();
+			this.setState({ isPaused: false, isPlaying: true });
+			return;
+		}
 
-  stopPlayLoop() {
-    clearInterval(this.loop);
-    this.loop = 0;
-  }
+		this.sound = new Howl({ src: [this.props.activeTrack.src] });
+		window.audio = { active: this.sound };
+		this.sound.once("load", () => {
+			this.sound.on("end", evt => {
+				this.stopPlayLoop();
+				this.setProgressIndicator(this.progressRef.current.clientWidth);
+				this.setState({ currentTime: this.state.trackDuration });
+			});
 
-  changeVolume = evt => {
-    if (!this.sound) {
-      return;
-    }
-    evt.preventDefault();
-    const volumeControl = document.querySelector('[data-action="volume"]');
-    if (volumeControl) {
-      this.sound.volume(volumeControl.value);
-      this.setState({ volumeLevel: volumeControl.value });
-    }
-  };
+			this.sound.on("play", evt => {
+				this.setState(
+					{
+						trackDuration: this.sound._duration,
+						isPlaying: true,
+						isPaused: false
+					},
+					() => this.playLoop()
+				);
+			});
 
-  muteSound = evt => {
-    if (!this.sound) {
-      return;
-    }
-    evt.preventDefault();
-    this.isMuted = !this.isMuted;
-    this.sound.mute(this.isMuted);
-    const volumeControl = document.querySelector('[data-action="volume"]');
-    if (volumeControl) {
-      this.setState({ volumeLevel: this.isMuted ? 0 : volumeControl.value });
-    }
-  };
+			this.sound.play();
+		});
+	}
 
-  playPause() {
-    if (!this.state.isPlaying) {
-      return (
-        <button
-          className="mp3-player-tape-controls-play"
-          onClick={() => this.play()}
-        >
-          <span className="mp3-player-play-button">
-            <Icon iconName="play" />
-          </span>
-        </button>
-      );
-    }
-    return (
-      <button
-        className="mp3-player-tape-controls-play"
-        onClick={() => this.pause()}
-      >
-        <Icon iconName="pause" />
-      </button>
-    );
-  }
+	pause() {
+		this.sound.pause();
+		this.stopPlayLoop();
+		this.setState({ isPlaying: false, isPaused: true });
+	}
 
-  playLoop() {
-    this.loop = setInterval(() => {
-      let progressIndicator =
-        (this.sound.seek() / this.state.trackDuration) *
-        this.progressRef.current.clientWidth;
-      this.setState({ currentTime: this.sound.seek(), progressIndicator }, () =>
-        this.setProgressIndicator(progressIndicator)
-      );
-    }, 500);
-  }
+	stopPlayLoop() {
+		clearInterval(this.loop);
+		this.loop = 0;
+	}
 
-  progressClicked(evt) {
-    if (!this.sound) {
-      return;
-    }
+	changeVolume = evt => {
+		if (!this.sound) {
+			return;
+		}
+		evt.preventDefault();
+		const volumeControl = document.querySelector('[data-action="volume"]');
+		if (volumeControl) {
+			this.sound.volume(volumeControl.value);
+			this.setState({ volumeLevel: volumeControl.value });
+		}
+	};
 
-    this.pause();
-    this.movementX =
-      (evt.pageX || evt.clientX) -
-      evt.currentTarget.getBoundingClientRect().left;
+	muteSound = evt => {
+		if (!this.sound) {
+			return;
+		}
+		evt.preventDefault();
+		this.isMuted = !this.isMuted;
+		this.sound.mute(this.isMuted);
+		const volumeControl = document.querySelector('[data-action="volume"]');
+		if (volumeControl) {
+			this.setState({ volumeLevel: this.isMuted ? 0 : volumeControl.value });
+		}
+	};
 
-    this.setState(
-      {
-        currentTime:
-          (this.movementX / this.progressRef.current.clientWidth) *
-          this.state.trackDuration,
-        progressIndicator: this.movementX
-      },
-      () => {
-        this.setProgressIndicator(this.state.progressIndicator);
-        this.sound.seek(this.state.currentTime);
-        this.play();
-      }
-    );
-  }
+	playPause() {
+		if (!this.state.isPlaying) {
+			return (
+				<button
+					className="mp3-player-tape-controls-play"
+					onClick={() => this.play()}
+				>
+					<span className="mp3-player-play-button">
+						<Icon iconName="play" />
+					</span>
+				</button>
+			);
+		}
+		return (
+			<button
+				className="mp3-player-tape-controls-play"
+				onClick={() => this.pause()}
+			>
+				<Icon iconName="pause" />
+			</button>
+		);
+	}
 
-  
+	playLoop() {
+		this.loop = setInterval(() => {
+			let progressIndicator =
+				(this.sound.seek() / this.state.trackDuration) *
+				this.progressRef.current.clientWidth;
+			this.setState({ currentTime: this.sound.seek(), progressIndicator }, () =>
+				this.setProgressIndicator(progressIndicator)
+			);
+		}, 500);
+	}
 
-  render() {
-    const trackDuration = formatTime(this.state.trackDuration);
-    const currentTime = formatTime(this.state.currentTime);
-    const hideMp3 = this.state.isHidden ? "hidden" : "";
+	progressClicked(evt) {
+		if (!this.sound) {
+			return;
+		}
 
-    return (
-      <div className={`mp3-player-container ${hideMp3}`}>
-        <div className="mp3-player-current-track">
-          <div className="mp3-player-current-img">
-            <img src="/favicon.ico" alt="podcast" />
-          </div>
-          <div className="mp3-player-current-title">
-            <h3 className="mp3-player-current-name">This is the title</h3>
-            <h4 className="mp3-player-current-copy">
-              This is the copy for the podcast were we have info
-            </h4>
-          </div>
-        </div>
-        <div className="mp3-player-track-container">
-          <div className="mp3-player-control-buttons">
-            <button className="mp3-player-tape-controls-backward">
-              <Icon iconName="backward" />
-            </button>
-            {this.playPause()}
-            <button className="mp3-player-tape-controls-forward">
-              <Icon iconName="forward" />
-            </button>
-          </div>
-          <div className="mp3-player-control-track">
-            <span className="mp3-player-track-elapsed">{currentTime}</span>
-            <a
-              href="#"
-              ref={this.progressRef}
-              className="progress-bar-wrap"
-              onClick={evt => this.progressClicked(evt)}
-            >
-              <div className="progress" />
-            </a>
-            <span className="mp3-player-track-remaining">{trackDuration}</span>
-          </div>
-        </div>
-        <div className="mp3-player-volume-container">
-          <div className="mp3-player-menu-buttons">
-            <button
-              className="mp3-player-playlist-control"
-              onClick={evt => this.viewPlaylistBox(evt)}
-            >
-              <Icon iconName="playlist" fill={"white"} />
-            </button>
-            <button
-              className="mp3-player-hide-control"
-              onClick={() =>
-                this.setState({ isHidden: this.state.isHidden ? false : true })
-              }
-            >
-              <Icon iconName="hide" fill={"white"} />
-            </button>
-          </div>
-          <div className="mp3-player-volume-slider">
-            <button
-              className="mp3-player-tape-controls-mute"
-              onClick={evt => this.muteSound(evt)}
-            >
-              {<Icon iconName={!this.state.volumeLevel ? "mute" : "volume"} />}
-            </button>
-            <input
-              type="range"
-              id="volume"
-              className="mp3-player-volume-input"
-              min="0"
-              max="2"
-              list="gain-vals"
-              step="0.01"
-              data-action="volume"
-              onInput={evt => this.changeVolume(evt)}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
+		this.pause();
+		this.movementX =
+			(evt.pageX || evt.clientX) -
+			evt.currentTarget.getBoundingClientRect().left;
+
+		this.setState(
+			{
+				currentTime:
+					(this.movementX / this.progressRef.current.clientWidth) *
+					this.state.trackDuration,
+				progressIndicator: this.movementX
+			},
+			() => {
+				this.setProgressIndicator(this.state.progressIndicator);
+				this.sound.seek(this.state.currentTime);
+				this.play();
+			}
+		);
+	}
+
+	render() {
+		const trackDuration = formatTime(this.state.trackDuration);
+		const currentTime = formatTime(this.state.currentTime);
+		const hideMp3 = this.state.isHidden ? "hidden" : "";
+
+		return (
+			<div className={`mp3-player-container ${hideMp3}`}>
+				<div className="mp3-player-current-track">
+					<div className="mp3-player-current-img">
+						<img
+							src="https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg"
+							alt="podcast"
+						/>
+					</div>
+					<div className="mp3-player-current-title">
+						<h3 className="mp3-player-current-name">
+							{this.props.activeTrack.name}
+						</h3>
+						<h4 className="mp3-player-current-copy">
+							{this.props.activeTrack.desc}
+						</h4>
+					</div>
+				</div>
+				<div className="mp3-player-track-container">
+					<div className="mp3-player-control-buttons">
+						<button className="mp3-player-tape-controls-backward">
+							<Icon iconName="backward" />
+						</button>
+						{this.playPause()}
+						<button className="mp3-player-tape-controls-forward">
+							<Icon iconName="forward" />
+						</button>
+					</div>
+					<div className="mp3-player-control-track">
+						<span className="mp3-player-track-elapsed">{currentTime}</span>
+						<a
+							href="#"
+							ref={this.progressRef}
+							className="progress-bar-wrap"
+							onClick={evt => this.progressClicked(evt)}
+						>
+							<div className="progress" />
+						</a>
+						<span className="mp3-player-track-remaining">{trackDuration}</span>
+					</div>
+				</div>
+				<div className="mp3-player-volume-container">
+					<div className="mp3-player-menu-buttons">
+						{this.props.hasPlaylist && (
+							<button
+								className="mp3-player-playlist-control"
+								onClick={this.props.playlistClickHandler}
+							>
+								<Icon iconName="playlist" fill={"white"} />
+							</button>
+						)}
+						<button
+							className="mp3-player-hide-control"
+							onClick={() =>
+								this.setState({ isHidden: this.state.isHidden ? false : true })
+							}
+						>
+							<Icon iconName="hide" fill={"white"} />
+						</button>
+					</div>
+					<div className="mp3-player-volume-slider">
+						<button
+							className="mp3-player-tape-controls-mute"
+							onClick={evt => this.muteSound(evt)}
+						>
+							{<Icon iconName={!this.state.volumeLevel ? "mute" : "volume"} />}
+						</button>
+						<input
+							type="range"
+							id="volume"
+							className="mp3-player-volume-input"
+							min="0"
+							max="2"
+							list="gain-vals"
+							step="0.01"
+							data-action="volume"
+							onInput={evt => this.changeVolume(evt)}
+						/>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default Player;

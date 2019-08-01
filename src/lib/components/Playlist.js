@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import Icon from "../icons/PlayerIcons";
 import Player from './Player';
 
@@ -7,7 +7,7 @@ class Playlist extends React.Component {
       super(props);
 
       this.state = {
-          activeTrack: ''
+          activeTrack: this.props.tracks[0]
       }
     }
 
@@ -19,12 +19,13 @@ class Playlist extends React.Component {
     
       playlistContent() {
         const playlist = this.props.tracks.map((track, key) => {
+
+          console.log(track);
           return (
             <button
               className="mp3-player-playlist-track-button"
               key={key}
-              onClick={() => this.setActiveTrack(track)}
-            >
+              onClick={() => this.setActiveTrack(track)} >
               <h3 className="mp3-player-playlist-track-name">{track.name}</h3>
               <h3 className="mp3-player-playlist-track-time">0:00</h3>
             </button>
@@ -38,32 +39,43 @@ class Playlist extends React.Component {
         if (track.src === this.state.activeTrack) {
           return;
         }
-        if (this.sound) {
-          this.sound.pause();
+        if ( window.audio && window.audio.active) {
+			window.audio.active.pause();
         }
-        this.setState({ activeTrack: track.src });
+        this.setState({ activeTrack: track });
         console.log("what is active", this.state.activeTrack);
       };
 
-    render(){
+      playlistClickHandler( evt ){
+        console.log('playlistClickHandler()', evt, this);
+        this.setState({
+          showPlaylistBody : !this.state.showPlaylistBody
+        })
+      }
+
+      playlistBody(){
+        if( !this.state.showPlaylistBody ){ return };
         return (
-            <div className="playlist-wrap">
-
-                <Player activeTrack={ this.props.tracks[0].src } />
-
-                <div className="mp3-player-playlist-container">
+          <div className="mp3-player-playlist-container">
                     <div className="mp3-player-playlist-header">
                     <button
                         className="mp3-player-playlist-close"
-                        onClick={evt => this.viewPlaylistBox(evt)}
-                    >
+                        onClick={evt => this.playlistClickHandler(evt)} >
                         <Icon iconName="close" fill={"white"} />
                     </button>
                     </div>
                     <div className="mp3-player-playlist-content">
-                    {this.playlistContent()}
+                    { this.playlistContent() }
                     </div>
                 </div>
+        );
+      }
+
+    render(){
+        return (
+            <div className="playlist-wrap">
+                <Player activeTrack={ this.state.activeTrack } hasPlaylist={ true } playlistClickHandler={ evt => this.playlistClickHandler( evt ) } />
+                { this.playlistBody() }
             </div>
         );
     }
