@@ -159,4 +159,4 @@ function (_React$Component) {
 }(React.Component);
 
 ;
-export default Playlist;
+module.exports = Playlist;
