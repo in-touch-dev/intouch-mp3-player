@@ -73,6 +73,9 @@
         transform: translateY(5px);
         margin-left: 5px;
         margin-right: 5px;
+        @media (max-width: $mobile) {
+          transform: none;
+        }
 
         .progress {
           display: block;
