@@ -1,5 +1,6 @@
   import React from 'react';
 import Icon from "../icons/PlayerIcons";
+import '../scss/App.scss';
 import Player from './Player';
 
 class Playlist extends React.Component {

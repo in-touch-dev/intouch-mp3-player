@@ -2,20 +2,7 @@
 *::before,
 *::after {
  box-sizing: border-box; // 1
-}
-
-.App {
-    text-align: center;
-   }
-   
-   .App-header {
-    background-color: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: white;
-   }
+}     
 
    @import '/Sliders.scss';
    @import '/Playlist.scss';
