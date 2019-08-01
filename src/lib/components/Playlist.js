@@ -1,7 +1,8 @@
-  import React from 'react';
-import Icon from "../icons/PlayerIcons";
-import '../scss/App.scss';
-import Player from './Player';
+
+require('../scss/App.scss')
+const React = require('react');
+const Icon = require('../icons/PlayerIcons');
+const Player = require('./Player');
 
 class Playlist extends React.Component {
     constructor(props) {
@@ -110,4 +111,4 @@ class Playlist extends React.Component {
     }
 };
 
-module.exports = {Playlist};
+module.exports = Playlist;
