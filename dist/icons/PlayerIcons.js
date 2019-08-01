@@ -6,6 +6,8 @@ import Backward from './Backward';
 import Playlist from './Playlist';
 import Mute from './Mute';
 import Hide from './Hide';
+import Volume from './Volume';
+import Close from './Close';
 
 var Icon = function Icon(props) {
   switch (props.iconName) {
@@ -29,6 +31,12 @@ var Icon = function Icon(props) {
 
     case 'hide':
       return React.createElement(Hide, props);
+
+    case 'volume':
+      return React.createElement(Volume, props);
+
+    case 'close':
+      return React.createElement(Close, props);
 
     default:
       return React.createElement("div", null, "Check the iconName prop is correct");

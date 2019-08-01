@@ -1,371 +1,421 @@
-.container {
-    width: 99%;
-    height: 100px;
+.mp3-player-container {
+  width: 100%;
+  height: 110px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #03163d;
+  border: 2px #03163d solid;
+  font-family: Arial, Helvetica, sans-serif;
+  position: fixed;
+  transition: 0.5s;
+  bottom: 0;
+  left: 0;
+  color: white;
+
+  &:before {
+    display: none;
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    padding-bottom: 10%;
+    background: #03163d;
+    clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
+    transform: rotate(180deg) translateY(1px);
+  }
+
+  @media (max-width: $mobile) {
+    height: 180px;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+
+    &:before {
+      display: block;
+    }
+  }
+
+  .mp3-player-track-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 400px);
+    justify-content: space-between;
+    padding: 1rem 0.5rem;
+
+    @media (max-width: $mobile) {
+      width: 100%;
+    }
+
+    .mp3-player-control-track {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin: 2px 0;
+
+      @media (max-width: $mobile) {
+        transform: translateY(20px);
+      }
+
+      span {
+        width: 63px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .progress-bar-wrap {
+        display: block;
+        background-color: #e84e0f;
+        height: 5px;
+        width: calc(100% - 126px);
+        transform: translateY(5px);
+        margin-left: 5px;
+        margin-right: 5px;
+
+        @media (max-width: $mobile) {
+          transform: none;
+        }
+
+        .progress {
+          display: block;
+          height: 5px;
+          text-align: right;
+          position: relative;
+          -webkit-appearance: none;
+          height: 14px;
+          width: 14px;
+          border-radius: 50%;
+          background: #ffffff;
+          margin-top: -5px;
+          box-shadow: 1px 1px 2px rgba(#000, 0.5);
+          transform: translateX(-5px);
+          //   transition: 1s;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .mp3-player-current-track {
+    height: 80px;
+    width: 210px;
+    background-color: transparent;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #03163D;
-    border: 2px #03163D solid;
-    font-family: Arial, Helvetica, sans-serif;
 
-    .current-track {
-        height: 80px;
-        width: 20%;
-        background-color: transparent;
-        display: flex;
-        flex-direction: row;
-
-        .current-img {
-            padding: 0.5rem;
-            height: 75px;
-            img {
-            border-radius: 40px;
-            border: 2px white solid; 
-            }
-        }
-
-        .current-title {
-            padding-left: 5px;
-            height: 75px;
-            justify-content: center;
-            h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
-                margin-top: 10px;
-                font-weight: 600;
-                text-align: left
-            }
-            h4 {
-                font-size: 12px;
-                margin-top: 2px;
-                font-weight: 300;
-                text-align: left
-            }
-        }
+    @media (max-width: $mobile) {
+      width: auto;
+      height: auto;
     }
 
-    .track-container {
-        display: flex;
-        flex-direction: column;
-        width: 65%;
-        justify-content: space-between;
-        padding: 1rem 2rem;
+    .mp3-player-current-img {
+      img {
+        border-radius: 40px;
+        border: 2px white solid;
+        width: 75px;
+      }
 
-        .control-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+      @media (max-width: $mobile) {
+        display: none;
+      }
+    }
+
+    .mp3-player-current-title {
+      transition: 0.5s;
+      padding-left: 10px;
+      justify-content: center;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+
+      @media (max-width: $mobile) {
+        height: 20px;
+        text-align: center;
+      }
+
+      .mp3-player-current-name {
+        font-size: 16px;
+        margin: 0;
+        font-weight: 600;
+        text-align: left;
+        -webkit-line-clamp: 2;
+
+
+        @media (max-width: $mobile) {
+          transform: translateY(5px);
+          text-align: center;
+          margin: none;
+        }
+      }
+
+      .mp3-player-current-copy {
+        transition: 0.5s;
+        font-size: 12px;
+        margin: 2px 0 0;
+        font-weight: 300;
+        text-align: left;
+        height: 28px;
+        -webkit-line-clamp: 2;
+        display: block;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+        @media (max-width: $mobile) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .mp3-player-control-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+
+    @media (max-width: $mobile) {
+      transform: translateY(10px);
+      text-align: center;
+      display: flex;
+    }
+
+    button {
+      border: none;
+      padding: 0.5rem;
+      background: transparent;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    
+    .mp3-player-tape-controls-play {
+      transition: 0.5s;
+      border: 1.5px white solid;
+      border-radius: 40px;
+      position: relative;
+      padding: 12px;
+      width: 65px;
+        height: 65px;
+        @media (max-width: $mobile) {
+          padding: 20px;
+          border-radius: 80px;
+          width: 95px;
+          height: 95px;
+        }
+
+      .mp3-player-play-button {
+          transition: 0.5s;
+
+          svg {
+              position: relative;
+              width: 35px;
+              transition: 0.5s;
+              left: 4px;
+
+              @media (max-width: $mobile) {
+                  width: 50px;
+              }
+
+              path {
+                  fill: #FFFFFF;
+                  ;
+                  transition: 0.5s;
+              }
+
+              &:hover {
+                  transform: scale(1.05);
+
+                  path {
+                      fill: #FFFFFF;
+                  }
+              }
+          }
+      }
+
+      svg {
+          position: relative;
+          width: 35px;
+          transition: 0.5s;
+
+          @media (max-width: $mobile) {
+              width: 50px;
+          }
+
+          path {
+              fill: #FFFFFF;
+              ;
+              transition: 0.5s;
+          }
+
+          &:hover {
+              transform: scale(1.05);
+
+              path {
+                  fill: #FFFFFF;
+              }
+          }
+      }
+  }
+
+    .mp3-player-tape-controls-forward {
+      svg {
+        width: 20px;
+        transition: 0.5s;
+
+        @media (max-width: $mobile) {
+          width: 30px;
+        }
+
+        path {
+          fill: #ffffff;
+          transition: 0.5s;
+        }
+
+        &:hover {
+          transform: translateX(2px);
+
+          path {
+            fill: #ffffff;
+          }
+        }
+      }
+    }
+
+    .mp3-player-tape-controls-backward {
+      svg {
+        width: 20px;
+        transition: 0.5s;
+
+        @media (max-width: $mobile) {
+          width: 30px;
+        }
+
+        path {
+          fill: #ffffff;
+          transition: 0.5s;
+        }
+
+        &:hover {
+          transform: translateX(-2px);
+
+          path {
+            fill: #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+  .mp3-player-volume-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 85px;
+    justify-content: space-between;
+
+    @media (max-width: $mobile) {
+      width: 150px;
+    }
+
+    .mp3-player-tape-controls-mute,
+    .mp3-player-playlist-control,
+    .mp3-player-hide-control {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .mp3-player-playlist-control {
+      svg {
+        width: 28px;
+      }
+
+      @media (max-width: $mobile) {
+        padding: 0.2rem 1rem 0.4rem 0.6rem;
+        position: absolute;
+        left: 1%;
+        bottom: 135px;
+
+        svg {
+          width: 20px;
+        }
+      }
+    }
+
+    .mp3-player-hide-control {
+      transition: 0.5s;
+      @media (max-width: $mobile) {
+        transition: none;
+        position: absolute;
+        left: 50%;
+        bottom: 180px;
+        transform: translateX(-50%);
+      }
+
+      svg {
+        width: 24px;
+
+        @media (max-width: $mobile) {
+          width: 20px;
+        }
+      }
+    }
+
+    .mp3-player-menu-buttons {
+      text-align: right;
+    }
+
+    .mp3-player-volume-slider {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .mp3-player-tape-controls-mute {
+        padding: 0.2rem 1rem 0.4rem 0.6rem;
         align-items: center;
-        button {
-                border: none;
-                padding:  0.5rem;
-                background: transparent;
-                cursor: pointer;
-                &:focus {
-                    outline: none;
-                }
-        }
-            .tape-controls-play {
-                border: 1.5px white solid;
-                border-radius: 40px;
-                position: relative;
-                padding: 12px;
-                .play-button {
-                svg {
-                    position: relative;
-                    width: 35px;
-                    transition: 0.5s;
-                    left: 3px;
-                    path {
-                        fill: #FFFFFF;;
-                        transition: 0.5s;
-                    }
-                    &:hover {
-                        transform: scale(1.05);
-                        path {
-                            fill: #FFFFFF;
-                        }
-                    }
-                }
-            }
-            svg {
-                position: relative;
-                width: 35px;
-                transition: 0.5s;
-                path {
-                    fill: #FFFFFF;;
-                    transition: 0.5s;
-                }
-                &:hover {
-                    transform: scale(1.05);
-                    path {
-                        fill: #FFFFFF;
-                    }
-                }
-            }
-            }
-            .tape-controls-forward {
-                svg {
-                    width: 20px;
-                    transition: 0.5s;
-                    path {
-                        fill: #FFFFFF;;
-                        transition: 0.5s;
-                    }
-                    &:hover {
-                        transform: translateX(2px);
-                        path {
-                            fill: #FFFFFF;
-                        }                    }
-                }
-            }
-            .tape-controls-backward {
-                svg {
-                    width: 20px;
-                    transition: 0.5s;
-                    path {
-                        fill: #FFFFFF;;
-                        transition: 0.5s;
-                    }
-                    &:hover {
-                        transform: translateX(-2px);
-                        path {
-                            fill: #FFFFFF;
-                        }
-                    }
-                }
-            }
+        cursor: pointer;
+        transform: translateY(3px);
+        color: #fff;
+
+        svg {
+          width: 15px;
+          transition: 0.5s;
+
+          path {
+            fill: white;
+          }
+
+          &:hover {
+            transform: translateX(2px);
+          }
         }
 
-        .control-track {
-            span {
-                padding: 1rem;
+        @media (max-width: $mobile) {
+          position: absolute;
+          right: 1%;
+          bottom: 135px;
+
+          svg {
+            width: 20px;
+
+            &:hover {
+              transform: translateY(2px);
             }
+          }
         }
-        
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 75%;
-            height: 100%;
-            background: transparent;
-        
-            &:focus {
-                outline: none;
-            }
-        
-            //WEBKIT
-            &::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-                
-            }
-        
-            &::-webkit-slider-runnable-track {
-                width: 60%;
-                height: 9px;
-                background: #E84E0F;
-                border-radius: 3rem;
-        
-                transition: all 0.5s;
-                cursor: pointer;
-            }
-        
-            // IE
-        
-            &::-ms-track {
-                width: 60%;
-                cursor: pointer;
-                height: 9px;
-        
-                transition: all 0.5s;
-                /* Hides the slider so custom styles can be added */
-                background: transparent;
-                border-color: transparent;
-                color: transparent;
-            }
-        
-            &::-ms-thumb {
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-            }
-    
-        
-            //FIREFOX
-            &::-moz-range-thumb {
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-            }
-        
-            &::-moz-range-track {
-                width: 60%;
-                height: 9px;
-                background: #E84E0F;
-                border-radius: 3rem;
-        
-                transition: all 0.5s;
-                cursor: pointer;
-            }
-        }
-        
+      }
     }
-
-    .volume-container {
-        display: flex;
-        flex-direction: column;
-        width: 15%;
-        height: 80px;
-        justify-content: space-between;
-
-        .tape-controls-mute,
-        .playlist-control {
-            border: none;
-            background: transparent;
-            &:focus {
-                outline: none;
-            }
-        }
-
-        .menu-buttons {
-           text-align: right
-        }
-
-        .volume-slider {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-
-            .tape-controls-mute {
-                padding: 0.2rem 0.2rem 0 0.6rem;
-                align-items: center;
-                cursor: pointer;
-                svg {
-                    width: 15px;
-                    transition: 0.5s;
-                    path {
-                        fill: white;
-                    }
-                    &:hover {
-                        transform: translateX(2px)
-                    }
-                }
-            }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        
-            &:focus {
-                outline: none;
-            }
-        
-            //WEBKIT
-            &::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                height: 14px;
-                width: 14px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-                
-            }
-        
-            &::-webkit-slider-runnable-track {
-                width: 60%;
-                height: 5px;
-                background: #E84E0F;
-                border-radius: 3rem;
-        
-                transition: all 0.5s;
-                cursor: pointer;
-            }
-    
-        
-            // IE
-        
-            &::-ms-track {
-                width: 60%;
-                cursor: pointer;
-                height: 5px;
-        
-                transition: all 0.5s;
-                /* Hides the slider so custom styles can be added */
-                background: transparent;
-                border-color: transparent;
-                color: transparent;
-            }
-        
-            &::-ms-thumb {
-                height: 18px;
-                width: 18px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-            }
-        
-            &::-ms-fill-lower {
-                background: #bdbdbd;
-                border-radius: 3rem;
-            }
-            &:focus::-ms-fill-lower {
-                background: #E84E0F;
-            }
-            &::-ms-fill-upper {
-                background: #bdbdbd;
-                border-radius: 3rem;
-            }
-            &:focus::-ms-fill-upper {
-                background: #E84E0F;
-            }
-        
-            //FIREFOX
-            &::-moz-range-thumb {
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-                background: #ffffff;
-                margin-top: -5px;
-                box-shadow: 1px 1px 2px rgba(#000, 0.5);
-        
-                cursor: pointer;
-            }
-        
-            &::-moz-range-track {
-                width: 60%;
-                height: 9px;
-                background: #E84E0F;
-                border-radius: 3rem;
-        
-                transition: all 0.5s;
-                cursor: pointer;
-            }
-        }
-    }
-    }
+  }
 }
