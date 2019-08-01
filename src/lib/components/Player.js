@@ -1,17 +1,13 @@
 import React from "react";
 import Icon from "../icons/PlayerIcons";
-import audioMp3 from "../audio/1-10.mp3";
 import { formatTime } from "../helpers/playerHelper";
 import { Howl } from "howler";
 
 class Player extends React.Component {
 	constructor(props) {
 		super(props);
-
-		console.log("player  activeTrack : ", this.props.activeTrack.src);
-
+		
 		this.state = this.defaultState();
-
 		this.progressRef = React.createRef();
 	}
 
@@ -189,7 +185,7 @@ class Player extends React.Component {
 				<div className="mp3-player-current-track">
 					<div className="mp3-player-current-img">
 						<img
-							src="https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg"
+							src={this.props.activeTrack.img}
 							alt="podcast"
 						/>
 					</div>

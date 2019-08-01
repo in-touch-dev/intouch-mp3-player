@@ -86,7 +86,6 @@ class Playlist extends React.Component {
     }
     
     togglePlaylist( condition ){
-      console.log('toggle ', condition);
       const state = { hidePlaylist : condition };
 
       if( condition ){
