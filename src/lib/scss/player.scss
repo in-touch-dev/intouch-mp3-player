@@ -1,5 +1,5 @@
 .mp3-player-container {
-  width: 99%;
+  width: 100%;
   height: 110px;
   display: flex;
   flex-direction: row;
@@ -9,8 +9,10 @@
   background-color: #03163d;
   border: 2px #03163d solid;
   font-family: Arial, Helvetica, sans-serif;
-  position: absolute;
-  color: #fff;
+  position: fixed;
+  transition: 0.5s;
+  bottom: 0;
+  left: 0;
 
   &:before {
     display: none;
@@ -29,7 +31,7 @@
     height: 180px;
     flex-direction: column;
     padding: 0;
-    position: relative;
+    position: fixed;
 
     &:before {
       display: block;
@@ -51,27 +53,27 @@
       width: 100%;
       display: flex;
       flex-direction: row;
-      margin: 5px 0;
+      margin: 2px 0;
 
       @media (max-width: $mobile) {
         transform: translateY(20px);
       }
 
       span {
-        width: 50px;
+        width: 63px;
         text-align: center;
         color: #fff;
       }
 
       .progress-bar-wrap {
         display: block;
-        width: 85%;
         background-color: #e84e0f;
         height: 5px;
-        width: 100%;
+        width: calc(100% - 126px);
         transform: translateY(5px);
         margin-left: 5px;
         margin-right: 5px;
+
         .progress {
           display: block;
           height: 5px;
@@ -94,10 +96,12 @@
 
   .mp3-player-current-track {
     height: 80px;
-    width: 200px;
+    width: 210px;
     background-color: transparent;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 
     @media (max-width: $mobile) {
       width: auto;
@@ -105,12 +109,10 @@
     }
 
     .mp3-player-current-img {
-      padding: 0.5rem 0.5rem 0 0;
-      height: 75px;
-
       img {
         border-radius: 40px;
         border: 2px white solid;
+        width: 75px;
       }
 
       @media (max-width: $mobile) {
@@ -119,9 +121,12 @@
     }
 
     .mp3-player-current-title {
-      padding-left: 5px;
-      height: 75px;
+      transition: 0.5s;
+      padding-left: 10px;
       justify-content: center;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
 
       @media (max-width: $mobile) {
         height: 20px;
@@ -130,11 +135,11 @@
 
       .mp3-player-current-name {
         font-size: 16px;
-        margin-bottom: 5px;
-        margin-top: 10px;
+        margin: 0;
         font-weight: 600;
         text-align: left;
-        color: #fff;
+        -webkit-line-clamp: 2;
+
 
         @media (max-width: $mobile) {
           transform: translateY(5px);
@@ -144,11 +149,16 @@
       }
 
       .mp3-player-current-copy {
+        transition: 0.5s;
         font-size: 12px;
-        margin-top: 2px;
+        margin: 2px 0 0;
         font-weight: 300;
         text-align: left;
-        color: #fff;
+        height: 28px;
+        -webkit-line-clamp: 2;
+        display: block;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
 
         @media (max-width: $mobile) {
           display: none;
@@ -162,6 +172,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    transition: 0.5s;
 
     @media (max-width: $mobile) {
       transform: translateY(10px);
@@ -306,6 +317,7 @@
     .mp3-player-hide-control {
       border: none;
       background: transparent;
+      cursor: pointer;
 
       &:focus {
         outline: none;
@@ -330,7 +342,9 @@
     }
 
     .mp3-player-hide-control {
+      transition: 0.5s;
       @media (max-width: $mobile) {
+        transition: none;
         position: absolute;
         left: 50%;
         bottom: 180px;
@@ -388,143 +402,6 @@
             }
           }
         }
-      }
-    }
-  }
-
-  transition: 0.5s;
-
-  &.hidden {
-    transition: 0.5s;
-    height: 50px;
-    transform: translateY(25px);
-
-    .mp3-player-control-buttons,
-    .mp3-player-playlist-control,
-    .mp3-player-current-img,
-    .mp3-player-current-copy {
-      display: none;
-    }
-
-    .mp3-player-current-title {
-      position: relative;
-      top: 20px;
-    }
-
-    .mp3-player-track-container {
-      transform: translateX(-35px);
-    }
-
-    .mp3-player-volume-slider {
-      top: -28px;
-      right: 30px;
-      position: relative;
-    }
-
-    .mp3-player-hide-control {
-      position: relative;
-      bottom: -20px;
-      right: -35px;
-      transform: rotate(180deg) translate(50%);
-    }
-
-    @media (max-width: $mobile) {
-      transition: 0.5s;
-      height: 80px;
-      transform: translateY(50px);
-
-      .mp3-player-control-buttons,
-      .mp3-player-tape-controls-mute,
-      .mp3-player-playlist-control,
-      .mp3-player-volume-input {
-        display: none;
-      }
-
-      .mp3-player-track-input,
-      .mp3-player-track-elapsed,
-      .mp3-player-track-remaining {
-        transform: translateY(-5px);
-      }
-
-      .mp3-player-hide-control {
-        position: absolute;
-        bottom: 80px;
-        transform: rotate(180deg) translate(50%);
-      }
-
-      .mp3-player-track-container {
-        transform: none;
-      }
-
-      .mp3-player-current-title {
-        top: 0px;
-      }
-    }
-  }
-
-  &.playlist {
-    .mp3-player-playlist-control,
-    .mp3-player-hide-control {
-      display: none;
-    }
-  }
-}
-
-.mp3-player-playlist-container {
-  width: 30%;
-  position: absolute;
-  background-color: #03163d;
-  display: flex;
-  flex-direction: column;
-  height: 160px;
-  overflow: scroll;
-  right: 0px;
-  bottom: 108px;
-
-  .mp3-player-playlist-header {
-    width: 100%;
-    height: 30px;
-    position: relative;
-
-    .mp3-player-playlist-close {
-      background-color: transparent;
-      border: none;
-      align-items: center;
-      padding: 5px;
-      position: absolute;
-      right: 1px;
-
-      &:focus {
-        outline: none;
-      }
-
-      svg {
-        width: 20px;
-      }
-    }
-  }
-
-  .mp3-player-playlist-content {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-
-    .mp3-player-playlist-track-button {
-      width: 100%;
-      background-color: rgba(4, 26, 70, 0.612);
-      color: #ffffff;
-      text-align: left;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      height: 40px;
-
-      .mp3-player-playlist-track-name {
-        font-weight: 300;
-      }
-
-      .mp3-player-playlist-track-time {
-        font-weight: 300;
       }
     }
   }
