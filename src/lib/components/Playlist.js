@@ -110,4 +110,4 @@ class Playlist extends React.Component {
     }
 };
 
-export default Playlist;
+module.exports = Playlist;
