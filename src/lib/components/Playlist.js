@@ -47,7 +47,7 @@ class Playlist extends React.Component {
 
     render(){
         return (
-            <div className="playlist-wrap">
+            <div className="playlist-wrapper">
 
                 <Player activeTrack={ this.props.tracks[0].src } />
 
