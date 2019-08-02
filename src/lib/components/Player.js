@@ -1,10 +1,17 @@
-const React = require('react');
-const Icon = require('../icons/PlayerIcons');
-const formatTime = require("../helpers/playerHelper");
-const Howl = require('howler');
-require('../scss/App.scss');
+// const React = require('react');
+// const Icon = require('../icons/PlayerIcons');
+// const formatTime = require("../helpers/playerHelper");
+// const Howl = require('howler');
+// require('../scss/App.scss');
+import '../scss/App.scss'
+import React from 'react'
+import Icon from '../icons/PlayerIcons'
+import formatTime from '../helpers/playerHelper'
+import Howl from 'howler'
 
-class Player extends React.Component {
+
+
+export default class Player extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -266,4 +273,4 @@ class Player extends React.Component {
 	}
 }
 
-module.exports = Player;
+// module.exports = Player;

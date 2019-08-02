@@ -1,10 +1,14 @@
 
-require('../scss/App.scss')
-const React = require('react');
-const Icon = require('../icons/PlayerIcons');
-const Player = require('./Player');
+// require('../scss/App.scss')
+// const React = require('react');
+// const Icon = require('../icons/PlayerIcons');
+// const Player = require('./Player');
+import '../scss/App.scss'
+import React from 'react'
+import Icon from '../icons/PlayerIcons'
+import Player from './Player'
 
-class Playlist extends React.Component {
+export default class Playlist extends React.Component {
     constructor(props) {
       super(props);
 
@@ -111,4 +115,4 @@ class Playlist extends React.Component {
     }
 };
 
-module.exports = Playlist;
+// module.exports = Playlist;

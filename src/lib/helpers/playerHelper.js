@@ -1,4 +1,4 @@
-module.exports = function formatTime(time){
+export default function formatTime(time){
 
     const minutes = Math.floor(time / 60)
     const seconds = time - minutes * 60;

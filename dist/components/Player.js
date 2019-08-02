@@ -338,6 +338,4 @@ function (_React$Component) {
   return Player;
 }(React.Component);
 
-module.exports = {
-  Player: Player
-};
+module.exports = Player;

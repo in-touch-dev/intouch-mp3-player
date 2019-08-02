@@ -163,6 +163,4 @@ function (_React$Component) {
 }(React.Component);
 
 ;
-module.exports = {
-  Playlist: Playlist
-};
+module.exports = Playlist;
