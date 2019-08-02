@@ -3,15 +3,21 @@ import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/esm/inherits";
-// const React = require('react');
-// const Icon = require('../icons/PlayerIcons');
-// const formatTime = require("../helpers/playerHelper");
-// const Howl = require('howler');
-// require('../scss/App.scss');
-import '../scss/App.scss';
-import React from 'react';
-import Icon from '../icons/PlayerIcons';
-import formatTime from '../helpers/playerHelper'; // import {Howl} from 'howler'
+
+var React = require('react');
+
+var Icon = require('../icons/PlayerIcons');
+
+var formatTime = require("../helpers/playerHelper");
+
+var Howl = require('howler');
+
+require('../scss/App.scss'); // import '../scss/App.scss'
+// import React from 'react'
+// import Icon from '../icons/PlayerIcons'
+// import formatTime from '../helpers/playerHelper'
+// import {Howl} from 'howler'
+
 
 var Player =
 /*#__PURE__*/
@@ -116,9 +122,11 @@ function (_React$Component) {
           isPlaying: true
         });
         return;
-      } // this.sound = new Howl({ src: [this.props.activeTrack.src] });
+      }
 
-
+      this.sound = new Howl({
+        src: [this.props.activeTrack.src]
+      });
       window.audio = {
         active: this.sound
       };

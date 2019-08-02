@@ -1,7 +1,7 @@
 const React = require('react');
 const Icon = require('../icons/PlayerIcons');
 const formatTime = require("../helpers/playerHelper");
-const Howl = require('howler');
+const {Howl} = require('howler');
 require('../scss/App.scss');
 // import '../scss/App.scss'
 // import React from 'react'
