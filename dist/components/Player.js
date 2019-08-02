@@ -11,7 +11,8 @@ import _inherits from "@babel/runtime/helpers/esm/inherits";
 import '../scss/App.scss';
 import React from 'react';
 import Icon from '../icons/PlayerIcons';
-import formatTime from '../helpers/playerHelper'; // import Howl from 'howler'
+import formatTime from '../helpers/playerHelper';
+import Howl from 'howler';
 
 var Player =
 /*#__PURE__*/
@@ -116,9 +117,11 @@ function (_React$Component) {
           isPlaying: true
         });
         return;
-      } // this.sound = new Howl({ src: [this.props.activeTrack.src] });
+      }
 
-
+      this.sound = new Howl({
+        src: [this.props.activeTrack.src]
+      });
       window.audio = {
         active: this.sound
       };

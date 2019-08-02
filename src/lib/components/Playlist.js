@@ -8,7 +8,7 @@ require('../scss/App.scss')
 // import Icon from '../icons/PlayerIcons'
 // import Player from './Player'
 
-  class Playlist extends React.Component {
+  export default class Playlist extends React.Component {
     constructor(props) {
       super(props);
 
@@ -116,4 +116,3 @@ require('../scss/App.scss')
     }
 };
 
-module.exports = Playlist;

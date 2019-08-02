@@ -1,6 +1,6 @@
 // import Player from './components/Player';
-import Playlist from './components/Playlist';
+var Playlist = require('./components/Playlist');
+
 module.exports = {
-  // Player
   Playlist: Playlist
 };
