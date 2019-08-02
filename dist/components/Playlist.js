@@ -12,8 +12,9 @@ require('../scss/App.scss'); // const Player = require('./Player');
 // import '../scss/App.scss'
 // import React from 'react'
 // import Icon from '../icons/PlayerIcons'
-// import Player from './Player'
 
+
+import Player from './Player';
 
 var Playlist =
 /*#__PURE__*/
@@ -142,9 +143,23 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       return React.createElement("div", {
         className: "playlist-wrap"
-      }, "hello boys");
+      }, React.createElement(Player, {
+        activeTrack: this.state.activeTrack,
+        hasPlaylist: true,
+        playlistClickHandler: function playlistClickHandler(evt) {
+          return _this4.playlistClickHandler(evt);
+        },
+        skipHandler: function skipHandler(evt, type) {
+          return _this4.skipHandler(evt, type);
+        },
+        togglePlaylist: function togglePlaylist(condition) {
+          return _this4.togglePlaylist(condition);
+        }
+      }), this.playlistBody());
     }
   }]);
 

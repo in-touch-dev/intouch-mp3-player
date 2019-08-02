@@ -12,7 +12,7 @@ import '../scss/App.scss';
 import React from 'react';
 import Icon from '../icons/PlayerIcons';
 import formatTime from '../helpers/playerHelper';
-import Howl from 'howler';
+import { Howl } from 'howler';
 
 var Player =
 /*#__PURE__*/
