@@ -10,7 +10,8 @@ var Icon = require('../icons/PlayerIcons');
 
 var formatTime = require("../helpers/playerHelper");
 
-var Howl = require('howler');
+var _require = require('howler'),
+    Howl = _require.Howl;
 
 require('../scss/App.scss'); // import '../scss/App.scss'
 // import React from 'react'

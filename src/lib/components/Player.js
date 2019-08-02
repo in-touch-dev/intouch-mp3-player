@@ -11,7 +11,7 @@ require('../scss/App.scss');
 
 
 
-export default class Player extends React.Component {
+ class Player extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -273,4 +273,4 @@ export default class Player extends React.Component {
 	}
 }
 
-// module.exports = Player;
+module.exports = Player;
