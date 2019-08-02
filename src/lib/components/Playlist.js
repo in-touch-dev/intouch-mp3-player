@@ -1,4 +1,4 @@
-  import React from 'react';
+import React from 'react';
 import Icon from "../icons/PlayerIcons";
 import Player from './Player';
 
