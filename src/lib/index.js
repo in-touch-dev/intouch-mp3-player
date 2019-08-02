@@ -1,7 +1,4 @@
 // import Player from './components/Player';
-import Playlist from './components/Playlist';
+const Playlist = require('./components/Playlist');
 
-module.exports = {
-    // Player
-    Playlist
-};
+module.exports = {Playlist}
