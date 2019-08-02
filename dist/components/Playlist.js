@@ -3,10 +3,14 @@ import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/esm/inherits";
-import React from 'react';
-import Icon from "../icons/PlayerIcons";
-import '../scss/App.scss';
-import Player from './Player';
+
+require('../scss/App.scss');
+
+var React = require('react');
+
+var Icon = require('../icons/PlayerIcons');
+
+var Player = require('./Player');
 
 var Playlist =
 /*#__PURE__*/
@@ -159,6 +163,4 @@ function (_React$Component) {
 }(React.Component);
 
 ;
-module.exports = {
-  Playlist: Playlist
-};
+module.exports = Playlist;
