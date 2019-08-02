@@ -6,7 +6,7 @@ require('../scss/App.scss')
 // import '../scss/App.scss'
 // import React from 'react'
 // import Icon from '../icons/PlayerIcons'
-import Player from './Player'
+const Player = require('./Player')
 
   export default class Playlist extends React.Component {
     constructor(props) {
@@ -103,13 +103,13 @@ import Player from './Player'
     render(){
         return (
             <div className="playlist-wrap">
-                {/* <Player
+                <Player
                   activeTrack={ this.state.activeTrack }
                   hasPlaylist={ true }
                   playlistClickHandler={ evt => this.playlistClickHandler( evt ) }
                   skipHandler={ (evt, type) => this.skipHandler( evt, type ) }
                   togglePlaylist={ condition => this.togglePlaylist( condition ) } />
-                { this.playlistBody() } */}
+                { this.playlistBody() }
             </div>
         );
     }
