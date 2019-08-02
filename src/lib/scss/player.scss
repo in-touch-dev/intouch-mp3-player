@@ -13,6 +13,7 @@
   transition: 0.5s;
   bottom: 0;
   left: 0;
+  color: white;
 
   &:before {
     display: none;
@@ -73,6 +74,10 @@
         transform: translateY(5px);
         margin-left: 5px;
         margin-right: 5px;
+
+        @media (max-width: $mobile) {
+          transform: none;
+        }
 
         .progress {
           display: block;
@@ -177,7 +182,7 @@
     @media (max-width: $mobile) {
       transform: translateY(10px);
       text-align: center;
-      display: block;
+      display: flex;
     }
 
     button {
@@ -190,67 +195,75 @@
         outline: none;
       }
     }
-
+    
     .mp3-player-tape-controls-play {
+      transition: 0.5s;
       border: 1.5px white solid;
       border-radius: 40px;
       position: relative;
       padding: 12px;
-
-      @media (max-width: $mobile) {
-        padding: 20px;
-        border-radius: 80px;
-      }
+      width: 65px;
+        height: 65px;
+        @media (max-width: $mobile) {
+          padding: 20px;
+          border-radius: 80px;
+          width: 95px;
+          height: 95px;
+        }
 
       .mp3-player-play-button {
-        svg {
-          position: relative;
-          width: 35px;
           transition: 0.5s;
-          left: 4px;
 
-          @media (max-width: $mobile) {
-            width: 40px;
+          svg {
+              position: relative;
+              width: 35px;
+              transition: 0.5s;
+              left: 4px;
+
+              @media (max-width: $mobile) {
+                  width: 50px;
+              }
+
+              path {
+                  fill: #FFFFFF;
+                  ;
+                  transition: 0.5s;
+              }
+
+              &:hover {
+                  transform: scale(1.05);
+
+                  path {
+                      fill: #FFFFFF;
+                  }
+              }
           }
-
-          path {
-            fill: #ffffff;
-            transition: 0.5s;
-          }
-
-          &:hover {
-            transform: scale(1.05);
-
-            path {
-              fill: #ffffff;
-            }
-          }
-        }
       }
 
       svg {
-        position: relative;
-        width: 35px;
-        transition: 0.5s;
-
-        @media (max-width: $mobile) {
-          width: 40px;
-        }
-
-        path {
-          fill: #ffffff;
+          position: relative;
+          width: 35px;
           transition: 0.5s;
-        }
 
-        &:hover {
-          transform: scale(1.05);
+          @media (max-width: $mobile) {
+              width: 50px;
+          }
 
           path {
-            fill: #ffffff;
+              fill: #FFFFFF;
+              ;
+              transition: 0.5s;
           }
-        }
+
+          &:hover {
+              transform: scale(1.05);
+
+              path {
+                  fill: #FFFFFF;
+              }
+          }
       }
-    }
+  }
 
     .mp3-player-tape-controls-forward {
       svg {
@@ -305,7 +318,7 @@
     display: flex;
     flex-direction: column;
     width: 200px;
-    height: 80px;
+    height: 85px;
     justify-content: space-between;
 
     @media (max-width: $mobile) {

@@ -2,6 +2,7 @@ import React from "react";
 import Icon from "../icons/PlayerIcons";
 import { formatTime } from "../helpers/playerHelper";
 import { Howl } from "howler";
+import '../scss/App.scss';
 
 class Player extends React.Component {
 	constructor(props) {
