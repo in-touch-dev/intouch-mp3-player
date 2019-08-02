@@ -151,5 +151,5 @@ function (_React$Component) {
   return Playlist;
 }(React.Component);
 
+export { Playlist as default };
 ;
-module.exports = Playlist;
