@@ -1,7 +1,7 @@
-import Player from './components/Player';
+// import Player from './components/Player';
 import Playlist from './components/Playlist';
 
-export {
-    Player,
+export{
+    // Player,
     Playlist
 };
