@@ -266,4 +266,4 @@ class Player extends React.Component {
 	}
 }
 
-module.exports = {Player};
+module.exports = Player;
