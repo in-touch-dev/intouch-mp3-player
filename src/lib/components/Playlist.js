@@ -3,9 +3,9 @@ import Icon from "../icons/PlayerIcons";
 import '../scss/App.scss';
 import Player from './Player';
 
-const React = require('react');
-const Icon = require('../icons/PlayerIcons');
-require('../scss/App.scss')
+// const React = require('react');
+// const Icon = require('../icons/PlayerIcons');
+// require('../scss/App.scss')
 // const Player = require('./Player');
 // import '../scss/App.scss'
 // import React from 'react'
