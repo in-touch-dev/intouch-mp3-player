@@ -22,12 +22,17 @@ yarn add react-mp3-player
 Import the Icon component
 
 ```Javascript
-import {Player} from 'react-mp3-player';
+import Playlist from 'react-mp3-player';
 ```
-Add the Player component and pass it the relative mp3 playlist as well as a primary and secondary color
+Add the Player component and pass it the relative mp3 tracks.
+The tracks format will be ann array of objects, each object containing a name, description, src mp3 and an optional image
 
 ```Javascript
-<Player playlist={['audio.mp3', 'audio2.mp3']} primaryColor='#FFFFFF' secondaryColor='#FEFEFE'/>
+
+const tracks = [{ img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'MP3', desc: 'Description 1', src:'Audio.mp3'},
+{ img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'MP3 #2', desc: 'Description 2', src:'Audio2.mp3'}]
+
+<Player playlist={tracks} />
 ```
 
 ## Adding new features to the mp3
