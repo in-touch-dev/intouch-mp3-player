@@ -1,6 +1,5 @@
 .mp3-player-playlist-container {
-    width: 100%;
-    max-width: 400px;
+    min-width: 300px;
     position: fixed;
     background-color: #03163D;
     display: flex;
@@ -83,7 +82,6 @@
     }
 
     &.is-mobile {
-        max-width: 100%;
         bottom: 180px;
 
         .mp3-player-playlist-content {
