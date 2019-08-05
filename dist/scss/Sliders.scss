@@ -90,7 +90,7 @@ $mobile: 768px;
     @media (max-width: $mobile) {
         position: absolute;
         transform: rotate(-90deg);
-        width: 75px;
+        width: 75px !important;
         right: -10px;
         bottom: 80px;
     }
