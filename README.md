@@ -42,8 +42,19 @@ Add the Player component and pass it the relative mp3 tracks.
 
 ## Screenshots
 
+*Desktop*
+![Alt text](public/Desktop.png)
 
-![Alt text](public/favicon.ico)
+*Desktop Hidden*
+![Alt text](public/Desktop-hidden.png)
+
+*Mobile*
+![Alt text](public/Mobile.png)
+
+*Mobile Hidden*
+![Alt text](public/Mobile-hidden.png)
+
+
 
 ## Adding new features to the mp3
 Make any changes or additional features in the Player.js component and update the version (in the package.json) by 0.0.1 and then push all your changes to the repo.
