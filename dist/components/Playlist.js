@@ -14,7 +14,8 @@ require('../scss/App.scss'); // const Player = require('./Player');
 // import Icon from '../icons/PlayerIcons'
 
 
-var Player = require('./Player');
+var _require = require('./Player'),
+    Player = _require.Player;
 
 var Playlist =
 /*#__PURE__*/

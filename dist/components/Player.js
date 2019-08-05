@@ -342,7 +342,6 @@ function (_React$Component) {
   }]);
 
   return Player;
-}(React.Component); // module.exports = Player;
+}(React.Component);
 
-
-export { Player as default };
+module.exports = Player;
