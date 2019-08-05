@@ -10,7 +10,7 @@ import Player from './Player';
 // import '../scss/App.scss'
 // import React from 'react'
 // import Icon from '../icons/PlayerIcons'
-const {Player} = require('./Player')
+// const {Player} = require('./Player')
 
   export default class Playlist extends React.Component {
     constructor(props) {
