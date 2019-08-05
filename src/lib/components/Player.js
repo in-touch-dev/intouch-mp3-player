@@ -19,6 +19,20 @@ import {Howl} from 'howler'
 		this.progressRef = React.createRef();
 	}
 
+	componentWillMount = () => this.calculateOffset()
+
+	calculateOffset(){
+		console.log('this.props.opts : ', this.props.opts.offset);
+		this.wrapOffsetStyles = {
+			left : '0',
+			right : '0'
+		};
+
+		this.wrapOffsetStyles = Object.assign( {}, this.wrapOffsetStyles, this.props.opts.offset );
+		this.wrapOffsetStyles.left = `${ this.wrapOffsetStyles.left }px`;
+		this.wrapOffsetStyles.right = `${ this.wrapOffsetStyles.right }px`;
+	}
+
 	defaultState() {
 		return JSON.parse(
 			JSON.stringify({
@@ -187,9 +201,10 @@ import {Howl} from 'howler'
 		const trackDuration = formatTime(this.state.trackDuration);
 		const currentTime = formatTime(this.state.currentTime);
 		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
+		const isMobile = this.props.isMobile ? 'is-mobile' : ''
 
 		return (
-			<div className={`mp3-player-container ${hideMp3}`}>
+			<div className={`mp3-player-container ${hideMp3} ${isMobile}`} style={ this.wrapOffsetStyles }>
 				<div className="mp3-player-current-track">
 					<div className="mp3-player-current-img">
 						<img

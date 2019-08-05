@@ -2,6 +2,16 @@ import React from 'react';
 import './lib/scss/App.scss';
 import Playlist from './lib/components/Playlist';
 
+const playlistOverideStylingOpts = {
+  offset : {
+    left : 200
+  },
+  breakpoint : {
+    maxWidth : 762,
+    isMobile : true
+  }
+};
+
 const App = () => {
   const tracks = [
     { img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'hello number 1', desc: 'Description 1 is here', src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'},
@@ -11,7 +21,9 @@ const App = () => {
 ]
   return (
       <header className="App-header">
-      <Playlist tracks={tracks}/>
+        <div className='playlist-holder'>
+          <Playlist tracks={ tracks } opts={ playlistOverideStylingOpts }/>
+        </div>
       </header>
   );
 }
