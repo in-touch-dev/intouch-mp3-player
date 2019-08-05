@@ -186,7 +186,7 @@ import {Howl} from 'howler'
 	render() {
 		const trackDuration = formatTime(this.state.trackDuration);
 		const currentTime = formatTime(this.state.currentTime);
-		const hideMp3 = this.state.isHidden ? "hidden" : "";
+		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
 
 		return (
 			<div className={`mp3-player-container ${hideMp3}`}>
