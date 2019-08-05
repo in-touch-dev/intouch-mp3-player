@@ -25,8 +25,6 @@ class Player extends React.Component {
 
     const audioElement = document.querySelector(".audio-file");
     const time = getDuration(audioElement.duration);
-    console.log(time)
-
 
     this.setState({ trackDuration : time })
 
