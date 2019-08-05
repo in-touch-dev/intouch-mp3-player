@@ -8,10 +8,8 @@ var React = require('react');
 
 var Icon = require('../icons/PlayerIcons');
 
-var formatTime = require("../helpers/playerHelper");
+var formatTime = require("../helpers/playerHelper"); // const {Howl} = require('howler');
 
-var _require = require('howler'),
-    Howl = _require.Howl;
 
 require('../scss/App.scss'); // import '../scss/App.scss'
 // import React from 'react'
@@ -241,103 +239,91 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
-
       var trackDuration = formatTime(this.state.trackDuration);
       var currentTime = formatTime(this.state.currentTime);
       var hideMp3 = this.state.isHidden ? "hidden" : "";
-      return React.createElement("div", {
-        className: "mp3-player-container ".concat(hideMp3)
-      }, React.createElement("div", {
-        className: "mp3-player-current-track"
-      }, React.createElement("div", {
-        className: "mp3-player-current-img"
-      }, React.createElement("img", {
-        src: this.props.activeTrack.img,
-        alt: "podcast"
-      })), React.createElement("div", {
-        className: "mp3-player-current-title"
-      }, React.createElement("p", {
-        className: "mp3-player-current-name"
-      }, this.props.activeTrack.name), React.createElement("p", {
-        className: "mp3-player-current-copy"
-      }, this.props.activeTrack.desc))), React.createElement("div", {
-        className: "mp3-player-track-container"
-      }, React.createElement("div", {
-        className: "mp3-player-control-buttons"
-      }, this.props.hasPlaylist && React.createElement("button", {
-        className: "mp3-player-tape-controls-backward",
-        onClick: function onClick(evt) {
-          return _this6.props.skipHandler(evt, 'prev');
-        }
-      }, React.createElement(Icon, {
-        iconName: "backward"
-      })), this.playPause(), this.props.hasPlaylist && React.createElement("button", {
-        className: "mp3-player-tape-controls-forward",
-        onClick: function onClick(evt) {
-          return _this6.props.skipHandler(evt, 'next');
-        }
-      }, React.createElement(Icon, {
-        iconName: "forward"
-      }))), React.createElement("div", {
-        className: "mp3-player-control-track"
-      }, React.createElement("span", {
-        className: "mp3-player-track-elapsed"
-      }, currentTime), React.createElement("a", {
-        href: "#",
-        ref: this.progressRef,
-        className: "progress-bar-wrap",
-        onClick: function onClick(evt) {
-          return _this6.progressClicked(evt);
-        }
-      }, React.createElement("div", {
-        className: "progress"
-      })), React.createElement("span", {
-        className: "mp3-player-track-remaining"
-      }, trackDuration))), React.createElement("div", {
-        className: "mp3-player-volume-container"
-      }, React.createElement("div", {
-        className: "mp3-player-menu-buttons"
-      }, this.props.hasPlaylist && React.createElement("button", {
-        className: "mp3-player-playlist-control",
-        onClick: this.props.playlistClickHandler
-      }, React.createElement(Icon, {
-        iconName: "playlist",
-        fill: "white"
-      })), React.createElement("button", {
-        className: "mp3-player-hide-control",
-        onClick: function onClick() {
-          _this6.setState({
-            isHidden: _this6.state.isHidden ? false : true
-          }, function () {
-            return _this6.props.togglePlaylist(_this6.state.isHidden);
-          });
-        }
-      }, React.createElement(Icon, {
-        iconName: "hide",
-        fill: "white"
-      }))), React.createElement("div", {
-        className: "mp3-player-volume-slider"
-      }, React.createElement("button", {
-        className: "mp3-player-tape-controls-mute",
-        onClick: function onClick(evt) {
-          return _this6.muteSound(evt);
-        }
-      }, React.createElement(Icon, {
-        iconName: !this.state.volumeLevel ? "mute" : "volume"
-      })), React.createElement("input", {
-        type: "range",
-        id: "volume",
-        className: "mp3-player-volume-input",
-        min: "0",
-        max: "2",
-        list: "gain-vals",
-        step: "0.01",
-        "data-action": "volume",
-        onInput: function onInput(evt) {
-          return _this6.changeVolume(evt);
-        }
-      }))));
+      return (// <div className={`mp3-player-container ${hideMp3}`}>
+        // 	<div className="mp3-player-current-track">
+        // 		<div className="mp3-player-current-img">
+        // 			<img
+        // 				src={this.props.activeTrack.img}
+        // 				alt="podcast"
+        // 			/>
+        // 		</div>
+        // 		<div className="mp3-player-current-title">
+        // 			<p className="mp3-player-current-name">
+        // 				{this.props.activeTrack.name}
+        // 			</p>
+        // 			<p className="mp3-player-current-copy">
+        // 				{this.props.activeTrack.desc}
+        // 			</p>
+        // 		</div>
+        // 	</div>
+        // 	<div className="mp3-player-track-container">
+        // 		<div className="mp3-player-control-buttons">
+        // 			{ this.props.hasPlaylist && <button className="mp3-player-tape-controls-backward" onClick={ evt => this.props.skipHandler( evt, 'prev' ) }>
+        // 				<Icon iconName="backward" />
+        // 			</button> }
+        // 			{this.playPause()}
+        // 			{ this.props.hasPlaylist && <button className="mp3-player-tape-controls-forward" onClick={ evt => this.props.skipHandler( evt, 'next' ) }>
+        // 				<Icon iconName="forward" />
+        // 			</button> }
+        // 		</div>
+        // 		<div className="mp3-player-control-track">
+        // 			<span className="mp3-player-track-elapsed">{currentTime}</span>
+        // 			<a
+        // 				href="#"
+        // 				ref={this.progressRef}
+        // 				className="progress-bar-wrap"
+        // 				onClick={evt => this.progressClicked(evt)}
+        // 			>
+        // 				<div className="progress" />
+        // 			</a>
+        // 			<span className="mp3-player-track-remaining">{trackDuration}</span>
+        // 		</div>
+        // 	</div>
+        // 	<div className="mp3-player-volume-container">
+        // 		<div className="mp3-player-menu-buttons">
+        // 			{this.props.hasPlaylist && (
+        // 				<button
+        // 					className="mp3-player-playlist-control"
+        // 					onClick={this.props.playlistClickHandler}
+        // 				>
+        // 					<Icon iconName="playlist" fill={"white"} />
+        // 				</button>
+        // 			)}
+        // 			<button
+        // 				className="mp3-player-hide-control"
+        // 				onClick={() => {
+        // 					this.setState({ isHidden: this.state.isHidden ? false : true }, () => this.props.togglePlaylist( this.state.isHidden ));
+        // 				}}
+        // 			>
+        // 				<Icon iconName="hide" fill={"white"} />
+        // 			</button>
+        // 		</div>
+        // 		<div className="mp3-player-volume-slider">
+        // 			<button
+        // 				className="mp3-player-tape-controls-mute"
+        // 				onClick={evt => this.muteSound(evt)}
+        // 			>
+        // 				{<Icon iconName={!this.state.volumeLevel ? "mute" : "volume"} />}
+        // 			</button>
+        // 			<input
+        // 				type="range"
+        // 				id="volume"
+        // 				className="mp3-player-volume-input"
+        // 				min="0"
+        // 				max="2"
+        // 				list="gain-vals"
+        // 				step="0.01"
+        // 				data-action="volume"
+        // 				onInput={evt => this.changeVolume(evt)}
+        // 			/>
+        // 		</div>
+        // 	</div>
+        // </div>
+        React.createElement("div", null, "This is the player")
+      );
     }
   }]);
 
