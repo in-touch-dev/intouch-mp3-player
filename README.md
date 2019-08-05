@@ -4,6 +4,7 @@ An Mp3 player to play any audio file based on ReactJS
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Adding-new-icons-to-the-library](#Adding-new-icons-to-the-library)
 - [Contributing](#contributing)
 
@@ -24,16 +25,25 @@ Import the Icon component
 ```Javascript
 import Playlist from 'react-mp3-player';
 ```
-Add the Player component and pass it the relative mp3 tracks.
+
 The tracks format will be ann array of objects, each object containing a name, description, src mp3 and an optional image
 
 ```Javascript
-
 const tracks = [{ img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'MP3', desc: 'Description 1', src:'Audio.mp3'},
 { img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'MP3 #2', desc: 'Description 2', src:'Audio2.mp3'}]
+```
 
+Add the Player component and pass it the relative mp3 tracks.
+
+```Javascript
 <Player playlist={tracks} />
 ```
+
+
+## Screenshots
+
+
+![Alt text](public/favicon.ico)
 
 ## Adding new features to the mp3
 Make any changes or additional features in the Player.js component and update the version (in the package.json) by 0.0.1 and then push all your changes to the repo.
