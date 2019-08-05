@@ -193,7 +193,7 @@ import {Howl} from 'howler'
 				<div className="mp3-player-current-track">
 					<div className="mp3-player-current-img">
 						<img
-							src={this.props.activeTrack.img}
+							src={this.props.activeTrack.img ? this.props.activeTrack.img : './images/music.png'}
 							alt="podcast"
 						/>
 					</div>
