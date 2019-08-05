@@ -1,0 +1,10 @@
+*,
+*::before,
+*::after {
+ box-sizing: border-box; // 1
+}     
+
+   @import '/Sliders.scss';
+   @import '/Playlist.scss';
+   @import '/player.scss';
+   @import '/Hidden.scss';

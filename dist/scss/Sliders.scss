@@ -1,0 +1,188 @@
+$mobile: 768px;
+
+.mp3-player-track-input {
+    -webkit-appearance: none;
+    width: 85%;
+    height: 100%;
+    background: transparent;
+    transform: translateY(4px);
+
+    &:focus {
+        outline: none;
+    }
+
+    //WEBKIT
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+
+    }
+
+    &::-webkit-slider-runnable-track {
+        width: 60%;
+        height: 9px;
+        background: #E84E0F;
+
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    // IE
+
+    &::-ms-track {
+        width: 60%;
+        cursor: pointer;
+        height: 9px;
+
+        transition: all 0.5s;
+        /* Hides the slider so custom styles can be added */
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    &::-ms-thumb {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+    }
+
+
+    //FIREFOX
+    &::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+    }
+
+    &::-moz-range-track {
+        width: 60%;
+        height: 9px;
+        background: #E84E0F;
+
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+}
+
+.mp3-player-volume-input {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+
+    @media (max-width: $mobile) {
+        position: absolute;
+        transform: rotate(-90deg);
+        width: 75px;
+        right: -10px;
+        bottom: 80px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+
+    //WEBKIT
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+
+    }
+
+    &::-webkit-slider-runnable-track {
+        width: 60%;
+        height: 5px;
+        background: #E84E0F;
+
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+
+    // IE
+
+    &::-ms-track {
+        width: 60%;
+        cursor: pointer;
+        height: 5px;
+
+        transition: all 0.5s;
+        /* Hides the slider so custom styles can be added */
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    &::-ms-thumb {
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+    }
+
+    &::-ms-fill-lower {
+        background: #bdbdbd;
+    }
+
+    &:focus::-ms-fill-lower {
+        background: #E84E0F;
+    }
+
+    &::-ms-fill-upper {
+        background: #bdbdbd;
+    }
+
+    &:focus::-ms-fill-upper {
+        background: #E84E0F;
+    }
+
+    //FIREFOX
+    &::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        margin-top: -5px;
+        box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+        cursor: pointer;
+    }
+
+    &::-moz-range-track {
+        width: 60%;
+        height: 9px;
+        background: #E84E0F;
+
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+}
