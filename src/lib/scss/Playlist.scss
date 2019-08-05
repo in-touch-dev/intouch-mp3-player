@@ -82,7 +82,7 @@
         }
     }
 
-    @media (max-width :$mobile) {
+    &.is-mobile {
         max-width: 100%;
         bottom: 180px;
 
@@ -102,13 +102,9 @@
     }
     &.playlist {
 
-        // .mp3-player-playlist-control,
-        // .mp3-player-hide-control {
-        //     display: none;
-        // }
           height: 160px;
     
-          @media (max-width :$mobile) {
+          &.is-mobile {
             height: calc(100vh - 180px)
           }
         }

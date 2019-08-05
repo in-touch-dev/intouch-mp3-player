@@ -77,9 +77,11 @@ export default class Playlist extends React.Component {
     if (this.state.hidePlaylist) {
       return;
     }
-    const showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
+	const showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
+	const isMobile = this.state.isMobile ? 'is-mobile' : ''
+
     return (
-      <div className={`mp3-player-playlist-container ${showPlaylist}`}>
+      <div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`}>
         <div className="mp3-player-playlist-header">
           <button
             className="mp3-player-playlist-close"

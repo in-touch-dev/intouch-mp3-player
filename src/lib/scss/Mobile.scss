@@ -1,0 +1,134 @@
+.mp3-player-container {
+    &.is-mobile {
+        height: 180px;
+        flex-direction: column;
+        padding: 0;
+        position: fixed;
+
+        &:before {
+            display: block;
+        }
+
+        .mp3-player-track-container {
+            width: 100%;
+
+            .mp3-player-control-track {
+                transform: translateY(20px);
+
+                .progress-bar-wrap {
+                    transform: none;
+                }
+            }
+        }
+
+        .mp3-player-current-track {
+            width: auto;
+            height: auto;
+
+            .mp3-player-current-img {
+                display: none;
+            }
+
+            .mp3-player-current-title {
+                height: 20px;
+                text-align: center;
+
+                .mp3-player-current-name {
+                    transform: translateY(5px);
+                    text-align: center;
+                    margin: none;
+                }
+
+                .mp3-player-current-copy {
+                    display: none;
+                }
+            }
+        }
+
+
+        .mp3-player-control-buttons {
+            transform: translateY(10px);
+            text-align: center;
+            display: flex;
+
+            .mp3-player-tape-controls-play {
+                padding: 20px;
+                border-radius: 80px;
+                width: 95px;
+                height: 95px;
+
+                .mp3-player-play-button {
+                    svg {
+                        width: 50px;
+                    }
+                }
+
+                svg {
+                    width: 50px;
+                }
+            }
+
+            .mp3-player-tape-controls-forward {
+                svg {
+                    width: 30px;
+                }
+            }
+            .mp3-player-tape-controls-backward {
+                svg {
+                    width: 30px;
+                }
+            }
+        }
+
+        .mp3-player-volume-container {
+              width: 150px;
+        
+            .mp3-player-playlist-control {
+                padding: 0.2rem 1rem 0.4rem 0.6rem;
+                position: absolute;
+                left: 1%;
+                bottom: 135px;
+        
+                svg {
+                  width: 20px;
+                }
+            }
+        
+            .mp3-player-hide-control {
+                transition: none;
+                position: absolute;
+                left: 50%;
+                bottom: 180px;
+                transform: translateX(-50%);
+              
+              svg {
+                  width: 20px;
+                }
+            }
+        
+            .mp3-player-volume-slider {
+              .mp3-player-tape-controls-mute {
+                  position: absolute;
+                  right: 1%;
+                  bottom: 135px;
+        
+                  svg {
+                    width: 20px;
+        
+                    &:hover {
+                      transform: translateY(2px);
+                    }
+                  
+                }
+              }
+            }
+          }
+          .mp3-player-volume-input {
+            position: absolute;
+            transform: rotate(-90deg);
+            width: 75px !important;
+            right: -10px;
+            bottom: 80px;
+          }
+    }
+}
