@@ -247,7 +247,7 @@ function (_React$Component) {
       }, React.createElement("div", {
         className: "mp3-player-current-img"
       }, React.createElement("img", {
-        src: this.props.activeTrack.img,
+        src: this.props.activeTrack.img ? this.props.activeTrack.img : './images/music.png',
         alt: "podcast"
       })), React.createElement("div", {
         className: "mp3-player-current-title"

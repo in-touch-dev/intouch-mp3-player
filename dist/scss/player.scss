@@ -115,9 +115,14 @@
     }
 
     .mp3-player-current-img {
+      border: 2px white solid;
+      width: 75px;
+      height: 75px;
+      border-radius: 43px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       img {
-        border-radius: 40px;
-        border: 2px white solid;
         width: 75px;
       }
 
