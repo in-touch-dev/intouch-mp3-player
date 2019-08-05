@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     height: 0px;
-    overflow: scroll;
     right: 0px;
     bottom: 110px;
     transition: 0.5s;
@@ -39,7 +38,7 @@
     }
 
     .mp3-player-playlist-content {
-        overflow: scroll;
+        overflow: auto;
         display: block;
         // flex-direction: column;
         height: 120px;

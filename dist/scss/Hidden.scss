@@ -1,5 +1,5 @@
 .mp3-player-container {
-    &.hidden {
+    &.mp3-player-hidden {
         transition: 0.5s;
         height: 50px;
 
@@ -76,6 +76,5 @@
             display: none;
             height: 0px;
         }
-    background-color: aqua;
     }
 }

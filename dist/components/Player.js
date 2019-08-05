@@ -239,7 +239,7 @@ function (_React$Component) {
 
       var trackDuration = formatTime(this.state.trackDuration);
       var currentTime = formatTime(this.state.currentTime);
-      var hideMp3 = this.state.isHidden ? "hidden" : "";
+      var hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
       return React.createElement("div", {
         className: "mp3-player-container ".concat(hideMp3)
       }, React.createElement("div", {
