@@ -9,7 +9,7 @@
     right: 0px;
     bottom: 110px;
     transition: 0.5s;
-    z-index: 999999999999999999999999999;
+    z-index: 99999999999999;
 
 
 
@@ -106,4 +106,8 @@
             height: calc(100vh - 180px)
           }
         }
+}
+
+.playlist-wrap {
+    z-index: 999999999999999;
 }
