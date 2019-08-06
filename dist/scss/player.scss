@@ -1,5 +1,5 @@
 .mp3-player-container {
-  width: 100%;
+  // width: 100%;
   height: 110px;
   display: flex;
   flex-direction: row;
@@ -29,16 +29,16 @@
     transform: rotate(180deg) translateY(1px);
   }
 
-  @media (max-width: $mobile) {
-    height: 180px;
-    flex-direction: column;
-    padding: 0;
-    position: fixed;
+  // @media (max-width: $mobile) {
+  //   height: 180px;
+  //   flex-direction: column;
+  //   padding: 0;
+  //   position: fixed;
 
-    &:before {
-      display: block;
-    }
-  }
+  //   &:before {
+  //     display: block;
+  //   }
+  // }
 
   .mp3-player-track-container {
     display: flex;
@@ -47,9 +47,9 @@
     justify-content: space-between;
     padding: 1rem 0.5rem;
 
-    @media (max-width: $mobile) {
-      width: 100%;
-    }
+    // @media (max-width: $mobile) {
+    //   width: 100%;
+    // }
 
     .mp3-player-control-track {
       width: 100%;
@@ -57,9 +57,9 @@
       flex-direction: row;
       margin: 2px 0;
 
-      @media (max-width: $mobile) {
-        transform: translateY(20px);
-      }
+      // @media (max-width: $mobile) {
+      //   transform: translateY(20px);
+      // }
 
       span {
         width: 63px;
@@ -76,9 +76,9 @@
         margin-left: 5px;
         margin-right: 5px;
 
-        @media (max-width: $mobile) {
-          transform: none;
-        }
+        // @media (max-width: $mobile) {
+        //   transform: none;
+        // }
 
         .progress {
           display: block;
@@ -109,10 +109,10 @@
     justify-content: flex-start;
     align-items: center;
 
-    @media (max-width: $mobile) {
-      width: auto;
-      height: auto;
-    }
+    // @media (max-width: $mobile) {
+    //   width: auto;
+    //   height: auto;
+    // }
 
     .mp3-player-current-img {
       border: 2px white solid;
@@ -126,9 +126,9 @@
         width: 75px;
       }
 
-      @media (max-width: $mobile) {
-        display: none;
-      }
+      // @media (max-width: $mobile) {
+      //   display: none;
+      // }
     }
 
     .mp3-player-current-title {
@@ -139,10 +139,10 @@
       align-items: flex-start;
       flex-direction: column;
 
-      @media (max-width: $mobile) {
-        height: 20px;
-        text-align: center;
-      }
+      // @media (max-width: $mobile) {
+      //   height: 20px;
+      //   text-align: center;
+      // }
 
       .mp3-player-current-name {
         font-size: 16px;
@@ -152,11 +152,11 @@
         -webkit-line-clamp: 2;
 
 
-        @media (max-width: $mobile) {
-          transform: translateY(5px);
-          text-align: center;
-          margin: none;
-        }
+        // @media (max-width: $mobile) {
+        //   transform: translateY(5px);
+        //   text-align: center;
+        //   margin: none;
+        // }
       }
 
       .mp3-player-current-copy {
@@ -171,9 +171,9 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
 
-        @media (max-width: $mobile) {
-          display: none;
-        }
+        // @media (max-width: $mobile) {
+        //   display: none;
+        // }
       }
     }
   }
@@ -185,11 +185,11 @@
     align-items: center;
     transition: 0.5s;
 
-    @media (max-width: $mobile) {
-      transform: translateY(10px);
-      text-align: center;
-      display: flex;
-    }
+    // @media (max-width: $mobile) {
+    //   transform: translateY(10px);
+    //   text-align: center;
+    //   display: flex;
+    // }
 
     button {
       border: none;
@@ -251,9 +251,9 @@
           width: 35px;
           transition: 0.5s;
 
-          @media (max-width: $mobile) {
-              width: 50px;
-          }
+          // @media (max-width: $mobile) {
+          //     width: 50px;
+          // }
 
           path {
               fill: #FFFFFF;
@@ -276,9 +276,9 @@
         width: 20px;
         transition: 0.5s;
 
-        @media (max-width: $mobile) {
-          width: 30px;
-        }
+        // @media (max-width: $mobile) {
+        //   width: 30px;
+        // }
 
         path {
           fill: #ffffff;
@@ -300,9 +300,9 @@
         width: 20px;
         transition: 0.5s;
 
-        @media (max-width: $mobile) {
-          width: 30px;
-        }
+        // @media (max-width: $mobile) {
+        //   width: 30px;
+        // }
 
         path {
           fill: #ffffff;
@@ -327,9 +327,9 @@
     height: 85px;
     justify-content: space-between;
 
-    @media (max-width: $mobile) {
-      width: 150px;
-    }
+    // @media (max-width: $mobile) {
+    //   width: 150px;
+    // }
 
     .mp3-player-tape-controls-mute,
     .mp3-player-playlist-control,
@@ -348,34 +348,34 @@
         width: 28px;
       }
 
-      @media (max-width: $mobile) {
-        padding: 0.2rem 1rem 0.4rem 0.6rem;
-        position: absolute;
-        left: 1%;
-        bottom: 135px;
+      // @media (max-width: $mobile) {
+      //   padding: 0.2rem 1rem 0.4rem 0.6rem;
+      //   position: absolute;
+      //   left: 1%;
+      //   bottom: 135px;
 
-        svg {
-          width: 20px;
-        }
-      }
+      //   svg {
+      //     width: 20px;
+      //   }
+      // }
     }
 
     .mp3-player-hide-control {
       transition: 0.5s;
-      @media (max-width: $mobile) {
-        transition: none;
-        position: absolute;
-        left: 50%;
-        bottom: 180px;
-        transform: translateX(-50%);
-      }
+      // @media (max-width: $mobile) {
+      //   transition: none;
+      //   position: absolute;
+      //   left: 50%;
+      //   bottom: 180px;
+      //   transform: translateX(-50%);
+      // }
 
       svg {
         width: 24px;
 
-        @media (max-width: $mobile) {
-          width: 20px;
-        }
+        // @media (max-width: $mobile) {
+        //   width: 20px;
+        // }
       }
     }
 
@@ -408,19 +408,19 @@
           }
         }
 
-        @media (max-width: $mobile) {
-          position: absolute;
-          right: 1%;
-          bottom: 135px;
+        // @media (max-width: $mobile) {
+        //   position: absolute;
+        //   right: 1%;
+        //   bottom: 135px;
 
-          svg {
-            width: 20px;
+        //   svg {
+        //     width: 20px;
 
-            &:hover {
-              transform: translateY(2px);
-            }
-          }
-        }
+        //     &:hover {
+        //       transform: translateY(2px);
+        //     }
+        //   }
+        // }
       }
     }
   }

@@ -3,10 +3,10 @@ import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/esm/inherits";
-import React from 'react';
+import React from "react";
 import Icon from "../icons/PlayerIcons";
-import '../scss/App.scss';
-import Player from './Player'; // const React = require('react');
+import "../scss/App.scss";
+import Player from "./Player"; // const React = require('react');
 // const Icon = require('../icons/PlayerIcons');
 // require('../scss/App.scss')
 // const Player = require('./Player');
@@ -49,22 +49,47 @@ function (_React$Component) {
 
     _this.state = {
       currentIndex: _this.props.currentIndex || 0,
-      activeTrack: _this.props.tracks[_this.props.currentIndex || 0]
+      activeTrack: _this.props.tracks[_this.props.currentIndex || 0],
+      isMobile: false
     };
     return _this;
   }
 
   _createClass(Playlist, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      var bp;
+
+      if (this.props.opts) {
+        bp = this.props.opts.breakpoint ? Math.abs(this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0)) : 768;
+      } else {
+        bp = 768;
+      }
+
+      this.breakpoint = window.matchMedia("(max-width: ".concat(bp, "px)"));
+
+      var breakpointHandler = function breakpointHandler() {
+        _this2.setState({
+          isMobile: _this2.breakpoint.matches
+        });
+      };
+
+      this.breakpoint.addListener(breakpointHandler);
+      breakpointHandler();
+    }
+  }, {
     key: "playlistContent",
     value: function playlistContent() {
-      var _this2 = this;
+      var _this3 = this;
 
       var playlist = this.props.tracks.map(function (track, key) {
         return React.createElement("button", {
           className: "mp3-player-playlist-track-button",
           key: key,
           onClick: function onClick() {
-            return _this2.setActiveTrack(track);
+            return _this3.setActiveTrack(track);
           }
         }, track.name, React.createElement("span", {
           className: "mp3-player-playlist-track-time"
@@ -82,22 +107,29 @@ function (_React$Component) {
   }, {
     key: "playlistBody",
     value: function playlistBody() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.hidePlaylist) {
         return;
       }
 
-      ;
       var showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
+      var isMobile = this.state.isMobile ? 'is-mobile' : '';
+      var styleOffsetOverides = Object.assign({}, {
+        left: 0,
+        right: 0
+      }, this.props.opts && this.props.opts.offset);
+      styleOffsetOverides.left = "".concat(styleOffsetOverides.left, "px");
+      styleOffsetOverides.right = "".concat(styleOffsetOverides.right, "px");
       return React.createElement("div", {
-        className: "mp3-player-playlist-container ".concat(showPlaylist)
+        className: "mp3-player-playlist-container ".concat(showPlaylist, " ").concat(isMobile),
+        style: this.state.isMobile ? styleOffsetOverides : {}
       }, React.createElement("div", {
         className: "mp3-player-playlist-header"
       }, React.createElement("button", {
         className: "mp3-player-playlist-close",
         onClick: function onClick(evt) {
-          return _this3.playlistClickHandler(evt);
+          return _this4.playlistClickHandler(evt);
         }
       }, React.createElement(Icon, {
         iconName: "close",
@@ -109,7 +141,7 @@ function (_React$Component) {
   }, {
     key: "skipHandler",
     value: function skipHandler(evt, type) {
-      var newIndex = type === 'next' ? this.state.currentIndex + 1 : this.state.currentIndex - 1;
+      var newIndex = type === "next" ? this.state.currentIndex + 1 : this.state.currentIndex - 1;
 
       if (typeof this.props.tracks[newIndex] !== "undefined") {
         this.setState({
@@ -119,7 +151,6 @@ function (_React$Component) {
         return;
       }
 
-      ;
       console.error("no song to play!");
     }
   }, {
@@ -138,22 +169,24 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return React.createElement("div", {
-        className: "playlist-wrap"
+        className: this.state.isMobile ? "playlist-wrap is-mobile" : "playlist-wrap"
       }, React.createElement(Player, {
         activeTrack: this.state.activeTrack,
         hasPlaylist: true,
         playlistClickHandler: function playlistClickHandler(evt) {
-          return _this4.playlistClickHandler(evt);
+          return _this5.playlistClickHandler(evt);
         },
         skipHandler: function skipHandler(evt, type) {
-          return _this4.skipHandler(evt, type);
+          return _this5.skipHandler(evt, type);
         },
         togglePlaylist: function togglePlaylist(condition) {
-          return _this4.togglePlaylist(condition);
-        }
+          return _this5.togglePlaylist(condition);
+        },
+        isMobile: this.state.isMobile,
+        opts: this.props.opts
       }), this.playlistBody());
     }
   }]);
@@ -162,4 +195,3 @@ function (_React$Component) {
 }(React.Component);
 
 export { Playlist as default };
-;
