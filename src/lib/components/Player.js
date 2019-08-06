@@ -22,13 +22,12 @@ import {Howl} from 'howler'
 	componentWillMount = () => this.calculateOffset()
 
 	calculateOffset(){
-		console.log('this.props.opts : ', this.props.opts.offset);
 		this.wrapOffsetStyles = {
 			left : '0',
 			right : '0'
 		};
 
-		this.wrapOffsetStyles = Object.assign( {}, this.wrapOffsetStyles, this.props.opts.offset );
+		this.wrapOffsetStyles = Object.assign( {}, this.wrapOffsetStyles, this.props.opts && this.props.opts.offset );
 		this.wrapOffsetStyles.left = `${ this.wrapOffsetStyles.left }px`;
 		this.wrapOffsetStyles.right = `${ this.wrapOffsetStyles.right }px`;
 	}

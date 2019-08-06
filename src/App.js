@@ -4,12 +4,11 @@ import Playlist from './lib/components/Playlist';
 
 const playlistOverideStylingOpts = {
   offset : {
-    left : 100
+    left : 300
   },
   breakpoint : {
-    maxWidth : 762,
-    isMobile : true
-  }
+    maxWidth : 768
+    }
 };
 
 const App = () => {

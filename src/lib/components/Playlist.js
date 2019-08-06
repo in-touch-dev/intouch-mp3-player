@@ -20,13 +20,17 @@ export default class Playlist extends React.Component {
   }
 
   componentWillMount() {
-	  const bp = Math.abs( this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0))
+	  let bp
+	  if(this.props.opts) {
+	   bp = this.props.opts.breakpoint ? (Math.abs( this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0))) : 768
+	  } else {
+		  bp = 768
+	  }
 	
     this.breakpoint = window.matchMedia(
       `(max-width: ${ bp }px)`
     );
     const breakpointHandler = () => {
-      console.log(this.breakpoint.matches);
       this.setState({ isMobile: this.breakpoint.matches });
     };
 
@@ -80,7 +84,7 @@ export default class Playlist extends React.Component {
 	const showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
   const isMobile = this.state.isMobile ? 'is-mobile' : '';
 
-    const styleOffsetOverides = Object.assign( {}, { left : 0, right : 0 }, this.props.opts.offset );
+    const styleOffsetOverides = Object.assign( {}, { left : 0, right : 0 }, this.props.opts && this.props.opts.offset );
     styleOffsetOverides.left = `${ styleOffsetOverides.left }px`;
     styleOffsetOverides.right = `${ styleOffsetOverides.right }px`;
 
