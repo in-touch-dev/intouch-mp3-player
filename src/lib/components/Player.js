@@ -27,9 +27,7 @@ import {Howl} from 'howler'
 			right : '0'
 		};
 		
-		if( this.props.opts && this.props.opts.breakpoint && this.props.opts.breakpoint.removeOffset && !this.props.isMobile ){
-			this.wrapOffsetStyles = Object.assign( {}, this.wrapOffsetStyles, this.props.opts && this.props.opts.offset );
-		};
+		this.wrapOffsetStyles = Object.assign( {}, this.wrapOffsetStyles, this.props.opts && this.props.opts.offset );
 		
 		this.wrapOffsetStyles.left = `${ this.wrapOffsetStyles.left }px`;
 		this.wrapOffsetStyles.right = `${ this.wrapOffsetStyles.right }px`;
@@ -204,8 +202,6 @@ import {Howl} from 'howler'
 		const currentTime = formatTime(this.state.currentTime);
 		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
 		const isMobile = this.props.isMobile ? 'is-mobile' : '';
-
-		this.calculateOffset();
 
 		return (
 			<div className={`mp3-player-container ${hideMp3} ${isMobile}`} style={ this.wrapOffsetStyles }>

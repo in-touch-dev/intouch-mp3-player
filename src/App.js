@@ -7,8 +7,7 @@ const playlistOverideStylingOpts = {
     left : 300
   },
   breakpoint : {
-    maxWidth : 768,
-    removeOffset : true
+    maxWidth : 768
   }
 };
 
