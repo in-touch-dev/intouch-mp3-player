@@ -3,6 +3,10 @@
         transition: 0.5s;
         height: 50px;
 
+        &:before {
+          transform: rotate(180deg) translateY(3.5px) translateX(3%);
+        }
+
         .mp3-player-control-buttons,
         .mp3-player-playlist-control,
         .mp3-player-current-img, 
