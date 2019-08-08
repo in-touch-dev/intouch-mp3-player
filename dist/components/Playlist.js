@@ -37,13 +37,9 @@ function (_React$Component) {
         return;
       }
 
-      ;
-
       if (window.audio && window.audio.active) {
         window.audio.active.pause();
       }
-
-      ;
 
       _this.setState({
         activeTrack: track,
@@ -64,11 +60,18 @@ function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      var bp = !this.props.opts ? 768 : this.props.opts.breakpoint ? Math.abs(this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0)) : 768;
+      var bp;
+
+      if (this.props.opts) {
+        bp = this.props.opts.breakpoint ? Math.abs(this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0)) : 768;
+      } else {
+        bp = 768;
+      }
+
       this.breakpoint = window.matchMedia("(max-width: ".concat(bp, "px)"));
 
       var breakpointHandler = function breakpointHandler() {
-        return _this2.setState({
+        _this2.setState({
           isMobile: _this2.breakpoint.matches
         });
       };
@@ -115,7 +118,7 @@ function (_React$Component) {
       var styleOffsetOverides = Object.assign({}, {
         left: 0,
         right: 0
-      }, this.props.opts && this.props.opts.breakpoint && this.props.opts.breakpoint.removeOffset && this.state.isMobile ? {} : this.props.opts.offset);
+      }, this.props.opts && this.props.opts.offset);
       styleOffsetOverides.left = "".concat(styleOffsetOverides.left, "px");
       styleOffsetOverides.right = "".concat(styleOffsetOverides.right, "px");
       return React.createElement("div", {

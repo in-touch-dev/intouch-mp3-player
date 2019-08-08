@@ -82,12 +82,7 @@ function (_React$Component) {
         left: '0',
         right: '0'
       };
-
-      if (this.props.opts && this.props.opts.breakpoint && this.props.opts.breakpoint.removeOffset && !this.props.isMobile) {
-        this.wrapOffsetStyles = Object.assign({}, this.wrapOffsetStyles, this.props.opts && this.props.opts.offset);
-      }
-
-      ;
+      this.wrapOffsetStyles = Object.assign({}, this.wrapOffsetStyles, this.props.opts && this.props.opts.offset);
       this.wrapOffsetStyles.left = "".concat(this.wrapOffsetStyles.left, "px");
       this.wrapOffsetStyles.right = "".concat(this.wrapOffsetStyles.right, "px");
     }
@@ -261,7 +256,6 @@ function (_React$Component) {
       var currentTime = formatTime(this.state.currentTime);
       var hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
       var isMobile = this.props.isMobile ? 'is-mobile' : '';
-      this.calculateOffset();
       return React.createElement("div", {
         className: "mp3-player-container ".concat(hideMp3, " ").concat(isMobile),
         style: this.wrapOffsetStyles

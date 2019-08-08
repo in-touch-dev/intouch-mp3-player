@@ -206,11 +206,7 @@ import {Howl} from 'howler'
 		return (
 			<div className={`mp3-player-container ${hideMp3} ${isMobile}`} style={ this.wrapOffsetStyles }>
 				<div className="mp3-player-current-track">
-					<div className="mp3-player-current-img">
-						<img
-							src={this.props.activeTrack.img ? this.props.activeTrack.img : 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg'}
-							alt="podcast"
-						/>
+					<div className="mp3-player-current-img" style={{backgroundImage: `url( ${this.props.activeTrack.img ? this.props.activeTrack.img : 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg'} )`}}>
 					</div>
 					<div className="mp3-player-current-title">
 						<p className="mp3-player-current-name">

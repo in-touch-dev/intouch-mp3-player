@@ -4,7 +4,7 @@ import Playlist from './lib/components/Playlist';
 
 const playlistOverideStylingOpts = {
   offset : {
-    left : 300
+    left : 0
   },
   breakpoint : {
     maxWidth : 768
