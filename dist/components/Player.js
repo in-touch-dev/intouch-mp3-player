@@ -262,11 +262,11 @@ function (_React$Component) {
       }, React.createElement("div", {
         className: "mp3-player-current-track"
       }, React.createElement("div", {
-        className: "mp3-player-current-img"
-      }, React.createElement("img", {
-        src: this.props.activeTrack.img ? this.props.activeTrack.img : 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg',
-        alt: "podcast"
-      })), React.createElement("div", {
+        className: "mp3-player-current-img",
+        style: {
+          backgroundImage: "url( ".concat(this.props.activeTrack.img ? this.props.activeTrack.img : 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', " )")
+        }
+      }), React.createElement("div", {
         className: "mp3-player-current-title"
       }, React.createElement("p", {
         className: "mp3-player-current-name"
