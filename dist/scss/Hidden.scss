@@ -4,11 +4,12 @@
         height: 50px;
 
         &:before {
-          transform: rotate(180deg) translateY(3.5px) translateX(3%);
+          transform: rotate(180deg) translateY(2.5px) translateX(3%);
         }
 
         .mp3-player-control-buttons,
         .mp3-player-playlist-control,
+        .mp3-player-close-control,
         .mp3-player-current-img, 
         .mp3-player-current-copy {
             display: none !important;
@@ -31,46 +32,11 @@
         }
 
         .mp3-player-hide-control {
-            transition: 0.5s;
             position: relative;
             bottom: -25px;
             right: -35px;
             transform: rotate(180deg) translate(50%);
         }
-
-        // @media (max-width :$mobile) {
-        //     transition: 0.5s;
-        //     height: 80px;
-
-        //     .mp3-player-control-buttons,
-        //     .mp3-player-tape-controls-mute,
-        //     .mp3-player-playlist-control,
-        //     .mp3-player-volume-input {
-        //         display: none;
-        //     }
-
-        //     .mp3-player-track-input,
-        //     .mp3-player-track-elapsed,
-        //     .mp3-player-track-remaining {
-        //         transform: translateY(-5px)
-        //     }
-
-        //     .mp3-player-hide-control {
-        //         position: absolute;
-        //         bottom: 80px;
-        //         transform: rotate(180deg) translate(50%)
-        //     }
-
-        //     .mp3-player-track-container {
-        //         transform: none;
-        //     }
-
-        //     .mp3-player-current-title {
-        //         top: 0px;
-                
-        //     }
-
-        // }
 
         .mp3-player-playlist-container {
             display: none;
