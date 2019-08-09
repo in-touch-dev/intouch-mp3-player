@@ -96,8 +96,18 @@
             .mp3-player-playlist-control {
                 padding: 0.2rem 1rem 0.4rem 0.6rem;
                 position: absolute;
-                left: 1%;
-                bottom: 135px;
+                right: 1%;
+                bottom: 100px;
+        
+                svg {
+                  width: 21px;
+                }
+            }
+            .mp3-player-close-control {
+                padding: 0.2rem 1rem 0.4rem 0.6rem;
+                position: absolute;
+                right: 1%;
+                bottom: 131px;
         
                 svg {
                   width: 20px;
@@ -120,7 +130,7 @@
             .mp3-player-volume-slider {
               .mp3-player-tape-controls-mute {
                   position: absolute;
-                  right: 1%;
+                  left: 1%;
                   bottom: 135px;
         
                   svg {
@@ -138,7 +148,7 @@
             position: absolute;
             transform: rotate(-90deg);
             width: 75px !important;
-            right: -10px;
+            left: -12px;
             bottom: 80px;
           }
     }

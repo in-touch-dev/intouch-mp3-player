@@ -42,7 +42,8 @@ import {Howl} from 'howler'
 				currentTime: 0,
 				isHidden: false,
 				volumeLevel: 1,
-				currentIndex: 1
+				currentIndex: 1,
+				closed: false
 			})
 		);
 	}
@@ -63,9 +64,10 @@ import {Howl} from 'howler'
 	}
 
 	setProgressIndicator = val =>
+	this.progressRef.current && (
 		(this.progressRef.current.querySelector(
 			".progress"
-		).style.marginLeft = `${val}px`);
+		).style.marginLeft = `${val}px`))
 
 	play() {
 		if (this.sound && this.state.isPaused) {
@@ -111,6 +113,11 @@ import {Howl} from 'howler'
 	stopPlayLoop() {
 		clearInterval(this.loop);
 		this.loop = 0;
+	}
+
+	closePlayer() {
+		this.sound && this.sound.stop();
+		this.setState({closed: true})
 	}
 
 	changeVolume = evt => {
@@ -162,14 +169,17 @@ import {Howl} from 'howler'
 	}
 
 	playLoop() {
+		if(!this.state.closed) {
+			console.log('hello')
 		this.loop = setInterval(() => {
 			let progressIndicator =
 				(this.sound.seek() / this.state.trackDuration) *
-				this.progressRef.current.clientWidth;
+				(this.progressRef.current && this.progressRef.current.clientWidth);
 			this.setState({ currentTime: this.sound.seek(), progressIndicator }, () =>
 				this.setProgressIndicator(progressIndicator)
 			);
 		}, 500);
+	}
 	}
 
 	progressClicked(evt) {
@@ -202,7 +212,10 @@ import {Howl} from 'howler'
 		const currentTime = formatTime(this.state.currentTime);
 		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
 		const isMobile = this.props.isMobile ? 'is-mobile' : '';
-
+		const {closed } = this.state 
+		if(closed) {
+			return null
+		} else {
 		return (
 			<div className={`mp3-player-container ${hideMp3} ${isMobile}`} style={ this.wrapOffsetStyles }>
 				<div className="mp3-player-current-track">
@@ -258,6 +271,14 @@ import {Howl} from 'howler'
 						>
 							<Icon iconName="hide" fill={"white"} />
 						</button>
+						<button
+							className="mp3-player-close-control"
+							onClick={() => {
+								this.closePlayer()
+							}}
+						>
+							<Icon iconName="close" fill={"white"} />
+						</button>
 					</div>
 					<div className="mp3-player-volume-slider">
 						<button
@@ -281,6 +302,7 @@ import {Howl} from 'howler'
 				</div>
 			</div>
 		);
+						}
 	}
 }
 
