@@ -34,18 +34,17 @@ import {Howl} from 'howler'
 	}
 
 	defaultState() {
-		return JSON.parse(
-			JSON.stringify({
-				isPlaying: false,
-				track: false,
-				trackDuration: 0,
-				currentTime: 0,
-				isHidden: false,
-				volumeLevel: 1,
-				currentIndex: 1,
-				closed: false
-			})
-		);
+		return {
+			isPlaying: false,
+			track: false,
+			trackDuration: 0,
+			currentTime: 0,
+			isHidden: false,
+			volumeLevel: 1,
+			currentIndex: 1,
+			closed: false,
+			loading : false
+		};
 	}
 
 	reset() {
@@ -78,7 +77,10 @@ import {Howl} from 'howler'
 
 		this.sound = new Howl({ src: [this.props.activeTrack.src] });
 		window.audio = { active: this.sound };
+
+		this.setState({ loading : true });
 		this.sound.once("load", () => {
+			this.setState({ loading : false });
 			this.sound.on("end", evt => {
 				this.stopPlayLoop();
 				this.setProgressIndicator(this.progressRef.current.clientWidth);
@@ -208,6 +210,8 @@ import {Howl} from 'howler'
 	}
 
 	render() {
+		if( this.state.loading ){ return 'loading' };
+
 		const trackDuration = formatTime(this.state.trackDuration);
 		const currentTime = formatTime(this.state.currentTime);
 		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
