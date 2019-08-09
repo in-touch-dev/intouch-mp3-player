@@ -389,3 +389,62 @@
     }
   }
 }
+$color-4: #ffffff;
+$color-3: #ffffff;
+$color-2: #ffffff;
+$color-1: #ffffff;
+$color-5: #ffffff;
+
+$color: $color-1, $color-2, $color-3, $color-4, $color-5;
+
+@mixin anim() {
+  @keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50%,
+    75% {
+      transform: scale(2.5);
+    }
+    78%, 100% {
+      opacity: 0;
+    }
+  }
+}
+
+// body {
+//   overflow: hidden;
+// }
+
+.mp3-player-loading-container {
+transform: rotate(270deg) translateX(13px);
+padding: 0;
+}
+
+@for $i from 2 through 4 {
+  .item-#{$i} {
+    width: 10px;
+    height: 10px;
+    background: #f583a1;
+    border-radius: 50%;
+    @include anim();
+    background-color: nth($color, $i);
+    margin: 3px 3px 3px 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: nth($color, $i);
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 200ms * $i;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+  }
+}
