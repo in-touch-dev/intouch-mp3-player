@@ -1,11 +1,15 @@
 .mp3-player-container {
     &.is-mobile {
+        border: 2px #03163d solid;
         height: 180px;
         flex-direction: column;
         padding: 0;
         position: fixed;
 
         &:before {
+            display: block;
+        }
+        &:after {
             display: block;
         }
 
@@ -17,6 +21,11 @@
 
                 .progress-bar-wrap {
                     transform: none;
+                }
+
+                .mp3-player-track-remaining,
+                .mp3-player-track-elapsed {
+                    transform: translateY(-5px);
                 }
             }
         }
@@ -32,6 +41,7 @@
             .mp3-player-current-title {
                 height: 20px;
                 text-align: center;
+                width: auto;
 
                 .mp3-player-current-name {
                     transform: translateY(5px);
@@ -100,6 +110,7 @@
                 left: 50%;
                 bottom: 180px;
                 transform: translateX(-50%);
+                z-index: 5;
               
               svg {
                   width: 20px;

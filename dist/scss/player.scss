@@ -7,7 +7,7 @@
   justify-content: space-between;
   padding: 1rem 2rem;
   background-color: #03163d;
-  border: 2px #03163d solid;
+  border-top: 2px #e84e0f solid;
   font-family: Arial, Helvetica, sans-serif;
   position: fixed;
   transition: 0.5s;
@@ -16,7 +16,23 @@
   color: white;
   z-index: 12345678;
 
+  
   &:before {
+    display: none;
+    width: 106%;
+    content: "";
+    position: absolute;
+    bottom: 98%;
+    left: 0;
+    right: 0;
+    padding-bottom: 10.5%;
+    background: #e84e0f;
+    -webkit-clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
+    clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
+    transform: rotate(180deg) translateY(5.5px) translateX(3%);
+  }
+
+  &:after {
     display: none;
     content: "";
     position: absolute;
@@ -28,6 +44,7 @@
     clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
     transform: rotate(180deg) translateY(1px);
   }
+
 
   // @media (max-width: $mobile) {
   //   height: 180px;
@@ -108,11 +125,6 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-
-    // @media (max-width: $mobile) {
-    //   width: auto;
-    //   height: auto;
-    // }
 
     .mp3-player-current-img {
       border: 2px white solid;
