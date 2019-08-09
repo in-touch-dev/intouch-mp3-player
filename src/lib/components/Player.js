@@ -148,6 +148,9 @@ import {Howl} from 'howler'
 	};
 
 	playPause() {
+		if(this.state.loading) {
+			return {}
+		} else {
 		if (!this.state.isPlaying) {
 			return (
 				<button
@@ -168,6 +171,7 @@ import {Howl} from 'howler'
 				<Icon iconName="pause" />
 			</button>
 		);
+		}
 	}
 
 	playLoop() {
@@ -210,7 +214,6 @@ import {Howl} from 'howler'
 	}
 
 	render() {
-		if( this.state.loading ){ return 'loading' };
 
 		const trackDuration = formatTime(this.state.trackDuration);
 		const currentTime = formatTime(this.state.currentTime);
