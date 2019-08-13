@@ -41,7 +41,7 @@
 .mp3-player-container.mp3-player-hidden.is-mobile .mp3-player-track-input, .mp3-player-container.mp3-player-hidden.is-mobile .mp3-player-track-elapsed, .mp3-player-container.mp3-player-hidden.is-mobile .mp3-player-track-remaining {
     transform: translateY(-5px);
 }
-.mp3-player-container.mp3-player-hidden.is-mobile .mp3-player-hide-control {
+.mp3-player-container.mp3-player-hidden.is-mobile .mp3-player-volume-container .mp3-player-hide-control {
     position: absolute;
     bottom: 80px;
     transform: rotate(180deg) translate(50%);
