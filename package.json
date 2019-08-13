@@ -7,7 +7,7 @@
     "dist",
     "README.md"
   ],
-  "version": "0.6.3",
+  "version": "0.6.4",
   "private": false,
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -22,6 +22,7 @@
     "type": "git",
     "url": "https://github.com/in-touch-dev/intouch-mp3-player"
   },
+  "sass": "lib/scss/app.scss",
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__,serviceWorker.js",
