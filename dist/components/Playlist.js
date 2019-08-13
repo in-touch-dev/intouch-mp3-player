@@ -5,7 +5,7 @@ import _getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/esm/inherits";
 import React from "react";
 import Icon from "../icons/PlayerIcons";
-import "../scss/app.scss";
+import "../scss/app.css";
 import Player from "./Player"; // const React = require('react');
 // const Icon = require('../icons/PlayerIcons');
 // require('../scss/App.scss')
