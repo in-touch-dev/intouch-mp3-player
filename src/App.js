@@ -1,5 +1,5 @@
 import React from 'react';
-import './lib/scss/app.scss';
+import './lib/scss/app.css';
 import Playlist from './lib/components/Playlist';
 
 const playlistOverideStylingOpts = {

@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "../icons/PlayerIcons";
-import "../scss/app.scss";
+import "../scss/app.css";
 import Player from "./Player";
 
 // const React = require('react');
