@@ -1,8 +1,3 @@
-// const React = require('react');
-// const Icon = require('../icons/PlayerIcons');
-// const formatTime = require("../helpers/playerHelper");
-// const {Howl} = require('howler');
-// require('../scss/App.scss');
 import "../scss/app.css";
 import React from "react";
 import Icon from "../icons/PlayerIcons";
@@ -17,7 +12,12 @@ export default class Player extends React.Component {
     this.progressRef = React.createRef();
   }
 
-  componentWillMount = () => this.calculateOffset();
+  componentWillMount = () => {
+	  this.calculateOffset();
+
+	  if(!this.props.activeTrack) { return; }
+	  this.play();
+}
 
   calculateOffset() {
     this.wrapOffsetStyles = {
@@ -155,12 +155,12 @@ export default class Player extends React.Component {
     if (this.state.loading) {
       return (
         <button className="mp3-player-tape-controls-play">
-          <div class="mp3-player-loading-container">
-            <div class="item-1" />
-            <div class="item-2" />
-            <div class="item-3" />
-            <div class="item-4" />
-            <div class="item-5" />
+          <div className="mp3-player-loading-container">
+            <div className="item-1" />
+            <div className="item-2" />
+            <div className="item-3" />
+            <div className="item-4" />
+            <div className="item-5" />
           </div>
         </button>
       );
@@ -190,7 +190,6 @@ export default class Player extends React.Component {
 
   playLoop() {
     if (!this.state.closed) {
-      console.log("hello");
       this.loop = setInterval(() => {
         let progressIndicator =
           (this.sound.seek() / this.state.trackDuration) *
@@ -233,7 +232,7 @@ export default class Player extends React.Component {
     const currentTime = formatTime(this.state.currentTime);
     const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
     const isMobile = this.props.isMobile ? "is-mobile" : "";
-    const { closed } = this.state;
+	const { closed } = this.state;
     if (closed) {
       return null;
     } else {
@@ -267,7 +266,7 @@ export default class Player extends React.Component {
               {this.props.hasPlaylist && (
                 <button
                   className="mp3-player-tape-controls-backward"
-                  onClick={evt => this.props.skipHandler(evt, "prev")}
+				  onClick={evt => this.props.skipHandler(evt, "prev")}
                 >
                   <Icon iconName="backward" />
                 </button>
@@ -282,16 +281,15 @@ export default class Player extends React.Component {
                 </button>
               )}
             </div>
-            <div className="mp3-player-control-track">
+            <div className="mp3-player-control-track"> 
               <span className="mp3-player-track-elapsed">{currentTime}</span>
-              <a
-                href="#"
+              <div
                 ref={this.progressRef}
                 className="progress-bar-wrap"
                 onClick={evt => this.progressClicked(evt)}
               >
                 <div className="progress" />
-              </a>
+              </div>
               <span className="mp3-player-track-remaining">
                 {trackDuration}
               </span>

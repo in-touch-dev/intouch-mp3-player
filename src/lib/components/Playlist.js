@@ -3,11 +3,6 @@ import Icon from "../icons/PlayerIcons";
 import "../scss/app.css";
 import Player from "./Player";
 
-// const React = require('react');
-// const Icon = require('../icons/PlayerIcons');
-// require('../scss/App.scss')
-// const Player = require('./Player');
-
 export default class Playlist extends React.Component {
 	constructor(props) {
 		super(props);
@@ -53,7 +48,6 @@ export default class Playlist extends React.Component {
 			  onClick={() => this.setActiveTrack(track)}
 			>
 			  {track.name}
-			  <span className="mp3-player-playlist-track-time">0:00</span>
 			</button>
 		  );
 		});
