@@ -79,7 +79,7 @@ export default class Player extends React.Component {
       return;
     }
 
-    this.sound = new Howl({ src: [this.props.activeTrack.src] });
+    this.sound = new Howl({ src: [this.props.activeTrack.src], html5: true });
     window.audio = { active: this.sound };
 
     this.setState({ loading: true });
