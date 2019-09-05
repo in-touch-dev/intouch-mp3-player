@@ -135,7 +135,8 @@ export default class Playlist extends React.Component {
 			  skipHandler={(evt, type) => this.skipHandler(evt, type)}
 			  togglePlaylist={condition => this.togglePlaylist(condition)}
 			  isMobile={this.state.isMobile}
-			  opts={ this.props.opts }
+				opts={ this.props.opts }
+				onClose={this.props.onClose}
 			/>
 			{this.playlistBody()}
 		  </div>

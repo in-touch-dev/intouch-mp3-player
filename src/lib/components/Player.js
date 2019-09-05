@@ -123,7 +123,10 @@ export default class Player extends React.Component {
 
   closePlayer() {
     this.sound && this.sound.stop();
-    this.setState({ closed: true });
+    this.sound && this.sound.unload();
+    this.setState({ closed: true }, () => {
+      this.props.onClose instanceof Function && this.props.onClose();
+    });
   }
 
   changeVolume = evt => {
