@@ -3,11 +3,6 @@ import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/esm/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/esm/inherits";
-// const React = require('react');
-// const Icon = require('../icons/PlayerIcons');
-// const formatTime = require("../helpers/playerHelper");
-// const {Howl} = require('howler');
-// require('../scss/App.scss');
 import "../scss/app.css";
 import React from "react";
 import Icon from "../icons/PlayerIcons";
@@ -27,7 +22,13 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Player).call(this, props));
 
     _this.componentWillMount = function () {
-      return _this.calculateOffset();
+      _this.calculateOffset();
+
+      if (!_this.props.activeTrack) {
+        return;
+      }
+
+      _this.play();
     };
 
     _this.setProgressIndicator = function (val) {
@@ -136,7 +137,8 @@ function (_React$Component) {
       }
 
       this.sound = new Howl({
-        src: [this.props.activeTrack.src]
+        src: [this.props.activeTrack.src],
+        html5: true
       });
       window.audio = {
         active: this.sound
@@ -193,38 +195,43 @@ function (_React$Component) {
   }, {
     key: "closePlayer",
     value: function closePlayer() {
+      var _this3 = this;
+
       this.sound && this.sound.stop();
+      this.sound && this.sound.unload();
       this.setState({
         closed: true
+      }, function () {
+        _this3.props.onClose instanceof Function && _this3.props.onClose();
       });
     }
   }, {
     key: "playPause",
     value: function playPause() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.loading) {
         return React.createElement("button", {
           className: "mp3-player-tape-controls-play"
         }, React.createElement("div", {
-          class: "mp3-player-loading-container"
+          className: "mp3-player-loading-container"
         }, React.createElement("div", {
-          class: "item-1"
+          className: "item-1"
         }), React.createElement("div", {
-          class: "item-2"
+          className: "item-2"
         }), React.createElement("div", {
-          class: "item-3"
+          className: "item-3"
         }), React.createElement("div", {
-          class: "item-4"
+          className: "item-4"
         }), React.createElement("div", {
-          class: "item-5"
+          className: "item-5"
         })));
       } else {
         if (!this.state.isPlaying) {
           return React.createElement("button", {
             className: "mp3-player-tape-controls-play",
             onClick: function onClick() {
-              return _this3.play();
+              return _this4.play();
             }
           }, React.createElement("span", {
             className: "mp3-player-play-button"
@@ -236,7 +243,7 @@ function (_React$Component) {
         return React.createElement("button", {
           className: "mp3-player-tape-controls-play",
           onClick: function onClick() {
-            return _this3.pause();
+            return _this4.pause();
           }
         }, React.createElement(Icon, {
           iconName: "pause"
@@ -246,18 +253,17 @@ function (_React$Component) {
   }, {
     key: "playLoop",
     value: function playLoop() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (!this.state.closed) {
-        console.log("hello");
         this.loop = setInterval(function () {
-          var progressIndicator = _this4.sound.seek() / _this4.state.trackDuration * (_this4.progressRef.current && _this4.progressRef.current.clientWidth);
+          var progressIndicator = _this5.sound.seek() / _this5.state.trackDuration * (_this5.progressRef.current && _this5.progressRef.current.clientWidth);
 
-          _this4.setState({
-            currentTime: _this4.sound.seek(),
+          _this5.setState({
+            currentTime: _this5.sound.seek(),
             progressIndicator: progressIndicator
           }, function () {
-            return _this4.setProgressIndicator(progressIndicator);
+            return _this5.setProgressIndicator(progressIndicator);
           });
         }, 500);
       }
@@ -265,7 +271,7 @@ function (_React$Component) {
   }, {
     key: "progressClicked",
     value: function progressClicked(evt) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.sound) {
         return;
@@ -277,17 +283,17 @@ function (_React$Component) {
         currentTime: this.movementX / this.progressRef.current.clientWidth * this.state.trackDuration,
         progressIndicator: this.movementX
       }, function () {
-        _this5.setProgressIndicator(_this5.state.progressIndicator);
+        _this6.setProgressIndicator(_this6.state.progressIndicator);
 
-        _this5.sound.seek(_this5.state.currentTime);
+        _this6.sound.seek(_this6.state.currentTime);
 
-        _this5.play();
+        _this6.play();
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       var trackDuration = formatTime(this.state.trackDuration);
       var currentTime = formatTime(this.state.currentTime);
@@ -321,14 +327,14 @@ function (_React$Component) {
         }, this.props.hasPlaylist && React.createElement("button", {
           className: "mp3-player-tape-controls-backward",
           onClick: function onClick(evt) {
-            return _this6.props.skipHandler(evt, "prev");
+            return _this7.props.skipHandler(evt, "prev");
           }
         }, React.createElement(Icon, {
           iconName: "backward"
         })), this.playPause(), this.props.hasPlaylist && React.createElement("button", {
           className: "mp3-player-tape-controls-forward",
           onClick: function onClick(evt) {
-            return _this6.props.skipHandler(evt, "next");
+            return _this7.props.skipHandler(evt, "next");
           }
         }, React.createElement(Icon, {
           iconName: "forward"
@@ -336,12 +342,11 @@ function (_React$Component) {
           className: "mp3-player-control-track"
         }, React.createElement("span", {
           className: "mp3-player-track-elapsed"
-        }, currentTime), React.createElement("a", {
-          href: "#",
+        }, currentTime), React.createElement("div", {
           ref: this.progressRef,
           className: "progress-bar-wrap",
           onClick: function onClick(evt) {
-            return _this6.progressClicked(evt);
+            return _this7.progressClicked(evt);
           }
         }, React.createElement("div", {
           className: "progress"
@@ -360,10 +365,10 @@ function (_React$Component) {
         })), React.createElement("button", {
           className: "mp3-player-hide-control",
           onClick: function onClick() {
-            _this6.setState({
-              isHidden: _this6.state.isHidden ? false : true
+            _this7.setState({
+              isHidden: _this7.state.isHidden ? false : true
             }, function () {
-              return _this6.props.togglePlaylist(_this6.state.isHidden);
+              return _this7.props.togglePlaylist(_this7.state.isHidden);
             });
           }
         }, React.createElement(Icon, {
@@ -372,7 +377,7 @@ function (_React$Component) {
         })), React.createElement("button", {
           className: "mp3-player-close-control",
           onClick: function onClick() {
-            _this6.closePlayer();
+            _this7.closePlayer();
           }
         }, React.createElement(Icon, {
           iconName: "close",
@@ -382,7 +387,7 @@ function (_React$Component) {
         }, React.createElement("button", {
           className: "mp3-player-tape-controls-mute",
           onClick: function onClick(evt) {
-            return _this6.muteSound(evt);
+            return _this7.muteSound(evt);
           }
         }, React.createElement(Icon, {
           iconName: !this.state.volumeLevel ? "mute" : "volume"
@@ -396,7 +401,7 @@ function (_React$Component) {
           step: "0.01",
           "data-action": "volume",
           onInput: function onInput(evt) {
-            return _this6.changeVolume(evt);
+            return _this7.changeVolume(evt);
           }
         }))));
       }

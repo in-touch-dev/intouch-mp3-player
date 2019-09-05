@@ -6,10 +6,7 @@ import _inherits from "@babel/runtime/helpers/esm/inherits";
 import React from "react";
 import Icon from "../icons/PlayerIcons";
 import "../scss/app.css";
-import Player from "./Player"; // const React = require('react');
-// const Icon = require('../icons/PlayerIcons');
-// require('../scss/App.scss')
-// const Player = require('./Player');
+import Player from "./Player";
 
 var Playlist =
 /*#__PURE__*/
@@ -91,9 +88,7 @@ function (_React$Component) {
           onClick: function onClick() {
             return _this3.setActiveTrack(track);
           }
-        }, track.name, React.createElement("span", {
-          className: "mp3-player-playlist-track-time"
-        }, "0:00"));
+        }, track.name);
       });
       return playlist;
     }
@@ -186,7 +181,8 @@ function (_React$Component) {
           return _this5.togglePlaylist(condition);
         },
         isMobile: this.state.isMobile,
-        opts: this.props.opts
+        opts: this.props.opts,
+        onClose: this.props.onClose
       }), this.playlistBody());
     }
   }]);
