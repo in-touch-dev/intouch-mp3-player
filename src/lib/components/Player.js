@@ -17,7 +17,7 @@ export default class Player extends React.Component {
 
 	  if(!this.props.activeTrack) { return; }
 	  this.play();
-}
+  }
 
   calculateOffset() {
     this.wrapOffsetStyles = {
@@ -62,7 +62,15 @@ export default class Player extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    this.props.activeTrack.src !== nextProps.activeTrack.src && this.reset();
+    if(this.props.activeTrack.src !== nextProps.activeTrack.src) 
+  
+    {
+      if (window.audio && window.audio.active) {
+        window.audio.active.pause();
+      }
+    this.sound && this.sound.pause();
+    this.reset();
+    }
     return true;
   }
 
@@ -105,7 +113,6 @@ export default class Player extends React.Component {
           () => this.playLoop()
         );
       });
-
       this.sound.play();
     });
   }
@@ -234,7 +241,7 @@ export default class Player extends React.Component {
     const currentTime = formatTime(this.state.currentTime);
     const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
     const isMobile = this.props.isMobile ? "is-mobile" : "";
-	const { closed } = this.state;
+  const { closed } = this.state;
     if (closed) {
       return null;
     } else {

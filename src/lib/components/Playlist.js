@@ -12,7 +12,13 @@ export default class Playlist extends React.Component {
 		  activeTrack: this.props.tracks[this.props.currentIndex || 0],
 		  isMobile: false
 		};
-	  }
+		}
+		
+		componentWillReceiveProps (newProps) {
+			if( newProps.tracks !== this.props.tracks ) {
+				this.setState({ activeTrack: newProps.tracks[0] })
+			}
+		}
 	
 	  componentWillMount() {
 		  let bp
@@ -31,7 +37,7 @@ export default class Playlist extends React.Component {
 	
 		this.breakpoint.addListener(breakpointHandler);
 		breakpointHandler();
-	  }
+		}
 	
 	  viewPlaylistBox = evt => {
 		evt.preventDefault();
@@ -57,9 +63,6 @@ export default class Playlist extends React.Component {
 	  setActiveTrack = track => {
 		if (track.src === this.state.activeTrack) {
 		  return;
-		}
-		if (window.audio && window.audio.active) {
-		  window.audio.active.pause();
 		}
 		this.setState({ activeTrack: track, showPlaylistBody: false });
 	  };
