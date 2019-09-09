@@ -62,6 +62,8 @@ export default class Player extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    console.log(nextProps);
+    console.log(this.props.activeTrack.src);
     if(this.props.activeTrack.src !== nextProps.activeTrack.src) 
   
     {
