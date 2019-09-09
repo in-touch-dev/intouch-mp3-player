@@ -18,6 +18,8 @@ export default class Playlist extends React.Component {
 				this.setState({
 					activeTrack: newProps.tracks[this.props.currentIndex || 0],
 					currentIndex: this.props.currentIndex || 0
+				}, () => {
+					console.log('::Playlist this : ', this);
 				})
 		}
 	
