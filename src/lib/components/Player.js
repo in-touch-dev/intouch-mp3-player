@@ -68,10 +68,17 @@ export default class Player extends React.Component {
       if (window.audio && window.audio.active) {
         window.audio.active.pause();
       }
-    this.sound && this.sound.pause();
     this.reset();
+    this.sound && this.sound.stop();
+    this.sound && this.sound.unload();
     }
     return true;
+  }
+
+  componentDidUpdate( prevProps ) {
+    if(prevProps.activeTrack.src !== this.props.activeTrack.src) {
+      this.play();
+    }
   }
 
   setProgressIndicator = val =>
