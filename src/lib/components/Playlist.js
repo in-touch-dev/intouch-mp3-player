@@ -16,7 +16,7 @@ export default class Playlist extends React.Component {
 		
 		componentWillReceiveProps (newProps) {
 			if( newProps.tracks !== this.props.tracks ) {
-				this.setState({ activeTrack: newProps.tracks[0] })
+				this.setState({ activeTrack: newProps.tracks[this.props.currentIndex || 0] })
 			}
 		}
 	
