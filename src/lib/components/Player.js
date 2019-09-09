@@ -241,9 +241,7 @@ export default class Player extends React.Component {
     const currentTime = formatTime(this.state.currentTime);
     const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
     const isMobile = this.props.isMobile ? "is-mobile" : "";
-  const { closed } = this.state;
-
-    console.log('::Player this : ', this);
+    const { closed } = this.state;
 
     if (closed) {
       return null;

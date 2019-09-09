@@ -15,14 +15,12 @@ export default class Playlist extends React.Component {
 	}
 
 	componentWillReceiveProps(newProps) {
-        console.log("TCL: Playlist -> componentWillReceiveProps -> newProps", newProps)
-		console.log('THIS IS PROPS', this.props);
 		
 		this.setState({
 			activeTrack: newProps.tracks[newProps.currentIndex || 0],
 			currentIndex: newProps.currentIndex || 0
 		}, () => {
-			console.log('::Playlist this : ', this);
+
 		})
 	}
 
