@@ -79,6 +79,7 @@ export default class Player extends React.Component {
     if(prevProps.activeTrack.src !== this.props.activeTrack.src) {
       this.play();
     }
+    this.calculateOffset();
   }
 
   setProgressIndicator = val =>
