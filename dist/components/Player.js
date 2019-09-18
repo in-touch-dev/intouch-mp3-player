@@ -119,8 +119,24 @@ function (_React$Component) {
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps) {
-      this.props.activeTrack.src !== nextProps.activeTrack.src && this.reset();
+      if (this.props.activeTrack.src !== nextProps.activeTrack.src) {
+        if (window.audio && window.audio.active) {
+          window.audio.active.pause();
+        }
+
+        this.reset();
+        this.sound && this.sound.stop();
+        this.sound && this.sound.unload();
+      }
+
       return true;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.activeTrack.src !== this.props.activeTrack.src) {
+        this.play();
+      }
     }
   }, {
     key: "play",
@@ -198,7 +214,6 @@ function (_React$Component) {
       var _this3 = this;
 
       this.sound && this.sound.stop();
-      this.sound && this.sound.unload();
       this.setState({
         closed: true
       }, function () {

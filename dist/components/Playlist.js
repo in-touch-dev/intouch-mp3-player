@@ -34,10 +34,6 @@ function (_React$Component) {
         return;
       }
 
-      if (window.audio && window.audio.active) {
-        window.audio.active.pause();
-      }
-
       _this.setState({
         activeTrack: track,
         showPlaylistBody: false
@@ -53,6 +49,14 @@ function (_React$Component) {
   }
 
   _createClass(Playlist, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(newProps) {
+      this.setState({
+        activeTrack: newProps.tracks[newProps.currentIndex || 0],
+        currentIndex: newProps.currentIndex || 0
+      }, function () {});
+    }
+  }, {
     key: "componentWillMount",
     value: function componentWillMount() {
       var _this2 = this;
