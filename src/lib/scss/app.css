@@ -283,7 +283,7 @@
     flex-direction: column;
     width: calc(100% - 400px);
     justify-content: space-between;
-    padding: 1rem 0.5rem;
+    /* padding: 1rem 0.5rem; */
     box-sizing: border-box;
   }
   .mp3-player-container .mp3-player-track-container .mp3-player-control-track {
@@ -309,7 +309,7 @@
   }
   @media (max-width: 770px) {
     .mp3-player-container .mp3-player-track-container .mp3-player-control-track .progress-bar-wrap {
-      margin-top: 20px;
+      /* margin-top: 20px; */
     }
   }
 
@@ -515,6 +515,12 @@
     height: 85px;
     justify-content: space-between;
   }
+
+  @media (max-width: 768px) {
+    .mp3-player-container .mp3-player-volume-container {
+    height: 0px;
+    }
+  }
   .mp3-player-container .mp3-player-volume-container .mp3-player-tape-controls-mute, .mp3-player-container .mp3-player-volume-container .mp3-player-playlist-control, .mp3-player-container .mp3-player-volume-container .mp3-player-hide-control, .mp3-player-container .mp3-player-volume-container .mp3-player-close-control {
     border: none;
     background: transparent;
@@ -677,24 +683,24 @@
     width: 100%;
   }
   .mp3-player-container.is-mobile .mp3-player-track-container .mp3-player-control-track {
-    transform: translateY(20px);
+    /* transform: translateY(20px); */
   }
   .mp3-player-container.is-mobile .mp3-player-track-container .mp3-player-control-track .progress-bar-wrap {
-    transform: none;
+    transform: translateY(-10px);
   }
   .mp3-player-container.is-mobile .mp3-player-track-container .mp3-player-control-track .mp3-player-track-remaining, .mp3-player-container.is-mobile .mp3-player-track-container .mp3-player-control-track .mp3-player-track-elapsed {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     /* margin-top: 20px; */
   }
   @media (max-width: 768px) {
-    .mp3-player-track-remaining {
+    /* .mp3-player-track-remaining {
       margin-top: 25px;
     }
   }
   @media (max-width: 768px) {
     .mp3-player-track-elapsed {
       margin-top: 25px;
-    }
+    } */
   }
   .mp3-player-container.is-mobile .mp3-player-current-track {
     width: auto;
@@ -717,7 +723,7 @@
     display: none;
   }
   .mp3-player-container.is-mobile .mp3-player-control-buttons {
-    transform: translateY(10px);
+    transform: translateY(-15px);
     text-align: center;
     display: flex;
   }
@@ -787,7 +793,7 @@
     transform: rotate(-90deg);
     width: 75px !important;
     left: -12px;
-    bottom: 80px;
+    bottom: 90px;
   }
   .mp3-player-container.is-mobile .mp3-player-loading-container {
     transform: rotate(270deg) translateX(26px);
