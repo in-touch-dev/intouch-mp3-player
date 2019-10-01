@@ -236,7 +236,7 @@
   }
   .mp3-player-playlist-container.playlist.is-mobile {
     height: calc(100vh - 180px);
-    width: 100% !important
+    width: 100% !important 
   }
   .playlist-wrap {
     z-index: 12345678;
