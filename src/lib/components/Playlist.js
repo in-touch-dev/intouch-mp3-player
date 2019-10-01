@@ -9,8 +9,7 @@ export default class Playlist extends React.Component {
 
 		this.state = {
 			currentIndex: this.props.currentIndex || 0,
-			activeTrack: this.props.tracks[this.props.currentIndex || 0],
-			isMobile: false
+			activeTrack: this.props.tracks[this.props.currentIndex || 0]
 		};
 	}
 
@@ -19,27 +18,15 @@ export default class Playlist extends React.Component {
 		this.setState({
 			activeTrack: newProps.tracks[newProps.currentIndex || 0],
 			currentIndex: newProps.currentIndex || 0
-		}, () => {
-
 		})
 	}
 
 	componentWillMount() {
-		let bp
-		if (this.props.opts) {
-			bp = this.props.opts.breakpoint ? (Math.abs(this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0))) : 768
-		} else {
-			bp = 768
-		}
 
-		this.breakpoint = window.matchMedia(
-			`(max-width: ${bp}px)`
-		);
-		const breakpointHandler = () => {
-			this.setState({ isMobile: this.breakpoint.matches });
-		};
+		this.breakpoint = window.matchMedia( '(max-width: 768px)' );
+		const breakpointHandler = () => this.setState({ isMobile : this.breakpoint.matches }) ;
 
-		this.breakpoint.addListener(breakpointHandler);
+		this.breakpoint.addListener( breakpointHandler );
 		breakpointHandler();
 	}
 
@@ -90,7 +77,7 @@ export default class Playlist extends React.Component {
 		styleOffsetOverides.right = `${styleOffsetOverides.right}px`;
 
 		return (
-			<div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`} style={this.state.isMobile ? styleOffsetOverides : {}}>
+			<div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`} style={ styleOffsetOverides }>
 				<div className="mp3-player-playlist-header">
 					<button
 						className="mp3-player-playlist-close"
