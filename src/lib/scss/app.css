@@ -206,7 +206,11 @@
   .mp3-player-playlist-container .mp3-player-playlist-content .mp3-player-playlist-track-button:focus {
     outline: none;
   }
-  .mp3-player-playlist-container .mp3-player-playlist-content .mp3-player-playlist-track-button .mp3-player-playlist-track-time {
+  .mp3-player-playlist-container .mp3-player-playlist-content .mp3-player-playlist-track-button.active {
+    background-color:#e84e0f;
+    opacity: 0.95  
+  } 
+  .mp3-player-playlist-track-time {
     font-weight: 300;
     font-size: 12px;
   }
@@ -226,9 +230,13 @@
   }
   .mp3-player-playlist-container.playlist {
     height: 160px;
+    right: 0px !important;
+    left: unset !important;
+    width: 25%
   }
   .mp3-player-playlist-container.playlist.is-mobile {
     height: calc(100vh - 180px);
+    width: 100% !important
   }
   .playlist-wrap {
     z-index: 12345678;
@@ -292,7 +300,7 @@
     box-sizing: border-box;
   }
   .mp3-player-container .mp3-player-track-container .mp3-player-control-track span {
-    width: 32px;
+    width: 45px;
     text-align: center;
     color: #fff;
     overflow: hidden;
@@ -304,7 +312,7 @@
     height: 15px;
     color: #03163d;
     cursor: pointer;
-    width: calc(100% - 94px);
+    width: calc(100% - 120px);
     margin: 2px 15px;
     display: inline-block;
     vertical-align: top;

@@ -38,9 +38,10 @@ export default class Playlist extends React.Component {
 
 	playlistContent() {
 		const playlist = this.props.tracks.map((track, key) => {
+			const isActive = track.src === this.state.activeTrack.src ? 'active' : ''
 			return (
 				<button
-					className="mp3-player-playlist-track-button"
+					className={`mp3-player-playlist-track-button ${isActive}`}
 					key={key}
 					onClick={() => this.setActiveTrack(track)}
 				>
