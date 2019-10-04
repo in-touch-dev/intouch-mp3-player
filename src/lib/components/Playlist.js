@@ -73,12 +73,12 @@ export default class Playlist extends React.Component {
 		const showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
 		const isMobile = this.state.isMobile ? 'is-mobile' : '';
 
-		const styleOffsetOverides = Object.assign({}, { left: 0, right: 0 }, this.props.opts && this.props.opts.offset);
+		const styleOffsetOverides = Object.assign({}, { left: '0px', right: '0px' }, this.props.opts && this.props.opts.offset);
 		styleOffsetOverides.left = `${styleOffsetOverides.left}px`;
 		styleOffsetOverides.right = `${styleOffsetOverides.right}px`;
 
 		return (
-			<div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`} style={ styleOffsetOverides }>
+			<div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`}>
 				<div className="mp3-player-playlist-header">
 					<button
 						className="mp3-player-playlist-close"
