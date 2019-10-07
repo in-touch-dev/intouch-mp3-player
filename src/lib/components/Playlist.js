@@ -80,6 +80,7 @@ export default class Playlist extends React.Component {
 		return (
 			<div className={`mp3-player-playlist-container ${showPlaylist} ${isMobile}`}>
 				<div className="mp3-player-playlist-header">
+					{this.state.activeTrack && <p className='playlist-title'>{this.state.activeTrack.playlistName} </p>}
 					<button
 						className="mp3-player-playlist-close"
 						onClick={evt => this.playlistClickHandler(evt)}
@@ -121,6 +122,7 @@ export default class Playlist extends React.Component {
 	}
 
 	render() {
+		console.log(this.props);
 		return (
 			<div className={this.state.isMobile ? "playlist-wrap is-mobile" : "playlist-wrap"}>
 				<Player
