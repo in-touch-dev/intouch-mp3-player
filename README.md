@@ -32,7 +32,8 @@ Import the Playlist component
 import Playlist from 'react-mp3-player';
 ```
 
-The tracks format will be ann array of objects, each object containing a name, description, src mp3 and an optional image
+The tracks format will be ann array of objects, each object containing a name, description, src mp3 and an optional image.
+There's also an optional `autoStopAt` property for a track, which is represented by an array of numbers (seconds from the start - can be floating-point values or integers) where the track should automatically pause.
 
 ```Javascript
 const tracks = [{ img: 'https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg', name:'MP3', desc: 'Description 1', src:'Audio.mp3'},

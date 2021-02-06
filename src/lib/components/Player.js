@@ -45,7 +45,8 @@ export default class Player extends React.Component {
 			volumeLevel: 1,
 			currentIndex: 1,
 			closed: false,
-			loading: false
+			loading: false,
+			isAutoStopped: false
 		};
 	}
 
@@ -85,14 +86,22 @@ export default class Player extends React.Component {
 	play() {
 		if (this.sound && this.state.isPaused) {
 			this.sound.play();
-			this.setState({ isPaused: false, isPlaying: true });
+			this.setState({
+				isPaused: false,
+				isPlaying: true,
+				isAutoStopped: false
+			});
 			return;
 		}
 
 		this.sound = new Howl({ src: [this.props.activeTrack.src], html5: true });
 		window.audio = { active: this.sound };
 
-		this.setState({ loading: true });
+		this.setState({
+			loading: true,
+			autoStopAt: this.props.activeTrack.autoStopAt || [],
+			isAutoStopped: false
+		});
 		this.sound.once("load", () => {
 			this.setState({ loading: false });
 			this.sound.on("end", evt => {
@@ -203,12 +212,23 @@ export default class Player extends React.Component {
 		if (!this.state.closed) {
 			this.loop = setInterval(() => {
 				this.progressWidth = this.progressRef.current && this.progressRef.current.clientWidth ? this.progressRef.current.clientWidth : this.progressWidth ;
-
 				let progressIndicator = (~~(this.sound.seek()) / this.state.trackDuration) * this.progressWidth;
+				let {autoStopAt, isAutoStopped} = this.state;
+				if (!!autoStopAt && autoStopAt.length > 0 && this.sound.seek() >= autoStopAt[0]) {
+					console && console.log(`Auto pause at ${autoStopAt[0]}...`)
+					this.pause();
+					isAutoStopped = true;
+					autoStopAt = [...autoStopAt];
+					autoStopAt.shift();
+				} else {
+					isAutoStopped = false;
+				}
 				this.setState(
 					{
 						currentTime: this.sound.seek(),
-						progressIndicator
+						progressIndicator,
+						autoStopAt,
+						isAutoStopped
 					},
 					() => this.setProgressIndicator( progressIndicator )
 				);
@@ -241,7 +261,7 @@ export default class Player extends React.Component {
 		const currentTime = formatTime(this.state.currentTime);
 		const hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
 		const isMobile = this.props.isMobile ? "is-mobile" : "";
-		const { closed } = this.state;
+		const { closed, isAutoStopped } = this.state;
 
 		if (closed) {
 			return null;
@@ -259,7 +279,8 @@ export default class Player extends React.Component {
 									this.props.activeTrack.img
 										? this.props.activeTrack.img
 										: "https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg"
-									} )`
+									} )`,
+								mixBlendMode: isAutoStopped ? 'color-dodge': 'normal'
 							}}
 						/>
 						<div className="mp3-player-current-title">
