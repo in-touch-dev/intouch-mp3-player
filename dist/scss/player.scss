@@ -71,8 +71,6 @@
 
     .mp3-player-control-track {
       width: 100%;
-      display: flex;
-      flex-direction: row;
       margin: 2px 0;
       box-sizing: border-box;
 
@@ -81,9 +79,12 @@
       // }
 
       span {
-        width: 63px;
+        width: 32px;
         text-align: center;
         color: #fff;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: top;
       }
 
       .progress-bar-wrap {
@@ -91,7 +92,10 @@
         height: 15px;
         color: #03163d;
         cursor: pointer;
-        width: 100%;
+        width: calc(100% - 94px);
+        margin: 2px 15px;
+        display: inline-block;
+        vertical-align: top;
 
         &:before {
           position: absolute;
@@ -100,8 +104,6 @@
           background-color: #e84e0f;
           height: 5px;
           width: 100%;
-          margin-left: 5px;
-          margin-right: 5px;
         }
 
         // @media (max-width: $mobile) {
@@ -109,6 +111,7 @@
         // }
 
         .progress {
+          transform: translateX(-7px);
           display: block;
           height: 5px;
           text-align: right;
