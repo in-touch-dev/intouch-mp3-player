@@ -215,7 +215,7 @@ export default class Player extends React.Component {
 				let progressIndicator = (~~(this.sound.seek()) / this.state.trackDuration) * this.progressWidth;
 				let {autoStopAt, isAutoStopped} = this.state;
 				if (!!autoStopAt && autoStopAt.length > 0 && this.sound.seek() >= autoStopAt[0]) {
-					console && console.log(`Auto pause at ${autoStopAt[0]}...`)
+					console && console.log(`Auto pause at ${autoStopAt[0]} (${this.sound.seek()})...`)
 					this.pause();
 					isAutoStopped = true;
 					autoStopAt = [...autoStopAt];
@@ -233,7 +233,7 @@ export default class Player extends React.Component {
 					() => this.setProgressIndicator( progressIndicator )
 				);
 
-			}, 500);
+			}, 10);
 		}
 	}
 

@@ -286,7 +286,7 @@ function (_React$Component) {
               isAutoStopped = _this5$state.isAutoStopped;
 
           if (!!autoStopAt && autoStopAt.length > 0 && _this5.sound.seek() >= autoStopAt[0]) {
-            console && console.log("Auto pause at ".concat(autoStopAt[0], "..."));
+            console && console.log("Auto pause at ".concat(autoStopAt[0], " (").concat(_this5.sound.seek(), ")..."));
 
             _this5.pause();
 
@@ -305,7 +305,7 @@ function (_React$Component) {
           }, function () {
             return _this5.setProgressIndicator(progressIndicator);
           });
-        }, 500);
+        }, 10);
       }
     }
   }, {
