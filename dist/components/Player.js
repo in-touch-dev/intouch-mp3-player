@@ -1,3 +1,4 @@
+import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 import _classCallCheck from "@babel/runtime/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/esm/possibleConstructorReturn";
@@ -99,7 +100,8 @@ function (_React$Component) {
         volumeLevel: 1,
         currentIndex: 1,
         closed: false,
-        loading: false
+        loading: false,
+        isAutoStopped: false
       };
     }
   }, {
@@ -137,6 +139,8 @@ function (_React$Component) {
       if (prevProps.activeTrack.src !== this.props.activeTrack.src) {
         this.play();
       }
+
+      this.calculateOffset();
     }
   }, {
     key: "play",
@@ -147,7 +151,8 @@ function (_React$Component) {
         this.sound.play();
         this.setState({
           isPaused: false,
-          isPlaying: true
+          isPlaying: true,
+          isAutoStopped: false
         });
         return;
       }
@@ -160,7 +165,9 @@ function (_React$Component) {
         active: this.sound
       };
       this.setState({
-        loading: true
+        loading: true,
+        autoStopAt: this.props.activeTrack.autoStopAt || [],
+        isAutoStopped: false
       });
       this.sound.once("load", function () {
         _this2.setState({
@@ -272,15 +279,33 @@ function (_React$Component) {
 
       if (!this.state.closed) {
         this.loop = setInterval(function () {
-          var progressIndicator = _this5.sound.seek() / _this5.state.trackDuration * (_this5.progressRef.current && _this5.progressRef.current.clientWidth);
+          _this5.progressWidth = _this5.progressRef.current && _this5.progressRef.current.clientWidth ? _this5.progressRef.current.clientWidth : _this5.progressWidth;
+          var progressIndicator = ~~_this5.sound.seek() / _this5.state.trackDuration * _this5.progressWidth;
+          var _this5$state = _this5.state,
+              autoStopAt = _this5$state.autoStopAt,
+              isAutoStopped = _this5$state.isAutoStopped;
+
+          if (!!autoStopAt && autoStopAt.length > 0 && _this5.sound.seek() >= autoStopAt[0]) {
+            console && console.log("Auto pause at ".concat(autoStopAt[0], " (").concat(_this5.sound.seek(), ")..."));
+
+            _this5.pause();
+
+            isAutoStopped = true;
+            autoStopAt = _toConsumableArray(autoStopAt);
+            autoStopAt.shift();
+          } else {
+            isAutoStopped = false;
+          }
 
           _this5.setState({
             currentTime: _this5.sound.seek(),
-            progressIndicator: progressIndicator
+            progressIndicator: progressIndicator,
+            autoStopAt: autoStopAt,
+            isAutoStopped: isAutoStopped
           }, function () {
             return _this5.setProgressIndicator(progressIndicator);
           });
-        }, 500);
+        }, 10);
       }
     }
   }, {
@@ -292,6 +317,7 @@ function (_React$Component) {
         return;
       }
 
+      ;
       this.pause();
       this.movementX = (evt.pageX || evt.clientX) - evt.currentTarget.getBoundingClientRect().left;
       this.setState({
@@ -314,7 +340,9 @@ function (_React$Component) {
       var currentTime = formatTime(this.state.currentTime);
       var hideMp3 = this.state.isHidden ? "mp3-player-hidden" : "";
       var isMobile = this.props.isMobile ? "is-mobile" : "";
-      var closed = this.state.closed;
+      var _this$state = this.state,
+          closed = _this$state.closed,
+          isAutoStopped = _this$state.isAutoStopped;
 
       if (closed) {
         return null;
@@ -327,7 +355,8 @@ function (_React$Component) {
         }, React.createElement("div", {
           className: "mp3-player-current-img",
           style: {
-            backgroundImage: "url( ".concat(this.props.activeTrack.img ? this.props.activeTrack.img : "https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg", " )")
+            backgroundImage: "url( ".concat(this.props.activeTrack.img ? this.props.activeTrack.img : "https://icon-library.net/images/music-icon-transparent/music-icon-transparent-11.jpg", " )"),
+            mixBlendMode: isAutoStopped ? 'color-dodge' : 'normal'
           }
         }), React.createElement("div", {
           className: "mp3-player-current-title"

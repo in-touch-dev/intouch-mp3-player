@@ -42,8 +42,7 @@ function (_React$Component) {
 
     _this.state = {
       currentIndex: _this.props.currentIndex || 0,
-      activeTrack: _this.props.tracks[_this.props.currentIndex || 0],
-      isMobile: false
+      activeTrack: _this.props.tracks[_this.props.currentIndex || 0]
     };
     return _this;
   }
@@ -54,25 +53,17 @@ function (_React$Component) {
       this.setState({
         activeTrack: newProps.tracks[newProps.currentIndex || 0],
         currentIndex: newProps.currentIndex || 0
-      }, function () {});
+      });
     }
   }, {
     key: "componentWillMount",
     value: function componentWillMount() {
       var _this2 = this;
 
-      var bp;
-
-      if (this.props.opts) {
-        bp = this.props.opts.breakpoint ? Math.abs(this.props.opts.breakpoint.maxWidth + (this.props.opts.offset && this.props.opts.offset.left ? this.props.opts.offset.left : 0) + (this.props.opts.offset && this.props.opts.offset.right ? this.props.opts.offset.right : 0)) : 768;
-      } else {
-        bp = 768;
-      }
-
-      this.breakpoint = window.matchMedia("(max-width: ".concat(bp, "px)"));
+      this.breakpoint = window.matchMedia('(max-width: 768px)');
 
       var breakpointHandler = function breakpointHandler() {
-        _this2.setState({
+        return _this2.setState({
           isMobile: _this2.breakpoint.matches
         });
       };
@@ -86,8 +77,9 @@ function (_React$Component) {
       var _this3 = this;
 
       var playlist = this.props.tracks.map(function (track, key) {
+        var isActive = track.src === _this3.state.activeTrack.src ? 'active' : '';
         return React.createElement("button", {
-          className: "mp3-player-playlist-track-button",
+          className: "mp3-player-playlist-track-button ".concat(isActive),
           key: key,
           onClick: function onClick() {
             return _this3.setActiveTrack(track);
@@ -115,17 +107,18 @@ function (_React$Component) {
       var showPlaylist = this.state.showPlaylistBody ? "playlist" : "";
       var isMobile = this.state.isMobile ? 'is-mobile' : '';
       var styleOffsetOverides = Object.assign({}, {
-        left: 0,
-        right: 0
+        left: '0px',
+        right: '0px'
       }, this.props.opts && this.props.opts.offset);
       styleOffsetOverides.left = "".concat(styleOffsetOverides.left, "px");
       styleOffsetOverides.right = "".concat(styleOffsetOverides.right, "px");
       return React.createElement("div", {
-        className: "mp3-player-playlist-container ".concat(showPlaylist, " ").concat(isMobile),
-        style: this.state.isMobile ? styleOffsetOverides : {}
+        className: "mp3-player-playlist-container ".concat(showPlaylist, " ").concat(isMobile)
       }, React.createElement("div", {
         className: "mp3-player-playlist-header"
-      }, React.createElement("button", {
+      }, this.state.activeTrack && React.createElement("p", {
+        className: "playlist-title"
+      }, this.state.activeTrack.playlistName, " "), React.createElement("button", {
         className: "mp3-player-playlist-close",
         onClick: function onClick(evt) {
           return _this4.playlistClickHandler(evt);
@@ -170,6 +163,7 @@ function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
+      console.log(this.props);
       return React.createElement("div", {
         className: this.state.isMobile ? "playlist-wrap is-mobile" : "playlist-wrap"
       }, React.createElement(Player, {
